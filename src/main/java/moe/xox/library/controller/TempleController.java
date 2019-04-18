@@ -11,10 +11,7 @@ public class TempleController {
     public  String good(){
         return "good";
     }
-    @RequestMapping("bookMsgDetail")
-    public  String bookMsgDetail(){
-        return "bookMsgDetail";
-    }
+
     @RequestMapping("index")
     public  String index(){
         return "index";
@@ -24,4 +21,15 @@ public class TempleController {
     public String toLogin(){
         return "login";
     }
+
+    @RequestMapping("bookMsgDetail")
+    public  String bookMsgDetail(){
+        return "bookMsgDetail";
+    }
+
+    @RequestMapping("bookDetail")
+    public String bookDetail(){
+        return "bookDetail";
+    }
+
 }

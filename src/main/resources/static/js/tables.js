@@ -312,7 +312,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             title:"新增图书",
                             area: ['400px', '590px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                            content:basePath+'bookMsgDetail'
+                            content:basePath+'bookDetail'
                         });
                         break;
                     case 'update':
@@ -328,7 +328,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 title:"图书信息管理详情",
                                 area: ['400px', '590px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                                content:basePath+'bookMsgDetail'
+                                content:basePath+'bookDetail'
                             });
                         }
                         break;
@@ -403,7 +403,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         title:"图书信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                        content:basePath+'bookMsgDetail'
+                        content:basePath+'bookDetail'
                     });
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么',
@@ -437,12 +437,447 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         title:"图书信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-molv', //加上边框
-                        content:basePath+'bookMsgDetail'
+                        content:basePath+'bookDetail'
+                    });
+                }
+            });
+
+        //table3
+        table.on('toolbar(test2)',
+            function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id),
+                    data = checkStatus.data; //获取选中的数据
+                console.log("checkStatus.data:");
+                console.log(checkStatus.data);
+                switch (obj.event) {
+                    case 'add':
+                        actionType = 'add';
+                        layer.open({
+                            type: 2,
+                            title:"新增图书",
+                            area: ['400px', '590px'],
+                            skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                            content:basePath+'bookDetail'
+                        });
+                        break;
+                    case 'update':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else if (data.length > 1) {
+                            layer.msg('只能同时编辑一个');
+                        } else {
+                            dataForChild = data[0];
+                            actionType='edit';
+                            layer.open({
+                                type: 2,
+                                title:"图书信息管理详情",
+                                area: ['400px', '590px'],
+                                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                                content:basePath+'bookDetail'
+                            });
+                        }
+                        break;
+                    case 'delete':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else {
+                            layer.confirm('你确定要删除这些数据？', {
+                                btn: ['确定','取消'] //按钮
+                            }, function(){
+                                var idList=[];
+                                for(var i=0;i<data.length;i++) {
+                                    idList[i]=data[i].bookId;
+                                    console.log("data[i].bookId:");
+                                    console.log(data[i].bookId);
+                                }
+
+                                console.log(idList);
+                                $.ajax({
+                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    ,contentType:'application/json'
+                                    , data: JSON.stringify(idList)
+                                    ,type:'post'
+                                    ,success:function (res) {
+                                        if(res.code==0){
+                                            layui.table.reload('table1');
+                                            layer.msg('操作成功', {icon: 1});
+                                        }else{
+                                            layer.alert("错误原因:"+res.msg, {icon: 5});
+                                        }
+                                    }
+                                    ,error:function (obj) {
+                                        console.log('请求错误,错误的原因为:'+obj.msg)
+                                    }
+                                });
+                            });
+                        }
+                        break;
+                }
+            });
+        //监听单元格编辑
+        table.on('edit(test2)',
+            function (obj) {
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,field = obj.field; //得到字段
+                console.log(data);
+                layui.use('jquery',
+                    function () {
+                        var $ = layui.$;
+                        $.ajax({
+                            type: 'get'
+                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            // ajax请求路径
+                            data: data,
+                            success: function (data) {
+                                layer.msg('[ID: ' + data[0].id + '] ' + field + ' 字段更改为：' + value);
+                            }
+                        });
+                    });
+            });
+        //监听行工具事件
+        table.on('tool(test2)',
+            function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'detail') {
+                    actionType='detail';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                } else if (layEvent === 'del') {
+                    layer.confirm('真的删除行么',
+                        function (index) {
+                            var idList=[];
+                            idList.push(data.bookId);
+                            $.ajax({
+                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                ,contentType:'application/json'
+                                , data: JSON.stringify(idList)
+                                ,type:'post'
+                                ,success:function (res) {
+                                    if(res.code==0){
+                                        layui.table.reload('table1');
+                                        layer.msg('操作成功', {icon: 1});
+                                    }else{
+                                        layer.alert("错误原因:"+res.msg, {icon: 5});
+                                    }
+                                }
+                                ,error:function (obj) {
+                                    console.log('请求错误,错误的原因为:'+obj.msg)
+                                }
+                            });
+                            //向服务端发送删除指令
+                        });
+                } else if (layEvent === 'edit') {
+                    actionType='edit';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
                     });
                 }
             });
 
 
+        //table4
+        table.on('toolbar(test2)',
+            function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id),
+                    data = checkStatus.data; //获取选中的数据
+                console.log("checkStatus.data:");
+                console.log(checkStatus.data);
+                switch (obj.event) {
+                    case 'add':
+                        actionType = 'add';
+                        layer.open({
+                            type: 2,
+                            title:"新增图书",
+                            area: ['400px', '590px'],
+                            skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                            content:basePath+'bookDetail'
+                        });
+                        break;
+                    case 'update':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else if (data.length > 1) {
+                            layer.msg('只能同时编辑一个');
+                        } else {
+                            dataForChild = data[0];
+                            actionType='edit';
+                            layer.open({
+                                type: 2,
+                                title:"图书信息管理详情",
+                                area: ['400px', '590px'],
+                                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                                content:basePath+'bookDetail'
+                            });
+                        }
+                        break;
+                    case 'delete':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else {
+                            layer.confirm('你确定要删除这些数据？', {
+                                btn: ['确定','取消'] //按钮
+                            }, function(){
+                                var idList=[];
+                                for(var i=0;i<data.length;i++) {
+                                    idList[i]=data[i].bookId;
+                                    console.log("data[i].bookId:");
+                                    console.log(data[i].bookId);
+                                }
+
+                                console.log(idList);
+                                $.ajax({
+                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    ,contentType:'application/json'
+                                    , data: JSON.stringify(idList)
+                                    ,type:'post'
+                                    ,success:function (res) {
+                                        if(res.code==0){
+                                            layui.table.reload('table1');
+                                            layer.msg('操作成功', {icon: 1});
+                                        }else{
+                                            layer.alert("错误原因:"+res.msg, {icon: 5});
+                                        }
+                                    }
+                                    ,error:function (obj) {
+                                        console.log('请求错误,错误的原因为:'+obj.msg)
+                                    }
+                                });
+                            });
+                        }
+                        break;
+                }
+            });
+        //监听单元格编辑
+        table.on('edit(test2)',
+            function (obj) {
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,field = obj.field; //得到字段
+                console.log(data);
+                layui.use('jquery',
+                    function () {
+                        var $ = layui.$;
+                        $.ajax({
+                            type: 'get'
+                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            // ajax请求路径
+                            data: data,
+                            success: function (data) {
+                                layer.msg('[ID: ' + data[0].id + '] ' + field + ' 字段更改为：' + value);
+                            }
+                        });
+                    });
+            });
+        //监听行工具事件
+        table.on('tool(test2)',
+            function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'detail') {
+                    actionType='detail';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                } else if (layEvent === 'del') {
+                    layer.confirm('真的删除行么',
+                        function (index) {
+                            var idList=[];
+                            idList.push(data.bookId);
+                            $.ajax({
+                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                ,contentType:'application/json'
+                                , data: JSON.stringify(idList)
+                                ,type:'post'
+                                ,success:function (res) {
+                                    if(res.code==0){
+                                        layui.table.reload('table1');
+                                        layer.msg('操作成功', {icon: 1});
+                                    }else{
+                                        layer.alert("错误原因:"+res.msg, {icon: 5});
+                                    }
+                                }
+                                ,error:function (obj) {
+                                    console.log('请求错误,错误的原因为:'+obj.msg)
+                                }
+                            });
+                            //向服务端发送删除指令
+                        });
+                } else if (layEvent === 'edit') {
+                    actionType='edit';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                }
+            });
+
+
+        //table5
+        table.on('toolbar(test5)',
+            function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id),
+                    data = checkStatus.data; //获取选中的数据
+                console.log("checkStatus.data:");
+                console.log(checkStatus.data);
+                switch (obj.event) {
+                    case 'add':
+                        actionType = 'add';
+                        layer.open({
+                            type: 2,
+                            title:"新增图书",
+                            area: ['400px', '590px'],
+                            skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                            content:basePath+'bookDetail'
+                        });
+                        break;
+                    case 'update':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else if (data.length > 1) {
+                            layer.msg('只能同时编辑一个');
+                        } else {
+                            dataForChild = data[0];
+                            actionType='edit';
+                            layer.open({
+                                type: 2,
+                                title:"图书信息管理详情",
+                                area: ['400px', '590px'],
+                                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                                content:basePath+'bookDetail'
+                            });
+                        }
+                        break;
+                    case 'delete':
+                        if (data.length === 0) {
+                            layer.msg('请选择一行');
+                        } else {
+                            layer.confirm('你确定要删除这些数据？', {
+                                btn: ['确定','取消'] //按钮
+                            }, function(){
+                                var idList=[];
+                                for(var i=0;i<data.length;i++) {
+                                    idList[i]=data[i].bookId;
+                                    console.log("data[i].bookId:");
+                                    console.log(data[i].bookId);
+                                }
+
+                                console.log(idList);
+                                $.ajax({
+                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    ,contentType:'application/json'
+                                    , data: JSON.stringify(idList)
+                                    ,type:'post'
+                                    ,success:function (res) {
+                                        if(res.code==0){
+                                            layui.table.reload('table1');
+                                            layer.msg('操作成功', {icon: 1});
+                                        }else{
+                                            layer.alert("错误原因:"+res.msg, {icon: 5});
+                                        }
+                                    }
+                                    ,error:function (obj) {
+                                        console.log('请求错误,错误的原因为:'+obj.msg)
+                                    }
+                                });
+                            });
+                        }
+                        break;
+                }
+            });
+        //监听单元格编辑
+        table.on('edit(test5)',
+            function (obj) {
+                var value = obj.value //得到修改后的值
+                    ,data = obj.data //得到所在行所有键值
+                    ,field = obj.field; //得到字段
+                console.log(data);
+                layui.use('jquery',
+                    function () {
+                        var $ = layui.$;
+                        $.ajax({
+                            type: 'get'
+                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            // ajax请求路径
+                            data: data,
+                            success: function (data) {
+                                layer.msg('[ID: ' + data[0].id + '] ' + field + ' 字段更改为：' + value);
+                            }
+                        });
+                    });
+            });
+        //监听行工具事件
+        table.on('tool(test5)',
+            function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data //获得当前行数据
+                    ,layEvent = obj.event; //获得 lay-event 对应的值
+                if (layEvent === 'detail') {
+                    actionType='detail';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                } else if (layEvent === 'del') {
+                    layer.confirm('真的删除行么',
+                        function (index) {
+                            var idList=[];
+                            idList.push(data.bookId);
+                            $.ajax({
+                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                ,contentType:'application/json'
+                                , data: JSON.stringify(idList)
+                                ,type:'post'
+                                ,success:function (res) {
+                                    if(res.code==0){
+                                        layui.table.reload('table1');
+                                        layer.msg('操作成功', {icon: 1});
+                                    }else{
+                                        layer.alert("错误原因:"+res.msg, {icon: 5});
+                                    }
+                                }
+                                ,error:function (obj) {
+                                    console.log('请求错误,错误的原因为:'+obj.msg)
+                                }
+                            });
+                            //向服务端发送删除指令
+                        });
+                } else if (layEvent === 'edit') {
+                    actionType='edit';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '590px'],
+                        skin: 'layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                }
+            });
         //点击导航条时，渲染对应的表格
   $('.tablePage').on('click', function(){
     var othis = $(this), type = othis.data('type');

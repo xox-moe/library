@@ -27,7 +27,7 @@ public class BaseController {
      * @return
      */
     public ReturnBean getSuccess(String msg) {
-        return new ReturnBean(true, msg == null ? "" : msg, null, 0);
+        return new ReturnBean(true, msg == null ? "" : msg, null, 0,0);
     }
 
     /**
@@ -35,7 +35,7 @@ public class BaseController {
      * @return success
      */
     public ReturnBean getSuccess() {
-        return new ReturnBean(true, "success", null, 0);
+        return new ReturnBean(true, "success", null, 0,0);
     }
 
     /**
@@ -47,11 +47,11 @@ public class BaseController {
      * @return
      */
     public ReturnBean getSuccess(String msg, Object data, int totalCount) {
-        return new ReturnBean(true, msg == null ? "" : msg, data, totalCount);
+        return new ReturnBean(true, msg == null ? "" : msg, data, totalCount,0);
     }
 
     public ReturnBean getSuccess(String msg, Object data, long totalCount) {
-        return new ReturnBean(true, msg == null ? "" : msg, data, (int) totalCount);
+        return new ReturnBean(true, msg == null ? "" : msg, data, (int) totalCount,0);
     }
 
 
@@ -62,7 +62,7 @@ public class BaseController {
      * @return
      */
     public ReturnBean getFailure(String msg, Object data, int totalCount) {
-        return new ReturnBean(true, msg == null ? "" : msg, data, totalCount);
+        return new ReturnBean(true, msg == null ? "" : msg, data, totalCount,-1);
     }
 
     /**
@@ -72,7 +72,7 @@ public class BaseController {
      * @return
      */
     public ReturnBean getFailure(String msg) {
-        return new ReturnBean(false, msg == null ? "" : msg, null, 0);
+        return new ReturnBean(false, msg == null ? "" : msg, null, 0,-1);
     }
 
     /**
@@ -83,6 +83,6 @@ public class BaseController {
      * @return
      */
     public ReturnBean getFailure(String msg, Object data) {
-        return new ReturnBean(false, msg == null ? "" : msg, data, 0);
+        return new ReturnBean(false, msg == null ? "" : msg, data, 0,-1);
     }
 }
