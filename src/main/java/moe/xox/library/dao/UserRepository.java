@@ -18,6 +18,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(nativeQuery = true,value = "select * from USER where nickname like concat('%',:nickname,'%') ")
     List<User> findUserByNickname(@Param("nickname") String nickname);
 
+    List<User> findAllByNickNameLike(String nickName);
+
+    User findByEmailAndPassword(String userName, String password);
+
     @Query(nativeQuery = true,value = "select distinct role_name  " +
             "from user  " +
             "         left join user_role on user.user_id = user_role.user_id  " +

@@ -2,9 +2,8 @@ package moe.xox.library.controller;
 
 import io.swagger.annotations.ApiOperation;
 import moe.xox.library.controller.vo.ReturnBean;
-import moe.xox.library.controller.vo.UserVO;
 import moe.xox.library.dao.entity.User;
-import moe.xox.library.service.dto.UserService;
+import moe.xox.library.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -17,11 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class LoginController extends BaseController{
@@ -34,27 +28,28 @@ public class LoginController extends BaseController{
 
 
     @RequestMapping(value = "login",method = {RequestMethod.POST,RequestMethod.GET})
-    public ModelAndView login(UserVO user){
-        ModelAndView modelAndView = new ModelAndView();
-        logger.info("请求登陆 userName："+user.getUserName()+" 密码："+user.getPassword());
+    public ReturnBean login(String userName,String password){
+//        ModelAndView modelAndView = new ModelAndView();
+        logger.info("请求登陆 userName："+userName+" 密码："+password);
         Subject subject = SecurityUtils.getSubject();
         try {
-            subject.login(new UsernamePasswordToken(user.getUserName(),user.getPassword()));
+            subject.login(new UsernamePasswordToken(userName,password));
         }catch (UnknownAccountException ex){
             logger.info("登录失败 无此账号");
 
-            modelAndView.addObject("userName", "userName");
-            modelAndView.addObject("password", "password");
-            modelAndView.setViewName("login");
-            return modelAndView;
+//            modelAndView.addObject("userName", "userName");
+//            modelAndView.addObject("password", "password");
+//            modelAndView.setViewName("login");
+            return getFailure("登录失败 无此账号");
 //            return "login";
         } catch (LockedAccountException loex){
             logger.info("登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
-        modelAndView.setViewName("redirect:/index");
+//        modelAndView.setViewName("redirect:/index");
 //        return "redirect:/index";
-        return modelAndView;
+//        return modelAndView;
+        return getSuccess("success");
     }
 
 

@@ -1,7 +1,7 @@
 package moe.xox.library.config.shiro;
 
 import moe.xox.library.dao.entity.User;
-import moe.xox.library.service.dto.UserService;
+import moe.xox.library.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

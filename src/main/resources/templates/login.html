@@ -32,18 +32,18 @@
 <div STYLE="width: 100%;">
     <div class="grid-demo" style="margin: 1em 30% 0 30%;width: 40%;">
         <div style="margin: 1em auto;font-size: 1em;">登录开始新的旅程吧</div>
-        <form class="layui-form" action="" method="post" th:action="@{/login}" th:object="${UserVO}">
+        <form class="layui-form" action="" method="post" >
 <!--        <form class="layui-form" action="" method="post" th:action="@{/login}" th:object="${User}">-->
 
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="text" name="userName" th:field="*{userName}" required lay-verify="required" placeholder="账号" autocomplete="off" class="layui-input">
+                    <input type="text" name="userName" required lay-verify="required" placeholder="账号" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="password" name="pwd" th:field="*{password}" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="password"  required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -61,5 +61,22 @@
 <script src="js/good.js"></script>
 <script src="layer/layer.js"></script>
 </body>
-
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+</script>
+<script>
+    $.ajax({
+        url:basePath+'login'
+        ,type:'post'
+        ,data:{
+            userName: $("input[name='userName']").val()
+            ,password:$("input[name='password']").val()
+        }
+        ,success:function (res) {
+            console.log("ok");
+        }
+    })
+</script>
 </html>

@@ -21,9 +21,9 @@ spring:
 server:
   port: 8080
 
-  serverlet:
-    #解决路径问题
-    context-path: /library
+#  serverlet:
+#    #解决路径问题
+#    context-path: /library
 
 
 
