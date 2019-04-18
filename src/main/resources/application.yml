@@ -10,9 +10,27 @@ spring:
     hikari:
       max-lifetime: 1765000
       maximum-pool-size: 15
+  thymeleaf:
+    mode: HTML5
+    encoding: utf-8
+#    content-type: text/html
+    cache: false
+    suffix: .html
+#    prefix:
+#    suffix:
 server:
   port: 8080
-#  serverlet:
-    #解决路径问题
-#    context-path: /library
 
+  serverlet:
+    #解决路径问题
+    context-path: /library
+
+
+
+#thymeleaf start
+#  spring.thymeleaf.mode=HTML5
+#  spring.thymeleaf.encoding=UTF-8
+#  spring.thymeleaf.content-type=text/html
+  #开发时关闭缓存,不然没法看到实时页面
+#  spring.thymeleaf.cache=false
+#thymeleaf end

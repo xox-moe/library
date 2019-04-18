@@ -19,4 +19,9 @@ public class TempleController {
     public  String index(){
         return "index";
     }
+
+    @RequestMapping("toLogin")
+    public String toLogin(){
+        return "login";
+    }
 }
