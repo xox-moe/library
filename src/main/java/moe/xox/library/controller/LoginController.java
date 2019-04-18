@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController extends BaseController{
@@ -28,8 +29,8 @@ public class LoginController extends BaseController{
 
 
     @RequestMapping(value = "login",method = {RequestMethod.POST,RequestMethod.GET})
-    public ReturnBean login(String userName,String password){
-//        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView login(String userName, String password){
+        ModelAndView modelAndView = new ModelAndView();
         logger.info("请求登陆 userName："+userName+" 密码："+password);
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -37,19 +38,19 @@ public class LoginController extends BaseController{
         }catch (UnknownAccountException ex){
             logger.info("登录失败 无此账号");
 
-//            modelAndView.addObject("userName", "userName");
-//            modelAndView.addObject("password", "password");
-//            modelAndView.setViewName("login");
-            return getFailure("登录失败 无此账号");
+            modelAndView.addObject("userName", "userName");
+            modelAndView.addObject("password", "password");
+            modelAndView.setViewName("login");
+//            return getFailure("登录失败 无此账号");
 //            return "login";
         } catch (LockedAccountException loex){
             logger.info("登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
-//        modelAndView.setViewName("redirect:/index");
+        modelAndView.setViewName("redirect:/index");
 //        return "redirect:/index";
-//        return modelAndView;
-        return getSuccess("success");
+        return modelAndView;
+//        return getSuccess("success");
     }
 
 

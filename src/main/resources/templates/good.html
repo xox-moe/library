@@ -5,65 +5,90 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>图书详情</title>
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <link rel="stylesheet" href="css/good.css"></head>
-    <style>
-    	.grid-demo{
-    		background-color: white;
-    	}
-    	.grid-demo-bg1{
-    		background-color: #f4f4f4;
-    	}
-    	.grid-demo-bg2{
-    		background-color: white;
-    		color: #000000;
-    	}
-    	.grid-demo-bg3{
-    		background-color: white;
-    	}
-    	
-    </style>
-<body style="width: 1000px;height: 400px;" >
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="stylesheet" href="./css/good.css">
+</head>
+<style>
+    .grid-demo {
+        background-color: white;
+        line-height: 2em;
+        font-size: 1em;
+    }
 
-<div class="layui-row">
+    .grid-demo-bg1 {
+        background-color: #f4f4f4;
+    }
+
+    .grid-demo-bg2 {
+        background-color: white;
+        color: #000000;
+    }
+
+    .grid-demo-bg3 {
+        background-color: white;
+    }
+</style>
+
+<body style="width: 800px;height: 320px; margin: 2% auto;">
+
+<div class="layui-row" style="padding: 2%;border: 2px solid gainsboro;">
     <div class="layui-col-md12">
         <div class="layui-row grid-demo">
-            <div class="layui-col-md7">
-                <div class="grid-demo grid-demo-bg1">  <img style="width: 100%;" src="img/商品.jpg"></div>
+            <div class="layui-col-md5" style="margin: 0 2em 1em 0;">
+                <div class="grid-demo grid-demo-bg1">
+                    <img style="width: 100%;" src="img/商品.jpg">
+                </div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md6" style="height: 20em;overflow: hidden; text-overflow: ellipsis;">
+                <div class="grid-demo grid-demo-bg2">
+                    <p>
+                        简介简介简介简介简介简介简介简介简介简介简介简介简介简
+                        介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+                        简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+                        简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简
+                        介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简
+                        介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+                        简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+                        简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简
+                        介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+                    </p>
+                </div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+        </div>
+
+        <div class="layui-row grid-demo">
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">书名：<span>《epsilon》</span></div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">作者：<span>沃·夏边德</span></div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">版次：<span>2</span></div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">出版社：<span>沃野·布吉岛</span></div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">性质：<span>教辅</span></div>
             </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
-            </div>
-            <div class="layui-col-md5">
-                <div class="grid-demo grid-demo-bg2">内部列内部列内部</div>
+            <div class="layui-col-md4">
+                <div class="grid-demo grid-demo-bg2">分类：<span>计算机</span></div>
             </div>
             <div class="layui-col-md12">
-                <div class="grid-demo grid-demo-bg3"><a class="layui-btn layui-btn-primary borrow">借书</a>
-                    <a class="layui-btn collection">收藏</a></div>
+                <div class="grid-demo grid-demo-bg2">库存数量：<span>56</span></div>
             </div>
 
+            <div style="margin: 1em auto;">
+                <div class="grid-demo grid-demo-bg3">
+                    <a class="layui-btn layui-btn-primary borrow">借书</a>
+                    <a class="layui-btn collection">收藏</a>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
-
 
 <script src="layui/layui.js"></script>
 <script src="js/good.js"></script>
