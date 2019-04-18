@@ -296,7 +296,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 }
             });
 
-
+        //出入库管理
         //table2
         table.on('toolbar(test2)',
             function (obj) {
@@ -442,8 +442,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 }
             });
 
+        //公告管理
         //table3
-        table.on('toolbar(test2)',
+        table.on('toolbar(test3)',
             function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),
                     data = checkStatus.data; //获取选中的数据
@@ -515,7 +516,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 }
             });
         //监听单元格编辑
-        table.on('edit(test2)',
+        table.on('edit(test3)',
             function (obj) {
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
@@ -536,7 +537,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
             });
         //监听行工具事件
-        table.on('tool(test2)',
+        table.on('tool(test3)',
             function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data //获得当前行数据
                     ,layEvent = obj.event; //获得 lay-event 对应的值
@@ -588,8 +589,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
             });
 
 
+        //用户管理
         //table4
-        table.on('toolbar(test2)',
+        table.on('toolbar(test4)',
             function (obj) {
                 var checkStatus = table.checkStatus(obj.config.id),
                     data = checkStatus.data; //获取选中的数据
@@ -600,7 +602,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         actionType = 'add';
                         layer.open({
                             type: 2,
-                            title:"新增图书",
+                            title:"新增用户",
                             area: ['400px', '590px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
                             content:basePath+'bookDetail'
@@ -616,7 +618,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             actionType='edit';
                             layer.open({
                                 type: 2,
-                                title:"图书信息管理详情",
+                                title:"用户信息管理详情",
                                 area: ['400px', '590px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                                 content:basePath+'bookDetail'
@@ -661,7 +663,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 }
             });
         //监听单元格编辑
-        table.on('edit(test2)',
+        table.on('edit(test4)',
             function (obj) {
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
@@ -672,7 +674,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'get'
-                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            ,url: basePath+"/fankuiguanli/updateBookMsg",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -682,7 +684,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
             });
         //监听行工具事件
-        table.on('tool(test2)',
+        table.on('tool(test4)',
             function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data //获得当前行数据
                     ,layEvent = obj.event; //获得 lay-event 对应的值
@@ -691,7 +693,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"用户信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'bookDetail'
@@ -725,7 +727,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"用户信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-molv', //加上边框
                         content:basePath+'bookDetail'
@@ -734,6 +736,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
             });
 
 
+        //反馈管理
         //table5
         table.on('toolbar(test5)',
             function (obj) {
@@ -746,10 +749,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         actionType = 'add';
                         layer.open({
                             type: 2,
-                            title:"新增图书",
+                            title:"新增建议",
                             area: ['400px', '590px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                            content:basePath+'bookDetail'
+                            content:basePath+'adviceDetail'
                         });
                         break;
                     case 'update':
@@ -762,10 +765,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             actionType='edit';
                             layer.open({
                                 type: 2,
-                                title:"图书信息管理详情",
+                                title:"建议信息管理详情",
                                 area: ['400px', '590px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                                content:basePath+'bookDetail'
+                                content:basePath+'adviceDetail'
                             });
                         }
                         break;
@@ -785,7 +788,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + '/fankuiguanli/deleteAdvice'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -818,7 +821,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'get'
-                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            ,url: basePath+"/fankuiguanli/updateAdvice",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -837,10 +840,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"建议信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'adviceDetail'
                     });
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么',
@@ -848,7 +851,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             var idList=[];
                             idList.push(data.bookId);
                             $.ajax({
-                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + '/fankuiguanli/deleteAdvice'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -871,10 +874,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"建议信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'adviceDetail'
                     });
                 }
             });

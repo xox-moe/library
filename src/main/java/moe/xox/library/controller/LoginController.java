@@ -28,7 +28,7 @@ public class LoginController extends BaseController{
 //    Subject
 
 
-    @RequestMapping(value = "login",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "login",method = {RequestMethod.POST})
     public ModelAndView login(String userName, String password){
         ModelAndView modelAndView = new ModelAndView();
         logger.info("请求登陆 userName："+userName+" 密码："+password);
@@ -40,9 +40,10 @@ public class LoginController extends BaseController{
 
             modelAndView.addObject("userName", "userName");
             modelAndView.addObject("password", "password");
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("redirect:/toLogin");
 //            return getFailure("登录失败 无此账号");
 //            return "login";
+            return modelAndView;
         } catch (LockedAccountException loex){
             logger.info("登录失败，此账号已被锁定");
         }
