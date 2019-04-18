@@ -7,6 +7,9 @@ import moe.xox.library.dao.NoticeRepository;
 import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +32,11 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(){
-        return null;
+    public ReturnBean showBookManagerTable(int page,int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+        List<Notice> noticeList = noticePage.getContent();
+        return getSuccess("success", noticeList, noticePage.getTotalElements());
     }
 
     /**
@@ -41,7 +47,8 @@ public class NoticeController extends BaseController {
     @RequestMapping(path = "addNotice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBook(Notice notice){
-        return null;
+        noticeRepository.save(notice);
+        return getSuccess();
     }
 
     /**
@@ -50,8 +57,13 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(List<Integer>list){
-        return null;
+    public ReturnBean deleteBook(List<Integer> list) {
+        for (Integer integer : list) {
+            Notice notice = new Notice();
+            notice.setNoticeId(integer);
+            noticeRepository.delete(notice);
+        }
+        return getSuccess();
     }
 
     /**
@@ -62,6 +74,7 @@ public class NoticeController extends BaseController {
     @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(Notice notice){
-        return null;
+        noticeRepository.save(notice);
+        return getSuccess();
     }
 }
