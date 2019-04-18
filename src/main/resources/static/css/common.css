@@ -1,0 +1,43 @@
+input[readonly],textarea[readonly]
+{
+    background-color: #f2f2f2 !important;
+    color:black !important;
+}
+
+.display{
+    display:none !important;
+}
+
+body{
+	font-size:14px !important;
+}
+
+/*.layui-input-inline{
+	width:120px !important;
+}*/
+
+.longer{
+	width:300px !important;
+}
+
+.middle{
+	width:220px !important;
+}
+
+.little{
+	width:160px !important;
+}
+
+.small{
+	width:120px !important;
+}
+
+.green{
+	background:rgb(0,150,136) !important;
+	color:white;
+}
+
+
+.xs{
+	width:90px !important;
+}

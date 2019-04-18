@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:value="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>图书馆管理系统</title>
+		<link rel="stylesheet" href="layui/css/layui.css">
+		<link rel="stylesheet" href="css/index.css">
+		<link rel="stylesheet" href="./css/animate.css">
+		<style>
+			/*头部*/
+			
+			.layui-layout-admin .layui-header {
+				background-color: #fff;
+			}
+			/*左上角字体*/
+			
+			.layui-layout-admin .layui-logo {
+				color: black;
+			}
+			/*上/左边导航栏默认情况下字体颜色*/
+			
+			.layui-nav .layui-nav-item a {
+				color: black;
+			}
+			/*上/左导航字体被选中时颜色*/
+			
+			.layui-nav .layui-nav-item a:hover,
+			.layui-nav .layui-this a {
+				color: #226597;
+			}
+			/*上导航栏子树被选中背景色*/
+			
+			.layui-nav .layui-nav-child dd.layui-this a,
+			.layui-nav-child dd.layui-this {
+				background-color: #048998;
+			}
+			/*字体下面的标识块颜色*/
+			
+			.layui-nav .layui-this:after,
+			.layui-nav-bar,
+			.layui-nav-tree .layui-nav-itemed:after {
+				background-color: #048998;
+			}
+			
+			.layui-nav-tree .layui-nav-bar {
+				background-color: #048998;
+			}
+			/*左导航颜色 被分成了两部分= =*/
+			
+			.layui-bg-black {
+				background-color: #f9fafc!important;
+			}
+			
+			.layui-nav {
+				background-color: #f9fafc;
+			}
+			/*左被选中时颜色*/
+			
+			.layui-nav-tree .layui-nav-child dd.layui-this,
+			.layui-nav-tree .layui-nav-child dd.layui-this a,
+			.layui-nav-tree .layui-this,
+			.layui-nav-tree .layui-this>a,
+			.layui-nav-tree .layui-this>a:hover {
+				background-color: #ececec;
+			}
+			/*左鼠标滑动时颜色*/
+			
+			.layui-nav-tree .layui-nav-item a:hover {
+				background-color: #ececec;
+			}
+			/*有子树的标签点击后显色*/
+			
+			.layui-nav-itemed>a,
+			.layui-nav-tree .layui-nav-title a,
+			.layui-nav-tree .layui-nav-title a:hover {
+				color: grey!important;
+			}
+			/*子树的背景色*/
+			
+			.layui-nav-itemed>.layui-nav-child {
+				background-color: #f6f5f5!important;
+			}
+			/*那个指示有子树的小三角形*/
+			
+			.layui-nav .layui-nav-more {
+				border-color: #000 transparent transparent;
+				border-top-color: rgba(0, 0, 0, 1);
+			}
+			
+			.layui-nav .layui-nav-mored,
+			.layui-nav-itemed>a .layui-nav-more {
+				border-color: transparent transparent #000;
+			}
+			/*子树被选中后字体颜色*/
+			
+			.layui-nav-tree .layui-nav-child dd.layui-this,
+			.layui-nav-tree .layui-nav-child dd.layui-this a,
+			.layui-nav-tree .layui-this,
+			.layui-nav-tree .layui-this>a,
+			.layui-nav-tree .layui-this>a:hover {
+				color: #226597;
+			}
+			/*内容部分tab的左边色块*/
+			
+			.layui-elem-quote {
+				border-left: 5px solid #f05a28;
+				background-color: #f9f9f9;
+			}
+			/*搜索的书籍展示 背景色*/
+			
+			.goods {
+				background-color: #f4f4f4;
+			}
+			/*借阅收藏背景*/
+			
+			#nav-content-6 .grid-demo {
+				background-color: #f4f4f4;
+			}
+			
+			#nav-content-7 .grid-demo {
+				background-color: #f4f4f4;
+			}
+			/*图书推荐部分*/
+			
+			#nav-content-4 .grid-demo-bg1 {
+				background-color: #f4f4f4;
+			}
+		</style>
+	</head>
+
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<!-- 头部区域 -->
+			<div class="layui-header">
+				<div class="layui-logo">图书馆管理系统</div>
+				<ul class="layui-nav layui-layout-left" lay-filter="demo">
+					<li class="layui-nav-item layui-this nav-myset">
+						<a href="">主页</a>
+					</li>
+					<li class="layui-nav-item  nav-myset" id="nav-10">
+						<a href="javascript:;">公告</a>
+					</li>
+					<li class="layui-nav-item  nav-myset" id="nav-21">
+						<a href="javascript:;">用户</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">其它系统</a>
+						<dl class="layui-nav-child">
+							<dd id="nav-11" class="tablePage" data-type="table1">
+								<a href="javascript:;">图书信息管理</a>
+							</dd>
+							<dd id="nav-12" class="tablePage" data-type="table2">
+								<a href="javascript:;">出入库管理</a>
+							</dd>
+							<dd id="nav-13" class="tablePage" data-type="table3">
+								<a href="javascript:;">公告管理</a>
+							</dd>
+							<dd id="nav-14" class="tablePage" data-type="table4">
+								<a href="javascript:;">用户管理</a>
+							</dd>
+							<dd id="nav-15" class="tablePage" data-type="table5">
+								<a href="javascript:;">反馈管理</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+				<ul class="layui-nav layui-layout-right" lay-filter="demo">
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<img src="http://t.cn/RCzsdCq" class="layui-nav-img">RUA</a>
+						<dl class="layui-nav-child">
+							<dd id="nav-37">
+								<a href="javascript:;">基本资料</a>
+							</dd>
+							<dd>
+								<a href="">安全设置</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">退出</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 左侧导航区域-->
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<ul class="layui-nav layui-nav-tree" lay-filter="demo">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">图书导航</a>
+							<dl class="layui-nav-child">
+								<dd id="nav-2">
+									<a href="javascript:;">新进图书</a>
+								</dd>
+								<dd id="nav-3">
+									<a href="javascript:;">图书排行</a>
+								</dd>
+								<dd id="nav-4">
+									<a href="javascript:;">图书推荐</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">个人管理</a>
+							<dl class="layui-nav-child">
+								<dd id="nav-5">
+									<a href="javascript:;">个人信息</a>
+								</dd>
+								<dd id="nav-6">
+									<a href="javascript:;">我的借阅</a>
+								</dd>
+								<dd id="nav-7">
+									<a href="javascript:;">我的收藏</a>
+								</dd>
+								<dd id="nav-8">
+									<a href="javascript:;">浏览历史</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item" id="nav-9">
+							<a href="javascript:;">意见反馈</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 内容主体区域 -->
+			<div class="layui-body">
+				<div class="stadiums">
+					<!--页面1主页-->
+					<div class="layui-nav-content" id="nav-content-1">
+						<blockquote class="layui-elem-quote">主页</blockquote>
+						<div class="layui-fluid ">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">主页</div>
+										<div class="layui-card-body" pad15="">
+											<form class="layui-form layui-inline" style="display:flex;flex-wrap: nowrap; margin: 40px 20% 0 20%; " lay-filter="select1">
+												<div class="layui-form-item" style="width: 100%;">
+													<div style="width: 78%;display: inline-block; float: left;">
+														<select name="year" id="index_sel" lay-verify="">
+															<option value="1">数学</option>
+															<option value="2">物理</option>
+															<option value="3">英语</option>
+														</select>
+													</div>
+													<div style="width:20%;display: inline-block;">
+														<div class="layui-form-item">
+															<button class="layui-btn layui-btn-fluid" data-type="reload" id="index_search">搜索</button>
+														</div>
+													</div>
+												</div>
+											</form>
+											<!--商品展示-->
+											<div class="layui-fluid layadmin-cmdlist-fluid">
+												<div class="layui-row layui-col-space30">
+													<!--商品-->
+													<div class=" goods layui-col-xs2 animated fadeIn">
+														<div class="cmdlist-container">
+															<a href="javascript:;">
+																<img style="width: 100%;" src="img/商品.jpg"></a>
+															<a href="javascript:;">
+																<div class="cmdlist-text">
+																	<p class="info">书名</p>
+																	<p class="info">作者</p>
+																</div>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面2新进图书-->
+					<div class="layui-nav-content layui-hide" id="nav-content-2">
+						<blockquote class="layui-elem-quote">新进图书</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">最新图书</div>
+										<div class="layui-card-body" pad15="">
+											<form class="layui-form layui-inline" style="display:flex;flex-wrap: nowrap; margin: 40px 20% 0 20%; " lay-filter="select1">
+												<div class="layui-form-item" style="width: 100%;">
+													<div style="width: 78%;display: inline-block; float: left;">
+														<select name="year" id="page2_sel" lay-verify="">
+															<option value="1">2018-2019</option>
+															<option value="2">2017-2018</option>
+															<option value="3">2016-2017</option>
+														</select>
+													</div>
+												<div style="width:20%;display: inline-block;">
+														<div class="layui-form-item">
+															<button class="layui-btn layui-btn-fluid" data-type="reload" id="page2_search">搜索</button>
+														</div>
+													</div>
+												</div>
+											</form>
+											<!--商品展示-->
+											<div class="layui-fluid layadmin-cmdlist-fluid">
+												<div class="layui-row layui-col-space30">
+													<!--商品-->
+
+													<div class="goods layui-col-xs2 animated fadeIn">
+														<div class="cmdlist-container">
+															<a href="javascript:;">
+																<img style="width: 100%;" src="img/商品.jpg"></a>
+															<a href="javascript:;">
+																<div class="cmdlist-text">
+																	<p class="info">书名</p>
+																	<p class="info">作者</p>
+																</div>
+															</a>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面3图书排行-->
+					<div class="layui-nav-content layui-hide" id="nav-content-3">
+						<blockquote class="layui-elem-quote">图书排行</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">图书排行</div>
+										<div class="layui-card-body" pad15="">
+											<div class="layui-row">
+												<div class="layui-col-md5" style="margin: 30px">
+													<div class="grid-demo grid-demo-bg1">
+														<table class="layui-table" lay-skin="line">
+															<colgroup>
+																<col>
+																<col>
+																<col>
+															</colgroup>
+															<thead>
+																<tr>
+																	<th>排名</th>
+																	<th>书名</th>
+																	<th>作者</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>贤心</td>
+																	<td>2016-11-29</td>
+																	<td>人生就是一场旅行</td>
+																</tr>
+														</table>
+													</div>
+												</div>
+												<div class="layui-col-md5" style="margin: 30px">
+													<div class="grid-demo">
+														<table class="layui-table" lay-skin="line">
+															<colgroup>
+																<col>
+																<col>
+																<col>
+															</colgroup>
+															<thead>
+																<tr>
+																	<th>排名</th>
+																	<th>书名</th>
+																	<th>作者</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>许闲心</td>
+																	<td>2016-11-28</td>
+																	<td>于千万</td>
+																</tr>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面4图书推荐-->
+					<div class="layui-nav-content layui-hide" id="nav-content-4">
+						<blockquote class="layui-elem-quote">图书推荐</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">
+											图书推荐
+											<button class="layui-btn layui-bg-red" style="float: right;height: 2.5em;margin-top: 0.3em;">换一批</button>
+										</div>
+										<div class="layui-card-body" pad15="">
+											<div class="">
+												<div class=" layui-row" style="padding: 0 0 0 10%;">
+
+													<div class="goods layui-col-sm3 animated zoomIn" style="height: 30em;">
+														<div class="grid-demo grid-demo-bg1">
+															<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">
+																<div class="layui-col-md12">
+																	<div class="grid-demo grid-demo-bg1">
+																		<img style="width: 100%;" src="img/商品.jpg">
+																	</div>
+																</div>
+																<div class="layui-col-md12">
+																	<div class="cmdlist-text" style="">
+																		<p class="info">推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由</p>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<!--
+
+													<div class="goods layui-col-sm3 animated zoomIn">
+														<div class="grid-demo grid-demo-bg1">
+															<div class="layui-row grid-demo" style="background-color: #a9c6de;">
+																<div class="layui-col-md8">
+																	<div class="grid-demo grid-demo-bg1">
+																		<img style="width: 100%;" src="img/商品.jpg"></div>
+																</div>
+																<div class="layui-col-md4">
+																	<div class="grid-demo grid-demo-bg1" style="background-color: #a9c6de;">求配色方案</div>
+																	<div class="grid-demo grid-demo-bg2" style="background-color: #a9c6de;">作者</div>
+																</div>
+																<div class="layui-col-md12">
+																	<div class="grid-demo grid-demo-bg3" style="background-color: #a9c6de;">
+																		<p class="line-limit-length">
+																			理由推荐理由推荐理由推荐理由推荐理由推荐理
+																		</p>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													-->
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--页面5个人信息-->
+					<div class="layui-nav-content layui-hide" id="nav-content-5">
+						<blockquote class="layui-elem-quote">个人信息</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">设置我的资料</div>
+										<div class="layui-card-body" pad15="">
+											<div class="layui-form" lay-filter="">
+												<div class="layui-form-item">
+													<label class="layui-form-label">我的角色</label>
+													<div class="layui-input-inline">
+														<select name="role" lay-verify="">
+															<option value="1" selected="">超级管理员</option>
+															<option value="2" disabled="">普通管理员</option>
+															<option value="3" disabled="">审核员</option>
+															<option value="4" disabled="">编辑人员</option>
+														</select>
+														<div class="layui-unselect layui-form-select">
+															<div class="layui-select-title">
+																<input type="text" placeholder="请选择" value="超级管理员" readonly="" class="layui-input layui-unselect">
+																<i class="layui-edge"></i>
+															</div>
+															<dl class="layui-anim layui-anim-upbit">
+																<dd lay-value="1" class="layui-this">超级管理员</dd>
+																<dd lay-value="2" class=" layui-disabled">普通管理员</dd>
+																<dd lay-value="3" class=" layui-disabled">审核员</dd>
+																<dd lay-value="4" class=" layui-disabled">编辑人员</dd>
+															</dl>
+														</div>
+													</div>
+													<div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">用户名</label>
+													<div class="layui-input-inline">
+														<input type="text" name="username" value="xianxin" readonly="" class="layui-input"></div>
+													<div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">昵称</label>
+													<div class="layui-input-inline">
+														<input type="text" name="nickname" value="CC" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称" class="layui-input"></div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">性别</label>
+													<div class="layui-input-block">
+														<input type="radio" name="sex" value="男" title="男">
+														<div class="layui-unselect layui-form-radio">
+															<i class="layui-anim layui-icon"></i>
+															<div>男</div>
+														</div>
+														<input type="radio" name="sex" value="女" title="女" checked="">
+														<div class="layui-unselect layui-form-radio layui-form-radioed">
+															<i class="layui-anim layui-icon"></i>
+															<div>女</div>
+														</div>
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">头像</label>
+													<div class="layui-input-inline">
+														<input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="img/person.jpg" class="layui-input"></div>
+													<div class="layui-input-inline layui-btn-container" style="width: auto;">
+														<button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                            <i class="layui-icon"></i>上传图片</button>
+														<input class="layui-upload-file" type="file" accept="undefined" name="file">
+														<button class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button>
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">手机</label>
+													<div class="layui-input-inline">
+														<input type="text" name="cellphone" value="" lay-verify="phone" autocomplete="off" class="layui-input"></div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label">邮箱</label>
+													<div class="layui-input-inline">
+														<input type="text" name="email" value="" lay-verify="email" autocomplete="off" class="layui-input"></div>
+												</div>
+												<div class="layui-form-item layui-form-text">
+													<label class="layui-form-label">备注</label>
+													<div class="layui-input-block">
+														<textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<div class="layui-input-block">
+														<button class="layui-btn" lay-submit="" lay-filter="setmyinfo">确认修改</button>
+														<button type="reset" class="layui-btn layui-btn-primary">重新填写</button></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面6我的借阅-->
+					<div class="layui-nav-content layui-hide" id="nav-content-6">
+						<blockquote class="layui-elem-quote">我的借阅</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">我的借阅</div>
+										<div class="layui-card-body" pad15="">
+											<div class="caller-contar">
+												<div class="layui-row myrow" style="margin-top:20px;">
+													<div class="layui-col-md10">
+														<div class="layui-row grid-demo">
+															<div class="layui-col-md2">
+																<div class="grid-demo grid-demo-bg1">
+																	<img style="width: 100%" src="img/商品.jpg"></div>
+															</div>
+															<div class="layui-col-md9">
+																<div class="grid-demo grid-demo-bg2">提取码</div>
+																<div class="grid-demo grid-demo-bg2">书名</div>
+																<button class="layui-btn" style="float: right;">延期</button>
+																<div class="grid-demo grid-demo-bg2">借书日期</div>
+																<div class="grid-demo grid-demo-bg2">还书日期</div>
+															</div>
+															<div class="layui-col-md12">
+																<div class="grid-demo grid-demo-bg3">
+																	<div class="grid-demo grid-demo-bg2 time" style="float: right;color:red">剩余时间:
+																		<text>?</text>天</div>
+																	<span class="layui-badge layui-hide layui-bg-green reStatus" style="float: right;">已还书</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="layui-row myrow" style="margin-top:20px;">
+													<div class="layui-row " style="margin-top:20px;">
+														<div class="layui-col-md10">
+															<div class="layui-row grid-demo">
+																<div class="layui-col-md2">
+																	<div class="grid-demo grid-demo-bg1">
+																		<img style="width: 100%" src="img/商品.jpg"></div>
+																</div>
+																<div class="layui-col-md9">
+																	<div class="grid-demo grid-demo-bg2">提取码</div>
+																	<div class="grid-demo grid-demo-bg2">书名</div>
+																	<button class="layui-btn" style="float: right;">延期</button>
+																	<div class="grid-demo grid-demo-bg2">借书日期</div>
+																	<div class="grid-demo grid-demo-bg2">还书日期</div>
+																</div>
+																<div class="layui-col-md12">
+																	<div class="grid-demo grid-demo-bg3">
+																		<span class="layui-badge layui-hide layui-bg-green reStatus" style="float: right;">未还书</span>
+																		<div class="grid-demo grid-demo-bg2 time" style="float: right;color:red">剩余时间:
+																			<text>?</text>天</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面7我的收藏-->
+					<div class="layui-nav-content layui-hide" id="nav-content-7">
+						<blockquote class="layui-elem-quote">我的收藏</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">我的收藏</div>
+										<div class="layui-card-body" pad15="">
+											<div class="caller-contar">
+												<div class="layui-row" style="margin-top:20px;">
+													<div class="layui-col-md10">
+														<div class="layui-row grid-demo">
+															<div class="layui-col-md2">
+																<div class="grid-demo grid-demo-bg1">
+																	<img style="width: 100%" src="img/商品.jpg"></div>
+															</div>
+															<div class="layui-col-md9">
+																<div class="grid-demo grid-demo-bg2">提取码</div>
+																<div class="grid-demo grid-demo-bg2">书名</div>
+																<div class="grid-demo grid-demo-bg2">作者</div>
+																<a href="" class="layui-btn layui-btn-primary" style="float: right">取消收藏</a>
+																<div class="grid-demo grid-demo-bg2">出版社</div>
+															</div>
+															<div class="layui-col-md12">
+																<div class="grid-demo grid-demo-bg3"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="layui-row" style="margin-top:20px;">
+													<div class="layui-col-md10">
+														<div class="layui-row grid-demo">
+															<div class="layui-col-md2">
+																<div class="grid-demo grid-demo-bg1">
+																	<img style="width: 100%" src="img/商品.jpg"></div>
+															</div>
+															<div class="layui-col-md9">
+																<div class="grid-demo grid-demo-bg2">提取码</div>
+																<div class="grid-demo grid-demo-bg2">书名</div>
+																<div class="grid-demo grid-demo-bg2">作者</div>
+																<a href="" class="layui-btn layui-btn-primary" style="float: right">取消收藏</a>
+																<div class="grid-demo grid-demo-bg2">出版社</div>
+															</div>
+															<div class="layui-col-md12">
+																<div class="grid-demo grid-demo-bg3"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--页面8浏览历史-->
+					<div class="layui-nav-content layui-hide" id="nav-content-8">
+						<blockquote class="layui-elem-quote">浏览历史</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">最近3日浏览历史</div>
+										<div class="layui-card-body" pad15="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面9意见反馈-->
+					<div class="layui-nav-content layui-hide" id="nav-content-9">
+						<blockquote class="layui-elem-quote">意见反馈</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">意见反馈</div>
+										<div class="layui-card-body" pad15="">
+											<div style="width: 800px;">
+												<form class="layui-form">
+													<div class="layui-form-item">
+														<textarea name="demo" id="demo" class="layui-hide">
+                                        </textarea>
+													</div>
+													<button class="layui-btn">提交</button>
+													<a class="layui-btn" id="getChoose">获取选中内容</a>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面10系统公告-->
+					<div class="layui-nav-content layui-hide" id="nav-content-10">
+						<blockquote class="layui-elem-quote">系统公告</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">系统公告</div>
+										<div class="layui-card-body" pad15="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面11图书信息管理-->
+					<div class="layui-nav-content layui-hide" id="nav-content-11">
+						<blockquote class="layui-elem-quote">图书信息管理</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">图书信息管理</div>
+										<div class="layui-card-body" pad15="">
+											<table class="layui-hide" id="table1" lay-filter="test1"></table>
+											<script type="text/html" id="barDemo">
+												<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面12出入库管理-->
+					<div class="layui-nav-content layui-hide" id="nav-content-12">
+						<blockquote class="layui-elem-quote">出入库管理</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">出入库管理</div>
+										<div class="layui-card-body" pad15="">
+											<table class="layui-hide" id="table2" lay-filter="test"></table>
+											<script type="text/html" id="barDemo2">
+												<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面13公告管理-->
+					<div class="layui-nav-content layui-hide" id="nav-content-13">
+						<blockquote class="layui-elem-quote">公告管理</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">公告管理</div>
+										<div class="layui-card-body" pad15="">
+											<table class="layui-hide" id="table3" lay-filter="test"></table>
+											<script type="text/html" id="barDemo3">
+												<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--页面14用户管理-->
+					<div class="layui-nav-content layui-hide" id="nav-content-14">
+						<blockquote class="layui-elem-quote">用户管理</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">用户管理</div>
+										<div class="layui-card-body" pad15="">
+											<table class="layui-hide" id="table4" lay-filter="test"></table>
+											<script type="text/html" id="barDemo4">
+												<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面15反馈管理-->
+					<div class="layui-nav-content layui-hide" id="nav-content-15">
+						<blockquote class="layui-elem-quote">反馈管理</blockquote>
+						<div class="layui-fluid">
+							<div class="layui-row layui-col-space15">
+								<div class="layui-col-md12">
+									<div class="layui-card">
+										<div class="layui-card-header">反馈管理</div>
+										<div class="layui-card-body" pad15="">
+											<table class="layui-hide" id="table5" lay-filter="test"></table>
+											<script type="text/html" id="barDemo5">
+												<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面16用户信息-->
+					<!-- <div class="layui-nav-content layui-hide" id="nav-content-20">
+          <blockquote class="layui-elem-quote">用户信息</blockquote>
+          <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+              <div class="layui-col-md12">
+                <div class="layui-card">
+                  <div class="layui-card-header">设置我的资料</div>
+                  <div class="layui-card-body" pad15="">
+                    <table class="layui-hide" id="table6" lay-filter="test"></table>
+                    <script type="text/html" id="barDemo6">
+                      <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+				</div>
+			</div>
+		</div>
+		<script src="layui/layui.js"></script>
+		<script src="js/index.js"></script>
+		<script src="layer/layer.js"></script>
+		<script src="js/tables.js"></script>
+	</body>
+	<script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var basePath = /*[[@{/}]]*/;
+        /*]]>*/
+	</script>
+</html>

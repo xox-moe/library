@@ -1,0 +1,136 @@
+.layui-body {
+	background: #eaeaea;
+}
+
+#nav-content-4 .grid-demo {
+	padding: 10px;
+	line-height: 50px;
+	text-align: left;
+	background-color: #79C48C;
+	color: #fff;
+}
+
+#nav-content-4 .grid-demo-bg1 {
+	background-color: #63BA79;
+}
+
+#nav-content-4 .grid-demo-bg2 {
+	background-color: #49A761;
+}
+
+#nav-content-4 .grid-demo-bg3 {
+	height: 285px;
+	background-color: #38814A;
+}
+
+#nav-content-4 .line-limit-length {
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+#nav-content-6 .grid-demo {
+	padding: 10px;
+	line-height: 26px;
+	text-align: left;
+	background-color: rgb(202, 197, 197);
+	color: black;
+}
+
+#nav-content-6 .grid-demo-bg2 {
+	font-size: 20px
+}
+
+#nav-content-6 .line-limit-length {
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+#nav-content-7 .grid-demo {
+	padding: 10px;
+	line-height: 26px;
+	text-align: left;
+	background-color: rgb(202, 197, 197);
+	color: black;
+}
+
+#nav-content-7 .grid-demo-bg2 {
+	font-size: 20px
+}
+
+#nav-content-7 .line-limit-length {
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.good .grid-demo {
+	padding: 10px;
+	line-height: 50px;
+	text-align: left;
+	background-color: #79C48C;
+	color: #fff;
+}
+
+.good .grid-demo-bg1 {
+	background-color: #63BA79;
+}
+
+.good .grid-demo-bg2 {
+	background-color: #49A761;
+}
+
+.good .grid-demo-bg3 {
+	height: 285px;
+	background-color: #38814A;
+}
+
+.good .line-limit-length {
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.goods {
+	background-color: rgb(202, 197, 197);
+	margin: 25px;
+}
+
+.layui-card {
+	min-height: 765px;
+	-webkit-animation: animatename 0.5s;
+	animation: animatename 0.5s;
+}
+
+@keyframes animatename {
+	0% {
+		opacity: 0.6;
+		-webkit-transform: translateX(10px);
+		-ms-transform: translateX(10px);
+		transform: translateX(10px);
+	}
+
+	100% {
+		opacity: 1;
+		transition: all 0.8s ease;
+	}
+}
+
+@keyframes animatename {
+	0% {
+		opacity: 0.6;
+		-webkit-transform: translateX(10px);
+		-ms-transform: translateX(10px);
+		transform: translateX(10px);
+	}
+
+	100% {
+		opacity: 1;
+		transition: all 0.8s ease;
+	}
+}

@@ -53,7 +53,7 @@ public class DemoController extends BaseController {
         System.out.println("queryUser:::" + userId);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         User user = new User(1, "zjq@qq.com",
-                "终焉警钟", "admin", 1, timestamp,
+                "终焉警钟", "admin", timestamp,
                 "admin", 2016, "计算机", "软件工程", 1);
         return   getSuccess("success",user,1);
     }

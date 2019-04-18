@@ -1,0 +1,44 @@
+*{
+	margin:0;
+	padding:0;
+	outline: none;
+}
+
+body{
+	/*background:#eee;*/
+}
+/*全局设定*/
+
+.header{
+	width:100%;
+	  background: -webkit-linear-gradient(white ,rgb(205,234,252)); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(white, rgb(205,234,252)); /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(white, rgb(205,234,252)); /* Firefox 3.6 - 15 */
+      background: linear-gradient(white, rgb(205,234,252)); /* 标准的语法 */
+	padding:30px 0;
+	overflow: hidden;
+	border-bottom: 3px solid rgb(92,188,245); 
+}
+
+.header div{
+	float:left;
+	width:20%;
+	margin-left:30px;
+}
+.header div img{
+	
+}
+p.title{
+	float:left;
+	width:60%;
+	text-align: center;
+	padding-top:35px;
+	font-size:36px;
+	font-weight: bolder;
+	font-family: "宋体";
+	color:rgb(105,27,128);
+	letter-spacing: 2px;
+	height:40px;	
+	line-height:40px;
+	margin-bottom: 20px;	
+}

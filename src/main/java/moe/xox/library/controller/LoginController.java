@@ -41,7 +41,7 @@ public class LoginController extends BaseController{
             logger.info("登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
-        return "/index";
+        return "redirect:/index";
     }
 
     @RequestMapping(value = "hasRole",method = {RequestMethod.POST,RequestMethod.GET})

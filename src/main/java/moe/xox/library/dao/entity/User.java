@@ -20,7 +20,7 @@ public class User {
   private String email;
   private String nickName;
   private String password;
-  private long roleId;
+//  private long roleId;
   private java.sql.Timestamp birthday;
   private String realName;
   private long grade;

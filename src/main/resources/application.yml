@@ -1,4 +1,7 @@
 spring:
+#  jmx:
+    #解决Tomcat多个项目数据源导致其他项目无法访问
+    # dafault-domain: library
   datasource:
     url: jdbc:mysql://aliyun.germinal.cc:3306/re_library?useUnicode=yes&characterEncoding=UTF8&useSSL=false
     username: re_library
@@ -7,3 +10,9 @@ spring:
     hikari:
       max-lifetime: 1765000
       maximum-pool-size: 15
+server:
+  port: 8080
+#  serverlet:
+    #解决路径问题
+#    context-path: /library
+
