@@ -31,6 +31,14 @@ public class BaseController {
     }
 
     /**
+     *
+     * @return success
+     */
+    public ReturnBean getSuccess() {
+        return new ReturnBean(true, "success", null, 0);
+    }
+
+    /**
      * 返回成功
      *
      * @param msg
@@ -41,6 +49,11 @@ public class BaseController {
     public ReturnBean getSuccess(String msg, Object data, int totalCount) {
         return new ReturnBean(true, msg == null ? "" : msg, data, totalCount);
     }
+
+    public ReturnBean getSuccess(String msg, Object data, long totalCount) {
+        return new ReturnBean(true, msg == null ? "" : msg, data, (int) totalCount);
+    }
+
 
     /**
      * 返回失败

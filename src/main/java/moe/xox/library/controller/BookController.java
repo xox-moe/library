@@ -7,11 +7,15 @@ import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BookMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,8 +33,11 @@ public class BookController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(){
-        return null;
+    public ReturnBean showBookManagerTable(int page,int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+        List<Book> bookList = bookPage.getContent();
+        return getSuccess("success", bookList, bookPage.getTotalElements());
     }
 
     /**
@@ -41,7 +48,8 @@ public class BookController extends BaseController {
     @RequestMapping(path = "addBookMsg",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBook(Book book){
-        return null;
+        bookRepository.save(book);
+        return getSuccess();
     }
 
     /**
@@ -51,7 +59,14 @@ public class BookController extends BaseController {
     @RequestMapping(path = "deleteBookMsg",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(List<Integer>list){
-        return null;
+        List<Book> bookList = new ArrayList<>();
+        for (Integer integer : list) {
+            Book book = new Book();
+            book.setBookId(integer);
+            bookList.add(book);
+        }
+        bookRepository.deleteAll(bookList);
+        return getSuccess();
     }
 
     /**
@@ -62,6 +77,7 @@ public class BookController extends BaseController {
     @RequestMapping(path = "updateBookMsg",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(Book book){
-        return null;
+        bookRepository.save(book);
+        return getSuccess();
     }
 }
