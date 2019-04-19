@@ -33,7 +33,7 @@ public class AdviceController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(int page,int limit){
+    public ReturnBean showBookManagerTable(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Advice> advicePage = adviceRepository.findAll(pageable);
         List<Advice> advice = advicePage.getContent();

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@RequestMapping("kind")
 public class KindController extends BaseController {
 
     @Autowired
@@ -30,7 +31,7 @@ public class KindController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listBookKindPage(int page, int limit){
+    public ReturnBean listBookKindPage(Integer page, Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<BookKind> noticePage =   bookKindRepository.findAll(pageable);
         List<BookKind> noticeList = noticePage.getContent();

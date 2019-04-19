@@ -34,7 +34,7 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(int page,int limit){
+    public ReturnBean showBookManagerTable(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Notice> noticePage = noticeRepository.findAll(pageable);
         List<Notice> noticeList = noticePage.getContent();

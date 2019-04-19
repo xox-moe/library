@@ -36,7 +36,7 @@ public class BookController extends BaseController {
      */
     @RequestMapping(value = "showBookManagerTable",method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listAllBook(int page,int limit){
+    public ReturnBean listAllBook(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Book> bookPage = bookRepository.findAllByStatusIsTrue(pageable);
         List<Book> bookList = bookPage.getContent();
@@ -45,7 +45,7 @@ public class BookController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listAllBookInfo(int page,int limit){
+    public ReturnBean listAllBookInfo(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable);
         List<JSONObject> bookList = bookPage.getContent();

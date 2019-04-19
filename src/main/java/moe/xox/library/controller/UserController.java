@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.UserRepository;
 import moe.xox.library.dao.entity.User;
+import net.bytebuddy.description.field.FieldDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(int page,int limit){
+    public ReturnBean showBookManagerTable(Integer page, Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<User> userPage = userRepository.findAll(pageable);
         List<User>userList=userPage.getContent();
@@ -81,6 +82,5 @@ public class UserController extends BaseController {
     public  ReturnBean updateBook(User user){
         userRepository.save(user);
         return getSuccess("success");
-
     }
 }

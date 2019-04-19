@@ -29,7 +29,7 @@ public class BookMassageController extends BaseController {
      */
     @RequestMapping(value = "showBookMsgManagerTable",method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookMsgManagerTable(int page,int limit){
+    public ReturnBean showBookMsgManagerTable(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<BookMessage> bookMessagePage = bookMsgRepository.findAll(pageable);
         List<BookMessage> bookMessageList = bookMessagePage.getContent();
@@ -38,7 +38,7 @@ public class BookMassageController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listBookMsgManageInfo(int page,int limit){
+    public ReturnBean listBookMsgManageInfo(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable);
         List<JSONObject> bookMessageList = bookMessagePage.getContent();
