@@ -22,6 +22,6 @@ public class Book {
   private long quality;
   private String creatorId;
   private java.sql.Timestamp createTime;
-  private String status;
+  private boolean status;
 
 }

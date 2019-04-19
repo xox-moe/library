@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class BookController extends BaseController {
     @ResponseBody
     public ReturnBean showBookManagerTable(int page,int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<Book> bookPage = bookRepository.findAll(pageable);
+        Page<Book> bookPage = bookRepository.findAllByStatusIsTrue(pageable);
         List<Book> bookList = bookPage.getContent();
         return getSuccess("success", bookList, bookPage.getTotalElements());
     }
@@ -45,9 +46,10 @@ public class BookController extends BaseController {
      * 反馈一条消息
      * @return msg
      */
-    @RequestMapping(path = "addBookMsg",method = RequestMethod.POST)
+    @RequestMapping(path = "addBook",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBook(Book book){
+        book.setCreateTime(new Timestamp(System.currentTimeMillis()));
         bookRepository.save(book);
         return getSuccess();
     }
@@ -56,13 +58,13 @@ public class BookController extends BaseController {
      * 从Book表中删除几条图书信息
      * @return
      */
-    @RequestMapping(path = "deleteBookMsg",method = RequestMethod.POST)
+    @RequestMapping(path = "deleteBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(List<Integer>list){
+    public  ReturnBean deleteBook(List<Long>list){
         List<Book> bookList = new ArrayList<>();
-        for (Integer integer : list) {
-            Book book = new Book();
-            book.setBookId(integer);
+        for (Long aLong : list) {
+            Book book = bookRepository.findByBookId(aLong);
+            book.setStatus(false);
             bookList.add(book);
         }
         bookRepository.deleteAll(bookList);
@@ -74,7 +76,7 @@ public class BookController extends BaseController {
      * @param book
      * @return
      */
-    @RequestMapping(path = "updateBookMsg",method = RequestMethod.POST)
+    @RequestMapping(path = "updateBook",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(Book book){
         bookRepository.save(book);
