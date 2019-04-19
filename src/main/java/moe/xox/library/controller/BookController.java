@@ -43,7 +43,7 @@ public class BookController extends BaseController {
         return getSuccess("success", bookList, bookPage.getTotalElements());
     }
 
-    @RequestMapping(value = "listAllBookInfo",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ReturnBean listAllBookInfo(int page,int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);

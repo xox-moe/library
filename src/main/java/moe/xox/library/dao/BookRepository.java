@@ -17,8 +17,25 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     Book findByBookId(Long id);
 
 
-    @Query(nativeQuery = true,value = "select *\n" +
-            "from book left join book_message on book.book_message_id = book_message.book_message_id;",
-            countQuery = "select count(*) from book;")
+    @Query(nativeQuery = true,value = "select book_id as bookId,  " +
+            "       quality as quality,  " +
+            "       bookMsg.book_message_id as bookMessageId,  " +
+            "       name as name,  " +
+            "       author as author,  " +
+            "       publisher as publisher,  " +
+            "       introduction as introduction,  " +
+            "       ISBN as ISBN,  " +
+            "       book_kind.kind_id as kindId,  " +
+            "       kind_name as kindName,  " +
+            "       book_kind.status as status,  " +
+            "       book_status.book_status_id as bookStatusId,  " +
+            "       book_status_name as statusName  " +
+            "from book left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id  " +
+            "left join  book_kind on book_kind.kind_id = bookMsg.kind_id  " +
+            "left join book_status on book.book_status_id = book_status.book_status_id  " +
+            "where book.status = true and bookMsg.status = true",
+            countQuery = "select count(*)  " +
+                    "from book  left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id  " +
+                    "where book.status = true and bookMsg.status = true")
     Page<JSONObject> listAllBookInfo(Pageable pageable);
 }

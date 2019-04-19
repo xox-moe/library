@@ -41,7 +41,7 @@ public class BookMassageController extends BaseController {
         return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
     }
 
-    @RequestMapping(value = "listBookMsgManageInfo",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ReturnBean listBookMsgManageInfo(int page,int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
@@ -79,7 +79,8 @@ public class BookMassageController extends BaseController {
         for (Integer integer : list) {
             BookMessage bookMessage = new BookMessage();
             bookMessage.setBookMessageId(integer);
-            bookMsgRepository.delete(bookMessage);
+            bookMessage.setStatus(false);
+            bookMsgRepository.save(bookMessage);
         }
         return getSuccess();
     }
