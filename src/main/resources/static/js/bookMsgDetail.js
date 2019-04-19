@@ -25,40 +25,39 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
         form.render();
     }
-    //选完文件后不自动上传
-    upload.render({
-        elem: '#selectFile'
-        ,url:basePath + '/uploadApplyTableTemplate'
-        ,auto: false
-        ,accept: 'file' //普通文件
-        ,bindAction: '#uploadFile'
-        ,data:{
-            tSerialNumber:function (){ return $('#tSerialNumber').val()}
-            ,tName: function (){return $('#tName').val()}
-            ,tAskFor:function (){return $('#tAskFor').val()}
-            ,tId:parent.dataForChild.tId
+    var uploadInst = upload.render({
+        elem: '#test1'
+        ,url: '/upload/'
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#demo1').attr('src', result); //图片链接（base64）
+            });
         }
         ,done: function(res){
-            console.log("$('#tName').val()" + $('#tName').val());
-            console.log(res);
-            if (res.code === 0) {
-                layer.alert("操作成功！", function () {
-                    parent.layui.table.reload('upLoadTable');
-                    var myWindow = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(myWindow); //再执行关闭
-                });
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
             }
-
+            //上传成功
+        }
+        ,error: function(){
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+            demoText.find('.demo-reload').on('click', function(){
+                uploadInst.upload();
+            });
         }
     });
     form.on('submit(save)',function(data){//保存
         var myurl;
-        if(parent.actionType='detail')
+        if(parent.actionType=='detail')
         {
            //修改
             myurl = "tushuxinxiguanli/updateBookMsg";
         }
-        else if(parent.actionType='add')
+        else if(parent.actionType=='add')
         {
             //添加
             myurl = "tushuxinxiguanli/addBookMsg";
