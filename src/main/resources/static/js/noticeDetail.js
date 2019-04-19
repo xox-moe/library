@@ -27,12 +27,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
 
     form.on('submit(save)',function(data){//保存
         var myurl;
-        if(parent.actionType='detail')
+        if(parent.actionType=='detail')
         {
            //修改
             myurl = "gonggaoguanli/updateNotice";
         }
-        else if(parent.actionType='add')
+        else if(parent.actionType=='add')
         {
             //添加
             myurl = "gonggaoguanli/addNotice";

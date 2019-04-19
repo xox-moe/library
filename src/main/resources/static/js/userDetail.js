@@ -9,7 +9,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,form = layui.form
         ,laydate=layui.laydate;
 
-    console.log(parent.actionType);
+
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
         $("form textarea").attr("readonly","readonly");
@@ -27,12 +27,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
 
     form.on('submit(save)',function(data){//保存
         var myurl;
-        if(parent.actionType='detail')
+        if(parent.actionType=='detail')
         {
            //修改
             myurl = "yonghuguanli/updateUser";
         }
-        else if(parent.actionType='add')
+        else if(parent.actionType=='add')
         {
             //添加
             myurl = "yonghuguanli/addUser";

@@ -49,4 +49,9 @@ public class TempleController {
         return "adviceDetail";
     }
 
+    @RequestMapping("userDetail")
+    public String userDetail(){
+        return "userDetail";
+    }
+
 }
