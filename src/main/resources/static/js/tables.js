@@ -39,11 +39,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                      [
                          {type:'checkbox',align:'center'},
                          {title:'序号',sort:'true',align:'center',type:'numbers',width:60},
-                         {title:'ID',field:'bookId',align:'center'},
-                         {title:'书名',field:'bookName',align:'center',edit: 'text'},
+                         {title:'ID',field:'bookMessageId',align:'center'},
+                         {title:'书名',field:'name',align:'center',edit: 'text'},
                          {title:'作者',field:'author',align:'center',edit: 'text'},
-                         {title:'分类',field:'kind',align:'center',edit: 'text'},
-                         {title:'是否教辅',field:'jiaofu',align:'center',edit: 'text'},
+                         {title:'分类',field:'kindName',align:'center',edit: 'text'},
                          {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                          {title:'描述',field:'introduction',align:'center',edit: 'text',width:300},
                          {title:'数量',field:'',align:'center',totalRowText:'合计:'},
@@ -173,7 +172,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         } else if (data.length > 1) {
                             layer.msg('只能同时编辑一个');
                         } else {
-                            layer.alert('编辑 [id]：' + checkStatus.data[0].bookId);
+
                             dataForChild = data[0];
                             actionType='edit';
                             layer.open({
@@ -194,14 +193,14 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             }, function(){
                                 var idList=[];
                                 for(var i=0;i<data.length;i++) {
-                                    idList[i]=data[i].bookId;
-                                    console.log("data[i].bookId:");
-                                    console.log(data[i].bookId);
+                                    idList[i]=data[i].bookMessageId;
+                                    console.log("data[i].bookMessageId:");
+                                    console.log(data[i].bookMessageId);
                                 }
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -262,9 +261,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.confirm('真的删除行么',
                         function (index) {
                             var idList=[];
-                            idList.push(data.bookId);
+                            idList.push(data.bookMessageId);
                             $.ajax({
-                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -347,7 +346,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -410,7 +409,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             var idList=[];
                             idList.push(data.bookId);
                             $.ajax({
-                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -493,7 +492,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/gonggaoguanli/deleteNotice'
+                                    url: basePath + 'gonggaoguanli/deleteNotice'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -556,7 +555,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             var idList=[];
                             idList.push(data.bookId);
                             $.ajax({
-                                url: basePath + '/gonggaoguanli/deleteNotice'
+                                url: basePath + 'gonggaoguanli/deleteNotice'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -633,9 +632,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             }, function(){
                                 var idList=[];
                                 for(var i=0;i<data.length;i++) {
-                                    idList[i]=data[i].bookId;
-                                    console.log("data[i].bookId:");
-                                    console.log(data[i].bookId);
+                                    idList[i]=data[i].userId;
+                                    console.log("data[i].userId:");
+                                    console.log(data[i].userId);
                                 }
 
                                 console.log(idList);
@@ -701,9 +700,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.confirm('真的删除行么',
                         function (index) {
                             var idList=[];
-                            idList.push(data.bookId);
+                            idList.push(data.userId);
                             $.ajax({
-                                url: basePath + 'yonghuguanli/deleteBookMsg'
+                                url: basePath + 'yonghuguanli/deleteUser'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -780,14 +779,14 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             }, function(){
                                 var idList=[];
                                 for(var i=0;i<data.length;i++) {
-                                    idList[i]=data[i].bookId;
-                                    console.log("data[i].bookId:");
-                                    console.log(data[i].bookId);
+                                    idList[i]=data[i].adviceId;
+                                    console.log("data[i].adviceId:");
+                                    console.log(data[i].adviceId);
                                 }
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/fankuiguanli/deleteAdvice'
+                                    url: basePath + 'fankuiguanli/deleteAdvice'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -848,9 +847,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.confirm('真的删除行么',
                         function (index) {
                             var idList=[];
-                            idList.push(data.bookId);
+                            idList.push(data.adviceId);
                             $.ajax({
-                                url: basePath + '/fankuiguanli/deleteAdvice'
+                                url: basePath + 'fankuiguanli/deleteAdvice'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
