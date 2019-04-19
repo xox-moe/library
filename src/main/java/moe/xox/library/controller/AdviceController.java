@@ -1,6 +1,7 @@
 package moe.xox.library.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.AdviceRepository;
 import moe.xox.library.dao.entity.Advice;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,10 +58,12 @@ public class AdviceController extends BaseController {
      */
     @RequestMapping(path = "deleteAdvice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteAdvice(List<Integer> list){
+    public  ReturnBean deleteAdvice(@RequestBody JSONObject object){
+
+        if(object == null || !object.containsKey("list"))
+            return getFailure("请选择正确的信息");
+        List<Integer> list = (List<Integer>) object.get("list");
         for (int integer : list) {
-//            Advice advice = adviceRepository.findByAdviceId((long) integer);
-//            advic
             Advice advice = new Advice();
             advice.setAdviceId(integer);
             adviceRepository.delete(advice);

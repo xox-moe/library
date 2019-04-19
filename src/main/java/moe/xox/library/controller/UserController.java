@@ -1,6 +1,7 @@
 package moe.xox.library.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.UserRepository;
 import moe.xox.library.dao.entity.User;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,9 +57,15 @@ public class UserController extends BaseController {
      */
     @RequestMapping(path = "deleteUser",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(List<Integer>list){
+    public  ReturnBean deleteBook(@RequestBody JSONObject object){
+
+        if(object == null || !object.containsKey("list"))
+            return getFailure("请选择正确的信息");
+        List<Integer> list = (List<Integer>) object.get("list");
         for (Integer id : list) {
-            userRepository.deleteById(id);
+            User user = new User();
+            user.setUserId(id);
+            userRepository.delete(user);
         }
 
         return getSuccess("success");

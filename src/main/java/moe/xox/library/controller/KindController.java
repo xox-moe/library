@@ -1,5 +1,6 @@
 package moe.xox.library.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookKindRepository;
 import moe.xox.library.dao.entity.BookKind;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +28,7 @@ public class KindController extends BaseController {
      * method = RequestMethod.GET
      * @return json
      */
-    @RequestMapping(value = "listBookKindPage",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ReturnBean listBookKindPage(int page, int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
@@ -39,7 +41,6 @@ public class KindController extends BaseController {
     @RequestMapping(value = "listBookKind",method = RequestMethod.GET)
     @ResponseBody
     public ReturnBean listBookKind(){
-
         List<BookKind> noticeList = bookKindRepository.findAll();
         return getSuccess("success", noticeList, noticeList.size());
     }
@@ -62,7 +63,11 @@ public class KindController extends BaseController {
      */
     @RequestMapping(path = "deleteBookKind",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean deleteBookKind(List<Integer> list) {
+    public ReturnBean deleteBookKind(@RequestBody JSONObject object){
+
+        if(object == null || !object.containsKey("list"))
+            return getFailure("请选择正确的信息");
+        List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
             BookKind bookKine = new BookKind();
             bookKine.setKindId(integer);

@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "         left join role on role.role_id = user_role.role_id  " +
             "where email = :email ")
     Set<String> listRoleNamesByEmail(String email);
+
+    User findByUserId(Integer id);
 }

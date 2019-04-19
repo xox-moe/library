@@ -73,14 +73,18 @@ public class BookController extends BaseController {
      */
     @RequestMapping(path = "deleteBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(@RequestBody List<Long> list){
+    public  ReturnBean deleteBook(@RequestBody JSONObject object){
+
+        if(object == null || !object.containsKey("list"))
+            return getFailure("请选择正确的信息");
+        List<Long> list = (List<Long>) object.get("list");
         List<Book> bookList = new ArrayList<>();
         for (Long aLong : list) {
             Book book = bookRepository.findByBookId(aLong);
             book.setStatus(false);
             bookList.add(book);
         }
-        bookRepository.deleteAll(bookList);
+        bookRepository.saveAll(bookList);
         return getSuccess();
     }
 
