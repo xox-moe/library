@@ -1,13 +1,14 @@
 var dataForChild
     ,hello
     ,actionType;
-layui.use(['layer','element','table','form','laydate'], function(){
+layui.use(['layer','element','table','form','laydate','upload'], function(){
     var $ = layui.jquery;
     var element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
         ,layer = layui.layer
         ,table = layui.table
         ,form = layui.form
-        ,laydate=layui.laydate;
+        ,laydate=layui.laydate
+        ,upload=layui.upload;
 
     console.log(parent.actionType);
     if(parent.actionType=='detail'){
@@ -24,7 +25,32 @@ layui.use(['layer','element','table','form','laydate'], function(){
         MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
         form.render();
     }
+    //选完文件后不自动上传
+    upload.render({
+        elem: '#selectFile'
+        ,url:basePath + '/uploadApplyTableTemplate'
+        ,auto: false
+        ,accept: 'file' //普通文件
+        ,bindAction: '#uploadFile'
+        ,data:{
+            tSerialNumber:function (){ return $('#tSerialNumber').val()}
+            ,tName: function (){return $('#tName').val()}
+            ,tAskFor:function (){return $('#tAskFor').val()}
+            ,tId:parent.dataForChild.tId
+        }
+        ,done: function(res){
+            console.log("$('#tName').val()" + $('#tName').val());
+            console.log(res);
+            if (res.code === 0) {
+                layer.alert("操作成功！", function () {
+                    parent.layui.table.reload('upLoadTable');
+                    var myWindow = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(myWindow); //再执行关闭
+                });
+            }
 
+        }
+    });
     form.on('submit(save)',function(data){//保存
         var myurl;
         if(parent.actionType='detail')
