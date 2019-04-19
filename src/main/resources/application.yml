@@ -18,6 +18,11 @@ spring:
     suffix: .html
 #    prefix:
 #    suffix:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
 server:
   port: 8080
 

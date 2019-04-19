@@ -29,6 +29,14 @@ public class BookController extends BaseController {
     BookRepository bookRepository;
 
     /**
+     *
+     */
+    @RequestMapping(value = "listNewBook",method = RequestMethod.GET)
+    public ReturnBean listNewBook(){
+        List<JSONObject> jsonObjects = bookRepository.listNewBook();
+        return getSuccess("success",jsonObjects,jsonObjects.size());
+    }
+    /**
      * 分页!
      * 返回Book表中的图书信息
      * method = RequestMethod.GET
