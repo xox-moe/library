@@ -30,7 +30,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
             table1:function(){
               table.render({
                   elem:'#table1'//tableId
-                  ,url:basePath+'/tushuxinxiguanli'//数据接口
+                  ,url:basePath+'tushuxinxiguanli'//数据接口
                   ,title:'图书信息管理'//表名
                   ,page:true//开启分页
                   ,toolbar:'default'//开启头工具栏
@@ -55,7 +55,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
             table2:function(){
                 table.render({
                     elem:'#table2'//tableId
-                    ,url:basePath+'/churukuguanli'//数据接口
+                    ,url:basePath+'churukuguanli'//数据接口
                     ,title:'出入库管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
@@ -80,7 +80,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
               table3:function(){
                 table.render({
                     elem:'#table3'//tableId
-                    ,url:basePath+'/gonggaoguanli'//数据接口
+                    ,url:basePath+'gonggaoguanli'//数据接口
                     ,title:'公告管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
@@ -101,7 +101,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
               table4:function(){
                 table.render({
                     elem:'#table4'//tableId
-                    ,url:''//数据接口
+                    ,url:basePath+'yonghuguanli'//数据接口
                     ,title:'用户管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
@@ -118,7 +118,6 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'年级',field:'grade',align:'center',edit: 'text'},
                         {title:'学院',field:'department',align:'center',edit: 'text'},
                         {title:'专业',field:'major',align:'center',edit: 'text'},
-                        {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                         {title:'操作',align:'center',toolbar: '#barDemo4'}
                     ]]
                     ,data:[{}]//假数据放这

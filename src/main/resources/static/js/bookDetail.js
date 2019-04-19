@@ -15,13 +15,13 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("form textarea").attr("readonly","readonly");
         $("button").addClass("layui-hide");
         console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+        MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }else if(parent.actionType=='add'){
-
+        $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+        MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }
 
@@ -30,12 +30,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
         if(parent.actionType='detail')
         {
            //修改
-            myurl = "/tushuxinxiguanli/updateBookMsg";
+            myurl = "/tushuxinxiguanli/updateBook";
         }
         else if(parent.actionType='add')
         {
             //添加
-            myurl = "/tushuxinxiguanli/addBookMsg";
+            myurl = "/tushuxinxiguanli/addBook";
         }
         $.ajax({
             url:basePath+myurl

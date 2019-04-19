@@ -2,11 +2,12 @@ package moe.xox.library.controller;
 
 
 import moe.xox.library.controller.vo.ReturnBean;
-import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.UserRepository;
-import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping("yonghuguanli")
 public class UserController extends BaseController {
     @Autowired
-    UserRepository UserRepository;
+    UserRepository userRepository;
 
     /**
      * 分页!
@@ -29,8 +30,11 @@ public class UserController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(){
-        return null;
+    public ReturnBean showBookManagerTable(int page,int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<User> userPage = userRepository.findAll(pageable);
+        List<User>userList=userPage.getContent();
+        return getSuccess("success", userList, userPage.getTotalElements());
     }
 
     /**
@@ -41,7 +45,8 @@ public class UserController extends BaseController {
     @RequestMapping(path = "addUser",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBook(User user){
-        return null;
+        userRepository.save(user);
+        return getSuccess("success");
     }
 
     /**
@@ -51,7 +56,11 @@ public class UserController extends BaseController {
     @RequestMapping(path = "deleteUser",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(List<Integer>list){
-        return null;
+        for (Integer id : list) {
+            userRepository.deleteById(id);
+        }
+
+        return getSuccess("success");
     }
 
     /**
@@ -61,7 +70,9 @@ public class UserController extends BaseController {
      */
     @RequestMapping(path = "updateUser",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(User user){
-        return null;
+    public  ReturnBean updateBook(User user){
+        userRepository.save(user);
+        return getSuccess("success");
+
     }
 }

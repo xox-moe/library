@@ -10,49 +10,58 @@
 </head>
 <body>
 <div style="width:350px;text-align:center;margin:30px;">
-    <form action="" id="bookDetail" class="layui-form layui-form-pane">
+    <form action="" id="userDetail" class="layui-form layui-form-pane">
         <div class="layui-form-item" id="IDinput">
             <label class="layui-form-label ">ID</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="bookId" class="layui-input"  readonly/>
+                <input type="text" name="userId" class="layui-input"  readonly/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">书名</label>
+            <label class="layui-form-label ">用户名</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="bookName" class="layui-input" lay-verify="required"/>
+                <input type="text" name="name" class="layui-input" lay-verify="required"/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">作者</label>
+            <label class="layui-form-label ">性别</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="author" class="layui-input" lay-verify="required"/>
+                <input type="text" name="sex" class="layui-input" lay-verify="required"/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">是否教辅</label>
+            <label class="layui-form-label ">生日</label>
             <div class="layui-input-inline middle">
-                <input type="text"name="jiaofu" class="layui-input" lay-verify="required"/>
+                <input type="text"name="birthday" class="layui-input" lay-verify="required"/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">出版社</label>
+            <label class="layui-form-label ">账号类型</label>
             <div class="layui-input-inline middle">
-                <input type="text"name="publisher" class="layui-input" lay-verify="required"/>
+                <input type="text"name="type" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label ">年级</label>
+            <div class="layui-input-inline middle">
+                <input type="text"  name="grade" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label ">学院</label>
+            <div class="layui-input-inline middle">
+                <input type="text"  name="department" class="layui-input" lay-verify="required"/>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">品质</label>
+            <label class="layui-form-label ">专业</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="quality" class="layui-input" lay-verify="required"/>
+                <input type="text"  name="major" class="layui-input" lay-verify="required"/>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label ">状态</label>
-            <div class="layui-input-inline middle">
-                <input type="text"  name="status" class="layui-input" lay-verify="required"/>
-            </div>
-        </div>
+
         <!--<div class="layui-form-item">-->
             <!--<div class="layui-form-item layui-form-text">-->
                 <!--<label class="layui-form-label" >描述</label>-->
@@ -70,7 +79,7 @@
 </div>
 <script src="layui/layui.js"></script>
 <script src="js/modleJquery.js"></script>
-<script src="js/bookDetail.js"></script>
+<script src="js/adviceDetail.js"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var basePath = /*[[@{/}]]*/;

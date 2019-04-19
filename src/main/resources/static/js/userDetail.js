@@ -15,13 +15,13 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("form textarea").attr("readonly","readonly");
         $("button").addClass("layui-hide");
         console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+        MOD.Form.fillForm($('#userDetail'),parent.dataForChild);
         form.render();
     }else if(parent.actionType=='add'){
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+        MOD.Form.fillForm($('#userDetail'),parent.dataForChild);
         form.render();
     }
 
@@ -30,12 +30,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
         if(parent.actionType='detail')
         {
            //修改
-            myurl = "/tushuxinxiguanli/updateBookMsg";
+            myurl = "/tushuxinxiguanli/updateUser";
         }
         else if(parent.actionType='add')
         {
             //添加
-            myurl = "/tushuxinxiguanli/addBookMsg";
+            myurl = "/tushuxinxiguanli/addUser";
         }
         $.ajax({
             url:basePath+myurl
@@ -44,7 +44,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             , success: function (res) {
                 if (res.code === 0) {
                     layer.alert("操作成功！", function () {
-                        parent.layui.table.reload('table1');
+                        parent.layui.table.reload('table4');
                         var myWindow = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(myWindow); //再执行关闭
                     });
