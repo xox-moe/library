@@ -197,12 +197,14 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].bookMessageId:");
                                     console.log(data[i].bookMessageId);
                                 }
-
+                                var mydata={
+                                    list:idList
+                                };
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                     ,contentType:'application/json'
-                                    , data: JSON.stringify(idList)
+                                    ,data:JSON.stringify(mydata)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
@@ -262,10 +264,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         function (index) {
                             var idList=[];
                             idList.push(data.bookMessageId);
+                            var mydata={
+                                list:idList
+                            };
                             $.ajax({
                                 url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                 ,contentType:'application/json'
-                                , data: JSON.stringify(idList)
+                                , data:JSON.stringify(mydata)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
@@ -343,16 +348,18 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].bookId:");
                                     console.log(data[i].bookId);
                                 }
-
+                                var mydata={
+                                    list:idList
+                                }
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                     ,contentType:'application/json'
-                                    , data: JSON.stringify(idList)
+                                    , data: JSON.stringify(mydata)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
-                                            layui.table.reload('table1');
+                                            layui.table.reload('table2');
                                             layer.msg('操作成功', {icon: 1});
                                         }else{
                                             layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -408,14 +415,17 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         function (index) {
                             var idList=[];
                             idList.push(data.bookId);
+                            var mydata={
+                                list:idList
+                            };
                             $.ajax({
                                 url: basePath + 'tushuxinxiguanli/deleteBookMsg'
                                 ,contentType:'application/json'
-                                , data: JSON.stringify(idList)
+                                , data: JSON.stringify(mydata)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
-                                        layui.table.reload('table1');
+                                        layui.table.reload('table2');
                                         layer.msg('操作成功', {icon: 1});
                                     }else{
                                         layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -489,12 +499,14 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].bookId:");
                                     console.log(data[i].bookId);
                                 }
-
+                                var mydata={
+                                    list:idList
+                                }
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'gonggaoguanli/deleteNotice'
                                     ,contentType:'application/json'
-                                    , data: JSON.stringify(idList)
+                                    , data:JSON.stringify(mydata)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
@@ -554,10 +566,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         function (index) {
                             var idList=[];
                             idList.push(data.bookId);
+                            var mydata={
+                                list:idList
+                            }
                             $.ajax({
                                 url: basePath + 'gonggaoguanli/deleteNotice'
                                 ,contentType:'application/json'
-                                , data: JSON.stringify(idList)
+                                , data: JSON.stringify(mydata)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
@@ -636,16 +651,18 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].userId:");
                                     console.log(data[i].userId);
                                 }
-
+                                var mydata={
+                                    list:idList
+                                }
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'yonghuguanli/deleteUser'
                                     ,contentType:'application/json'
-                                    , data: JSON.stringify(idList)
+                                    , data:JSON.stringify(mydata)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
-                                            layui.table.reload('table1');
+                                            layui.table.reload('table4');
                                             layer.msg('操作成功', {icon: 1});
                                         }else{
                                             layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -701,14 +718,17 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         function (index) {
                             var idList=[];
                             idList.push(data.userId);
+                            var mydata={
+                                list:idList
+                            };
                             $.ajax({
                                 url: basePath + 'yonghuguanli/deleteUser'
                                 ,contentType:'application/json'
-                                , data: JSON.stringify(idList)
+                                , data: JSON.stringify(mydata)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
-                                        layui.table.reload('table1');
+                                        layui.table.reload('table4');
                                         layer.msg('操作成功', {icon: 1});
                                     }else{
                                         layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -783,16 +803,18 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].adviceId:");
                                     console.log(data[i].adviceId);
                                 }
-
+                                var mydata={
+                                    list:idList
+                                }
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'fankuiguanli/deleteAdvice'
                                     ,contentType:'application/json'
-                                    , data: JSON.stringify(idList)
+                                    , data: JSON.stringify(mydata)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
-                                            layui.table.reload('table1');
+                                            layui.table.reload('table5');
                                             layer.msg('操作成功', {icon: 1});
                                         }else{
                                             layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -848,14 +870,17 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         function (index) {
                             var idList=[];
                             idList.push(data.adviceId);
+                            var mydata={
+                                list:idList
+                            };
                             $.ajax({
                                 url: basePath + 'fankuiguanli/deleteAdvice'
                                 ,contentType:'application/json'
-                                , data: JSON.stringify(idList)
+                                , data: JSON.stringify(mydata)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
-                                        layui.table.reload('table1');
+                                        layui.table.reload('table5');
                                         layer.msg('操作成功', {icon: 1});
                                     }else{
                                         layer.alert("错误原因:"+res.msg, {icon: 5});

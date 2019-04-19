@@ -28,7 +28,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
     //监听导航点击
     element.on('nav(demo)', function(elem){
         var layuiId =( $(this).parent().attr('id').split('-')[1])%16;//标号
-        console.log("页面:"+layuiId)
+        console.log("页面:"+layuiId);
         $('#nav-content-'+layuiId).removeClass('layui-hide').siblings().addClass('layui-hide');//显示当前隐藏其他
 
         $('.reStatus').each(function () {
@@ -67,6 +67,8 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         ,anim: 'fade'
         ,height: '120px'
     });
+
+
 
 });
 

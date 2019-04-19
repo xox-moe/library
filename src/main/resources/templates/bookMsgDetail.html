@@ -11,6 +11,12 @@
 <body>
 <div style="width:350px;text-align:center;margin:30px;">
     <form action="" id="bookMsgDetail" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <label class="layui-form-label" >选择文件</label>
+                <button type="button" class="layui-btn layui-btn-normal" id="selectFile">选择文件</button>
+            </div>
+        </div>
         <div class="layui-form-item" id="IDinput">
             <label class="layui-form-label ">ID</label>
             <div class="layui-input-inline middle">
@@ -49,9 +55,8 @@
                 </div>
                 </div>
             </div>
-
         <div class="layui-form-item forLastButton" >
-            <button class="layui-btn small" lay-submit="" lay-filter="save">保存</button>
+            <button class="layui-btn small"   id="uploadFile" type="button" lay-submit="" lay-filter="save">保存</button>
             <button class="layui-btn layui-btn-primary small" type="close">取消</button>
         </div>
     </form>
