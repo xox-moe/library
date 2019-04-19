@@ -454,10 +454,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         actionType = 'add';
                         layer.open({
                             type: 2,
-                            title:"新增图书",
+                            title:"新增公告",
                             area: ['400px', '590px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                            content:basePath+'bookDetail'
+                            content:basePath+'noticeDetail'
                         });
                         break;
                     case 'update':
@@ -470,10 +470,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             actionType='edit';
                             layer.open({
                                 type: 2,
-                                title:"图书信息管理详情",
+                                title:"公告信息管理详情",
                                 area: ['400px', '590px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                                content:basePath+'bookDetail'
+                                content:basePath+'noticeDetail'
                             });
                         }
                         break;
@@ -493,13 +493,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + '/gonggaoguanli/deleteNotice'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
                                     ,success:function (res) {
                                         if(res.code==0){
-                                            layui.table.reload('table1');
+                                            layui.table.reload('table3');
                                             layer.msg('操作成功', {icon: 1});
                                         }else{
                                             layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -526,7 +526,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'get'
-                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            ,url: basePath+"/gonggaoguanli/updateNotice",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -545,10 +545,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"公告信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'noticeDetail'
                     });
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么',
@@ -556,13 +556,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             var idList=[];
                             idList.push(data.bookId);
                             $.ajax({
-                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + '/gonggaoguanli/deleteNotice'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
                                 ,success:function (res) {
                                     if(res.code==0){
-                                        layui.table.reload('table1');
+                                        layui.table.reload('table3');
                                         layer.msg('操作成功', {icon: 1});
                                     }else{
                                         layer.alert("错误原因:"+res.msg, {icon: 5});
@@ -579,10 +579,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     dataForChild=data;
                     layer.open({
                         type: 2,
-                        title:"图书信息管理详情",
+                        title:"公告信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'noticeDetail'
                     });
                 }
             });
@@ -604,7 +604,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             title:"新增用户",
                             area: ['400px', '590px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                            content:basePath+'bookDetail'
+                            content:basePath+'userDetail'
                         });
                         break;
                     case 'update':
@@ -620,7 +620,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 title:"用户信息管理详情",
                                 area: ['400px', '590px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                                content:basePath+'bookDetail'
+                                content:basePath+'userDetail'
                             });
                         }
                         break;
@@ -640,7 +640,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
 
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + 'yonghuguanli/deleteUser'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(idList)
                                     ,type:'post'
@@ -673,7 +673,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'get'
-                            ,url: basePath+"/fankuiguanli/updateBookMsg",
+                            ,url: basePath+"yonghuguanli/updateUser",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -695,7 +695,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         title:"用户信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'userDetail'
                     });
                 } else if (layEvent === 'del') {
                     layer.confirm('真的删除行么',
@@ -703,7 +703,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             var idList=[];
                             idList.push(data.bookId);
                             $.ajax({
-                                url: basePath + '/tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + 'yonghuguanli/deleteBookMsg'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(idList)
                                 ,type:'post'
@@ -729,7 +729,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         title:"用户信息管理详情",
                         area: ['400px', '590px'],
                         skin: 'layui-layer-molv', //加上边框
-                        content:basePath+'bookDetail'
+                        content:basePath+'userDetail'
                     });
                 }
             });

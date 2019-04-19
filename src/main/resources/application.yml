@@ -23,7 +23,7 @@ server:
 
 #  serverlet:
 #    #解决路径问题
-#    context-path: /library
+#    context-path: /
 
 
 

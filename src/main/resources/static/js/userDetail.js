@@ -30,12 +30,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
         if(parent.actionType='detail')
         {
            //修改
-            myurl = "/tushuxinxiguanli/updateUser";
+            myurl = "yonghuguanli/updateUser";
         }
         else if(parent.actionType='add')
         {
             //添加
-            myurl = "/tushuxinxiguanli/addUser";
+            myurl = "yonghuguanli/addUser";
         }
         $.ajax({
             url:basePath+myurl
