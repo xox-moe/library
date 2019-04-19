@@ -1,6 +1,7 @@
 package moe.xox.library.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.BookRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,14 +34,25 @@ public class BookController extends BaseController {
      * method = RequestMethod.GET
      * @return json
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "showBookManagerTable",method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(int page,int limit){
+    public ReturnBean listAllBook(int page,int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Book> bookPage = bookRepository.findAllByStatusIsTrue(pageable);
         List<Book> bookList = bookPage.getContent();
         return getSuccess("success", bookList, bookPage.getTotalElements());
     }
+
+    @RequestMapping(value = "listAllBookInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnBean listAllBookInfo(int page,int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable);
+        List<JSONObject> bookList = bookPage.getContent();
+        return getSuccess("success", bookList, bookPage.getTotalElements());
+    }
+
+
 
     /**
      * 向Book表中新增一条图书信息
@@ -60,7 +73,7 @@ public class BookController extends BaseController {
      */
     @RequestMapping(path = "deleteBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(List<Long>list){
+    public  ReturnBean deleteBook(@RequestBody List<Long> list){
         List<Book> bookList = new ArrayList<>();
         for (Long aLong : list) {
             Book book = bookRepository.findByBookId(aLong);

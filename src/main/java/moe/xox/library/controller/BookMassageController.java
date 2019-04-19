@@ -1,6 +1,8 @@
 package moe.xox.library.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
+import moe.xox.library.controller.vo.BookMsgVo;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.entity.Book;
@@ -30,7 +32,7 @@ public class BookMassageController extends BaseController {
      * method = RequestMethod.GET
      * @return json
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "showBookMsgManagerTable",method = RequestMethod.GET)
     @ResponseBody
     public ReturnBean showBookMsgManagerTable(int page,int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
@@ -38,6 +40,18 @@ public class BookMassageController extends BaseController {
         List<BookMessage> bookMessageList = bookMessagePage.getContent();
         return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
     }
+
+    @RequestMapping(value = "listBookMsgManageInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnBean listBookMsgManageInfo(int page,int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable);
+        List<JSONObject> bookMessageList = bookMessagePage.getContent();
+        return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
+    }
+
+
+
 
     /**
      * 向BookMsg表中新增一条图书信息
@@ -57,7 +71,11 @@ public class BookMassageController extends BaseController {
      */
     @RequestMapping(path = "deleteBookMsg",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBookMsg(List<Integer>list){
+    public  ReturnBean deleteBookMsg(@RequestBody JSONObject object){
+
+        if(object == null || !object.containsKey("list"))
+            return getFailure("请选择正确的信息");
+        List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
             BookMessage bookMessage = new BookMessage();
             bookMessage.setBookMessageId(integer);
