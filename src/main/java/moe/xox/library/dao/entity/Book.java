@@ -16,12 +16,12 @@ import javax.persistence.Table;
 @Table(name = "book")
 public class Book {
   @Id
-  private long bookId;
-  private long bookMessageId;
-  private long bookStatusId;
-  private long quality;
+  private Long bookId;
+  private Long bookMessageId;
+  private Long bookStatusId;
+  private Long quality;
   private String creatorId;
   private java.sql.Timestamp createTime;
-  private boolean status;
+  private Boolean status;
 
 }

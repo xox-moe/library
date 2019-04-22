@@ -14,9 +14,9 @@ import javax.persistence.*;
 public class History {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long historyId;
-  private long userId;
-  private long bookId;
+  private Long historyId;
+  private Long userId;
+  private Long bookId;
   private java.sql.Timestamp createTime;
 
 }

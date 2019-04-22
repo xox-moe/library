@@ -71,7 +71,7 @@ public class KindController extends BaseController {
         List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
             BookKind bookKine = new BookKind();
-            bookKine.setKindId(integer);
+            bookKine.setKindId(integer.longValue());
               bookKindRepository.delete(bookKine);
         }
         return getSuccess();

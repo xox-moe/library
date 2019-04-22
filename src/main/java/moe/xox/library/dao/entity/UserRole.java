@@ -16,8 +16,8 @@ import javax.persistence.Table;
 public class UserRole {
 
   @Id
-  private long userId;
-  private long roleId;
-  private long status;
+  private Long userId;
+  private Long roleId;
+  private Boolean status;
 
 }

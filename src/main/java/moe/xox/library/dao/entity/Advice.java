@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Advice {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long adviceId;
-  private long userId;
+  private Long adviceId;
+  private Long userId;
   private String message;
   private java.sql.Timestamp createTime;
 

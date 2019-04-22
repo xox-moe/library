@@ -63,6 +63,7 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
             myurl = "tushuxinxiguanli/addBookMsg";
         }
         console.log(basePath);
+        // data.field.bookMessageId = null;
         $.ajax({
             url:basePath+myurl
             , type: 'post'

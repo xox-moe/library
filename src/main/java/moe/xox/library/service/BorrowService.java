@@ -8,6 +8,7 @@ import moe.xox.library.project.BookStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class BorrowService {
     @Autowired
     BookRepository bookRepository;
 
-    public int borrowBook(int userId,long bookId){
+    public int borrowBook(long userId,long bookId){
         BorrowInfo oldBorrowInfo = borrowInfoRepository.findAllByUserIdAndBookIdAndIfReturnIsFalse(userId, bookId);
         if(oldBorrowInfo != null)
             return -1; //该书已被这位同学借走 不要重复提交
@@ -40,19 +41,19 @@ public class BorrowService {
         borrowInfo.setOutQuality(book.getQuality());
         borrowInfo.setOutTime(new Timestamp(System.currentTimeMillis()));
 
-        book.setBookStatusId(1);
+        book.setBookStatusId(1L);
 
         bookRepository.save(book);
         borrowInfoRepository.save(borrowInfo);
         return 0;
     }
 
-    public int returnBook(int userId,long bookId,int quality ){
+    public int returnBook(long userId,long bookId,long quality ){
         BorrowInfo borrowInfo = borrowInfoRepository.findAllByUserIdAndBookIdAndIfReturnIsFalse(userId, bookId);
         if(borrowInfo == null)
             return -1;//查无此借书记录
         borrowInfo.setBackTime(new Timestamp(System.currentTimeMillis()));
-        borrowInfo.setBakcQuality(quality);
+        borrowInfo.setBackQuality(quality);
         Book book = bookRepository.findByBookId(bookId);
         book.setBookStatusId(BookStatusEnum.NORMAL.getId());
         bookRepository.save(book);
@@ -60,10 +61,10 @@ public class BorrowService {
         return 0;
     }
 
-    public List<BorrowInfo> findBorrowInfoByUsrId(int userId, int page, int limit){
+    public Page<BorrowInfo> findBorrowInfoByUsrId(long userId, int page, int limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
-        return null;
-//        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
+//        return null;
+        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
     }
 
 }

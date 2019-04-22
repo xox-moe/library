@@ -63,9 +63,9 @@ public class AdviceController extends BaseController {
         if(object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
         List<Integer> list = (List<Integer>) object.get("list");
-        for (int integer : list) {
+        for (Integer integer : list) {
             Advice advice = new Advice();
-            advice.setAdviceId(integer);
+            advice.setAdviceId(integer.longValue());
             adviceRepository.delete(advice);
         }
         return getSuccess();

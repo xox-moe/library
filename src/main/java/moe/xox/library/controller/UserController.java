@@ -65,7 +65,7 @@ public class UserController extends BaseController {
         List<Integer> list = (List<Integer>) object.get("list");
         for (Integer id : list) {
             User user = new User();
-            user.setUserId(id);
+            user.setUserId(id.longValue());
             userRepository.delete(user);
         }
 

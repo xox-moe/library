@@ -34,7 +34,7 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(Integer page,Integer limit){
+    public ReturnBean showNoticeManagerTable(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Notice> noticePage = noticeRepository.findAll(pageable);
         List<Notice> noticeList = noticePage.getContent();
@@ -48,38 +48,39 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(path = "addNotice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean addBook(Notice notice){
+    public  ReturnBean addNotice(Notice notice){
         noticeRepository.save(notice);
         return getSuccess();
     }
 
     /**
+     * 修改Book表中一条数据
      * 从Notice表中删除几条图书信息
      * @return
      */
     @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean deleteBook(@RequestBody JSONObject object){
+    public ReturnBean updateNotice(@RequestBody JSONObject object){
 
         if(object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
         List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
             Notice notice = new Notice();
-            notice.setNoticeId(integer);
+            notice.setNoticeId(integer.longValue());
             noticeRepository.delete(notice);
         }
         return getSuccess();
     }
 
     /**
-     * 修改Book表中一条数据
+     * 从Notice表中删除几条图书信息
      * @param notice
      * @return
      */
-    @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
+    @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(Notice notice){
+    public  ReturnBean deleteNotice(Notice notice){
         noticeRepository.save(notice);
         return getSuccess();
     }
@@ -87,4 +88,7 @@ public class NoticeController extends BaseController {
     /**
      * 首页显示当前有效的公告
      */
+
+
+
 }

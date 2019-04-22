@@ -15,14 +15,14 @@ import javax.persistence.*;
 public class BookMessage {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long bookMessageId;
+  private Long bookMessageId;
   private String name;
-  private long kindId;
+  private Long kindId;
   private String author;
   private String publisher;
   private String introduction;
-  private boolean status;
-  private long creatorId;
+  private Boolean status;
+  private Long creatorId;
   private java.sql.Timestamp createTime;
   private String isbn;
 

@@ -16,16 +16,16 @@ public class User {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long userId;
+  private Long userId;
   private String email;
   private String nickName;
   private String password;
-//  private long roleId;
+//  private Long roleId;
   private java.sql.Timestamp birthday;
   private String realName;
-  private long grade;
+  private Long grade;
   private String department;
   private String major;
-  private long sex;
+  private Long sex;
 
 }

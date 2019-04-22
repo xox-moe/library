@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.entity.BookMessage;
-import moe.xox.library.utils.ImageUtil;
+//import moe.xox.library.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,6 +57,8 @@ public class BookMassageController extends BaseController {
     @RequestMapping(path = "addBookMsg",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBookMsg(BookMessage bookMessage){
+//        bookMessage.setBookMessageId(null);\
+        bookMessage.setStatus(true);
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
@@ -74,7 +76,7 @@ public class BookMassageController extends BaseController {
         List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
             BookMessage bookMessage = new BookMessage();
-            bookMessage.setBookMessageId(integer);
+            bookMessage.setBookMessageId(integer.longValue());
             bookMessage.setStatus(false);
             bookMsgRepository.save(bookMessage);
         }
@@ -98,18 +100,24 @@ public class BookMassageController extends BaseController {
      * 图书借出排行 前十名
      */
 
+
     /**
      * 图书推荐页面
      */
+
 
     /**
      * 主页的图书模糊查询页面
      */
 
 
+
+
+
     /***
      * 图片查询demo
      */
+
     /**
      * 获取资料列表
      * @param courseId

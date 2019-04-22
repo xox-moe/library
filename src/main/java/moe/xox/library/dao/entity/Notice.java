@@ -14,11 +14,11 @@ import javax.persistence.*;
 public class Notice {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long noticeId;
+  private Long noticeId;
   private java.sql.Timestamp beginTime;
   private java.sql.Timestamp endTime;
   private String message;
-  private long creatorId;
+  private Long creatorId;
   private java.sql.Timestamp createTime;
 
 }

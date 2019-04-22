@@ -14,9 +14,9 @@ import javax.persistence.*;
 public class Collection {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long collectionId;
-  private long userId;
-  private long bookMessageId;
+  private Long collectionId;
+  private Long userId;
+  private Long bookMessageId;
   private java.sql.Timestamp createTime;
 
 }

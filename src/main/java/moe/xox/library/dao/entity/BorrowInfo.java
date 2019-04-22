@@ -14,13 +14,14 @@ import javax.persistence.*;
 public class BorrowInfo {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long borrowId;
-  private long userId;
-  private long bookId;
-  private boolean ifReturn;
+  private Long borrowId;
+  private Long userId;
+  private Long bookId;
+  private Boolean ifReturn;
   private java.sql.Timestamp outTime;
-  private long outQuality;
+  private Long outQuality;
   private java.sql.Timestamp backTime;
-  private long bakcQuality;
+  @Column(name = "bakcQuality")
+  private Long backQuality;
 
 }

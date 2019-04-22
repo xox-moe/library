@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class BookKind {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long kindId;
+  private Long kindId;
   private String kindName;
-  private boolean status;
+  private Boolean status;
 
 }
