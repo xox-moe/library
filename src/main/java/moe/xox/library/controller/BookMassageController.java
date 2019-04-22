@@ -88,7 +88,7 @@ public class BookMassageController extends BaseController {
      * @param bookMessage
      * @return
      */
-    @RequestMapping(path = "updateBookMsg",method = RequestMethod.POST)
+    @RequestMapping(path = "updateBookMsg",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public  ReturnBean deleteBookMsg(BookMessage bookMessage){
         bookMsgRepository.save(bookMessage);
@@ -99,7 +99,12 @@ public class BookMassageController extends BaseController {
     /**
      * 图书借出排行 前十名
      */
-
+    @RequestMapping(path = "listTopTenBook",method = {RequestMethod.GET})
+    @ResponseBody
+    public ReturnBean listTopTenBook(){
+        List<JSONObject> list =  bookMsgRepository.listTopTenBook();
+        return getSuccess("OK", list, list.size());
+    }
 
     /**
      * 图书推荐页面

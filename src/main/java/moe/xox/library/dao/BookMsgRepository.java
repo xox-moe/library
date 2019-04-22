@@ -32,4 +32,34 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             " where bookMsg.status = true ",
             countQuery = "select count(*) from book_message where book_message.status = true ;")
     Page<JSONObject> listBookMsgManageInfo(Pageable pageable);
+
+    @Query(nativeQuery = true,value = "\n" +
+            "select topTen.book_message_id as bookMessageId,\n" +
+            "       borrowCount,\n" +
+            "       name,\n" +
+            "       kind_id as kindId,\n" +
+            "       author,\n" +
+            "       publisher,\n" +
+            "       introduction,\n" +
+            "       status,\n" +
+            "       creator_id as creatorId,\n" +
+            "       create_time as createTime,\n" +
+            "       ISBN,\n" +
+            "       bookNum.bookNum\n" +
+            "from (\n" +
+            "         select book.book_message_id, count(*) borrowCount\n" +
+            "         from borrow_info\n" +
+            "                  left join book on book.book_id = borrow_info.book_id\n" +
+            "                  left join book_message on book.book_message_id = book_message.book_message_id\n" +
+            "         where out_time > date_sub(current_time, interval 7 day)\n" +
+            "         group by book_message.book_message_id\n" +
+            "         order by borrowCount desc\n" +
+            "         limit 10) topTen\n" +
+            "         left join book_message on topTen.book_message_id = book_message.book_message_id\n" +
+            "left join (select book_message_id, IFNULL(count(*), 0) as bookNum\n" +
+            "                             from book\n" +
+            "                             where status = true\n" +
+            "                             group by book_message_id) bookNum\n" +
+            "                            on book_message.book_message_id = bookNum.book_message_id")
+    List<JSONObject> listTopTenBook();
 }

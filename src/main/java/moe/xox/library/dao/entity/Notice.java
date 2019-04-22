@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -15,10 +16,10 @@ public class Notice {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long noticeId;
-  private java.sql.Timestamp beginTime;
-  private java.sql.Timestamp endTime;
+  private LocalDateTime beginTime;
+  private LocalDateTime endTime;
   private String message;
   private Long creatorId;
-  private java.sql.Timestamp createTime;
+  private LocalDateTime createTime;
 
 }

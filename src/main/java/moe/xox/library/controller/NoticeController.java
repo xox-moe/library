@@ -7,6 +7,9 @@ import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.NoticeRepository;
 import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.Notice;
+import moe.xox.library.dao.entity.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -49,6 +53,10 @@ public class NoticeController extends BaseController {
     @RequestMapping(path = "addNotice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addNotice(Notice notice){
+        Subject subject = SecurityUtils.getSubject();
+        notice.setCreateTime(LocalDateTime.now());
+        User user = (User) subject.getSession().getAttribute("user");
+        notice.setCreatorId(user.getUserId());
         noticeRepository.save(notice);
         return getSuccess();
     }

@@ -37,7 +37,6 @@ public class LoginController extends BaseController{
             subject.login(new UsernamePasswordToken(userName,password));
         }catch (UnknownAccountException ex){
             logger.info("登录失败 无此账号");
-
             modelAndView.addObject("userName", "userName");
             modelAndView.addObject("password", "password");
             modelAndView.setViewName("redirect:/toLogin");
@@ -48,6 +47,8 @@ public class LoginController extends BaseController{
             logger.info("登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
+        User user = userService.findUserByEmail(userName);
+        subject.getSession().setAttribute("user",user);
         modelAndView.setViewName("redirect:/index");
 //        return "redirect:/index";
         return modelAndView;
