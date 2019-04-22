@@ -107,6 +107,7 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public  ReturnBean deleteBookMsg(BookMessage bookMessage){
         bookMessage.setCreateTime(LocalDateTime.now());
+        bookMessage.setStatus(true);
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
