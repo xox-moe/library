@@ -30,6 +30,6 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             "         left join (select book_message_id, count(*) as bookNum from book where book.status = true group by book_message_id) bookNum  " +
             "                   on bookMsg.book_message_id = bookNum.book_message_id " +
             " where bookMsg.status = true ",
-            countQuery = "select count(*) from book_message where bookMsg.status = true ;")
+            countQuery = "select count(*) from book_message where book_message.status = true ;")
     Page<JSONObject> listBookMsgManageInfo(Pageable pageable);
 }

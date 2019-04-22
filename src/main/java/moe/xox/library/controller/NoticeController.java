@@ -58,7 +58,7 @@ public class NoticeController extends BaseController {
      * 从Notice表中删除几条图书信息
      * @return
      */
-    @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
+    @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
     @ResponseBody
     public ReturnBean updateNotice(@RequestBody JSONObject object){
 
