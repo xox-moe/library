@@ -74,11 +74,11 @@ public class NoticeController extends BaseController {
     }
 
     /**
-     * 从Notice表中删除几条图书信息
+     * 从Notice表中更新条图书信息
      * @param notice
      * @return
      */
-    @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
+    @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteNotice(Notice notice){
         noticeRepository.save(notice);

@@ -50,8 +50,8 @@ layui.use(['layer','element','table','form','laydate'], function(){
             //添加
             myurl = "gonggaoguanli/addNotice";
         }
-        data.field.btime=setDate.min;
-        data.field.etime=setDate.max;
+        data.field.beginTime=setDate.min;
+        data.field.endTime=setDate.max;
         $.ajax({
             url:basePath+myurl
             , type: 'post'

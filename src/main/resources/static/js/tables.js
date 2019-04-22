@@ -234,7 +234,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     function () {
                         var $ = layui.$;
                         $.ajax({
-                            type: 'get'
+                            type: 'post'
                             ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
                             // ajax请求路径
                             data: data,
@@ -385,7 +385,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     function () {
                         var $ = layui.$;
                         $.ajax({
-                            type: 'get'
+                            type: 'post'
                             ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
                             // ajax请求路径
                             data: data,
@@ -495,13 +495,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             }, function(){
                                 var idList=[];
                                 for(var i=0;i<data.length;i++) {
-                                    idList[i]=data[i].bookId;
-                                    console.log("data[i].bookId:");
-                                    console.log(data[i].bookId);
+                                    idList[i]=data[i].noticeId;
+                                    console.log("data[i].noticeId:");
+                                    console.log(data[i].noticeId);
                                 }
                                 var mydata={
                                     list:idList
-                                }
+                                };
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'gonggaoguanli/deleteNotice'
@@ -536,7 +536,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     function () {
                         var $ = layui.$;
                         $.ajax({
-                            type: 'get'
+                            type: 'post'
                             ,url: basePath+"/gonggaoguanli/updateNotice",
                             // ajax请求路径
                             data: data,
@@ -565,7 +565,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.confirm('真的删除行么',
                         function (index) {
                             var idList=[];
-                            idList.push(data.bookId);
+                            idList.push(data.noticeId);
                             var mydata={
                                 list:idList
                             }
@@ -688,7 +688,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     function () {
                         var $ = layui.$;
                         $.ajax({
-                            type: 'get'
+                            type: 'post'
                             ,url: basePath+"yonghuguanli/updateUser",
                             // ajax请求路径
                             data: data,
@@ -840,7 +840,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     function () {
                         var $ = layui.$;
                         $.ajax({
-                            type: 'get'
+                            type: 'post'
                             ,url: basePath+"/fankuiguanli/updateAdvice",
                             // ajax请求路径
                             data: data,
