@@ -41,7 +41,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 向User表中新增一条图书信息
+     * 向User表中新增一条用户信息
      * 反馈一条消息
      * @return msg
      */
@@ -53,7 +53,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 从User表中删除几条图书信息
+     * 从User表中删除几条用户信息
      * @return
      */
     @RequestMapping(path = "deleteUser",method = RequestMethod.POST)
@@ -83,4 +83,38 @@ public class UserController extends BaseController {
         userRepository.save(user);
         return getSuccess("success");
     }
+
+
+    /**
+     * 通过用户ID查询用户的详细信息
+     */
+    public ReturnBean getUserInfoByUserId(Integer userId){
+        User user = userRepository.findByUserId(userId);
+        return getFailure("success", user);
+    }
+
+    /**
+     * 通过用户邮箱查询用户
+     */
+    public ReturnBean getUserInfoByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        return getFailure("success", user);
+    }
+
+
+    /**
+     * 查询用户的收藏
+     */
+
+
+    /**
+     * 查询用户的浏览历史
+     */
+
+
+
+    /**
+     *
+     */
+
 }

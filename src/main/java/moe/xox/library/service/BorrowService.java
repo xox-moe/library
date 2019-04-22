@@ -3,12 +3,13 @@ package moe.xox.library.service;
 import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.BorrowInfoRepository;
 import moe.xox.library.dao.entity.Book;
-import moe.xox.library.dao.entity.BookStatus;
 import moe.xox.library.dao.entity.BorrowInfo;
 import moe.xox.library.project.BookStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -59,8 +60,10 @@ public class BorrowService {
         return 0;
     }
 
-    public List<BorrowInfo> findBorrowInfoByUsrId(int userId){
+    public List<BorrowInfo> findBorrowInfoByUsrId(int userId, int page, int limit){
+        Pageable pageable = PageRequest.of(page - 1, limit);
         return null;
+//        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
     }
 
 }

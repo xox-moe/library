@@ -91,4 +91,21 @@ public class BookMassageController extends BaseController {
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
+
+
+    /**
+     * 图书借出排行 前十名
+     */
+
+    /**
+     * 图书推荐页面
+     */
+
+    /**
+     * 主页的图书模糊查询页面
+     */
+
+
+
+
 }

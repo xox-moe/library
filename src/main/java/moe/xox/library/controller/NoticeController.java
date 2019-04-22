@@ -83,4 +83,8 @@ public class NoticeController extends BaseController {
         noticeRepository.save(notice);
         return getSuccess();
     }
+
+    /**
+     * 首页显示当前有效的公告
+     */
 }
