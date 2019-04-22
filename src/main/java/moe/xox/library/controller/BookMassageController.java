@@ -4,8 +4,11 @@ package moe.xox.library.controller;
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
+import moe.xox.library.dao.HistoryRepository;
 import moe.xox.library.dao.entity.BookMessage;
 //import moe.xox.library.utils.ImageUtil;
+import moe.xox.library.dao.entity.History;
+import moe.xox.library.utils.ShiorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,12 +20,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("tushuxinxiguanli")
 public class BookMassageController extends BaseController {
     @Autowired
     BookMsgRepository bookMsgRepository;
 
+    @Autowired
+    HistoryRepository historyRepository;
     /**
      * 分页!
      * 返回BookMsg表中的图书信息
@@ -45,6 +50,15 @@ public class BookMassageController extends BaseController {
         Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable);
         List<JSONObject> bookMessageList = bookMessagePage.getContent();
         return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
+    }
+
+
+    @RequestMapping(value = "getBookMessageById",method = RequestMethod.GET)
+    public ReturnBean getBookMessageById(Long bookMessageId){
+        BookMessage bookMessage = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId);
+        History history = new History(null, ShiorUtils.getUserId(),bookMessageId,LocalDateTime.now());
+        historyRepository.save(history);
+        return getSuccess("OK",bookMessage,1);
     }
 
 

@@ -17,23 +17,39 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     Book findByBookId(Long id);
 
 
-    @Query(nativeQuery = true,value = "select book_id as bookId,  " +
-            "       quality as quality,  " +
-            "       bookMsg.book_message_id as bookMessageId,  " +
-            "       name as name,  " +
-            "       author as author,  " +
-            "       publisher as publisher,  " +
-            "       introduction as introduction,  " +
-            "       ISBN as ISBN,  " +
-            "       book_kind.kind_id as kindId,  " +
-            "       kind_name as kindName,  " +
-            "       book_kind.status as status,  " +
-            "       book_status.book_status_id as bookStatusId,  " +
-            "       book_status_name as statusName  " +
-            "from book left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id  " +
-            "left join  book_kind on book_kind.kind_id = bookMsg.kind_id  " +
-            "left join book_status on book.book_status_id = book_status.book_status_id  " +
-            "where book.status = true and bookMsg.status = true",
+    @Query(nativeQuery = true,value = "select book_id                     as bookId,\n" +
+            "       quality                     as quality,\n" +
+            "       bookMsg.book_message_id     as bookMessageId,\n" +
+            "       name                        as bookMessageName,\n" +
+            "       author                      as author,\n" +
+            "       publisher                   as publisher,\n" +
+            "       introduction                as introduction,\n" +
+            "       ISBN                        as ISBN,\n" +
+            "       book_kind.kind_id           as kindId,\n" +
+            "       kind_name                   as kindName,\n" +
+            "       book_kind.status            as status,\n" +
+            "       book_status.book_status_id  as bookStatusId,\n" +
+            "       book_status_name            as statusName,\n" +
+            "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
+            "       IFNULL(bookNum.totalNum, 0) as totalNum\n" +
+            "from book\n" +
+            "         left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id\n" +
+            "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
+            "         left join book_status on book.book_status_id = book_status.book_status_id\n" +
+            "         left join (select book_message_id, IFNULL(count(*), 0) as freeNum\n" +
+            "                    from book\n" +
+            "                    where book_status_id = 4\n" +
+            "                      and status = true\n" +
+            "                    group by book_message_id) freeNum\n" +
+            "                   on bookMsg.book_message_id = freeNum.book_message_id\n" +
+            "         left join (select book_message_id, IFNULL(count(*), 0) as totalNum\n" +
+            "                    from book\n" +
+            "                    where status = true\n" +
+            "                      and (book_status_id = 4 or book_status_id = 1)\n" +
+            "                    group by book_message_id) bookNum\n" +
+            "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
+            "where book.status = true " +
+            "  and bookMsg.status = true ",
             countQuery = "select count(*)  " +
                     "from book  left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id  " +
                     "where book.status = true and bookMsg.status = true")
