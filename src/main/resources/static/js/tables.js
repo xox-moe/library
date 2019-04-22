@@ -34,7 +34,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                   ,title:'图书信息管理'//表名
                   ,page:true//开启分页
                   ,toolbar:'default'//开启头工具栏
-                  ,totalRow:true//合计行
+                  // ,totalRow:true//合计行
                   ,cols:[//表头
                      [
                          {type:'checkbox',align:'center'},
@@ -45,7 +45,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                          {title:'分类',field:'kindName',align:'center',edit: 'text'},
                          {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                          {title:'描述',field:'introduction',align:'center',edit: 'text',width:300},
-                         {title:'数量',field:'',align:'center',totalRowText:'合计:'},
+                         // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                          {title:'操作',align:'center',toolbar: '#barDemo'}
                   ]]
                   ,data:[{}]//假数据放这
@@ -58,7 +58,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     ,title:'出入库管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
-                    ,totalRow:true//合计行
+                    // ,totalRow:true//合计行
                     ,cols:[//表头
                        [
                         {type:'checkbox',align:'center'},
@@ -66,11 +66,14 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'ID',field:'bookId',align:'center'},
                         {title:'书名',field:'bookName',align:'center',edit: 'text'},
                         {title:'作者',field:'author',align:'center',edit: 'text'},
-                        {title:'是否教辅',field:'jiaofu',align:'center',edit: 'text'},
+                        // {title:'类别',field:'kindName',align:'center',edit: 'text'},
                         {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                         {title:'品质',field:'quality',align:'center',edit: 'text'},
-                        {title:'状态',field:'status',align:'center',edit: 'text'},
-                        {title:'数量',field:'',align:'center',totalRowText:'合计:'},
+                        {title:'状态',field:'statusName',align:'center',edit: 'text'},
+                        {title:'可借出/总数',field:'Num',align:'center',edit: 'text',templet:function (d) {
+                                return d.bookNum+"/"+d.totalNum;
+                            }},
+                        // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                         {title:'操作',align:'center',toolbar: '#barDemo2'}
                     ]]
                     ,data:[{}]//假数据放这
@@ -89,9 +92,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {type:'checkbox',align:'center'},
                         {title:'序号',field:'',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'noticeId',align:'center'},
-                        {title:'开始时间',field:'btime',align:'center',edit: 'text'},
-                        {title:'结束时间',field:'etime',align:'center',edit: 'text'},
-                        {title:'内容',field:'msg',align:'center',edit: 'text'},
+                        {title:'开始时间',field:'beginTime',align:'center',edit: 'text'},
+                        {title:'结束时间',field:'endTime',align:'center',edit: 'text'},
+                        {title:'内容',field:'message',align:'center',edit: 'text'},
                         {title:'操作',align:'center',toolbar: '#barDemo3'}
                     ]]
                     ,data:[{}]//假数据放这
@@ -104,7 +107,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     ,title:'用户管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
-                    ,totalRow:true//合计行
+                    // ,totalRow:true//合计行
                     ,cols:[//表头
                        [
                         {type:'checkbox',align:'center'},
@@ -129,7 +132,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     ,title:'反馈管理'//表名
                     ,page:true//开启分页
                     ,toolbar:'default'//开启头工具栏
-                    ,totalRow:true//合计行
+                    // ,totalRow:true//合计行
                     ,cols:[//表头
                        [
                         {type:'checkbox',align:'center'},
@@ -139,7 +142,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'建议人姓名',field:'name',align:'center'},
                         {title:'信息',field:'message',align:'center',width:350},
                         {title:'状态',field:'state',align:'center',edit: 'text'},
-                        {title:'数量',field:'',align:'center',totalRowText:'合计:'},
+                        // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                         {title:'操作',align:'center',toolbar: '#barDemo5'}
                     ]]
                     ,data:[{}]//假数据放这

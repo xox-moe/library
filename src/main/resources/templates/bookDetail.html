@@ -17,10 +17,18 @@
                 <input type="text" name="bookId" class="layui-input"  readonly/>
             </div>
         </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label ">书名</label>-->
+            <!--<div class="layui-input-inline middle">-->
+                <!--<input type="text" name="bookName" class="layui-input" lay-verify="required"/>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label ">书名</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="bookName" class="layui-input" lay-verify="required"/>
+                <select name="bookMessageId" id="bookName" lay-search="" lay-verify="required">
+                    <option value="">请选择</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -29,12 +37,16 @@
                 <input type="text" name="author" class="layui-input" lay-verify="required"/>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label ">是否教辅</label>
-            <div class="layui-input-inline middle">
-                <input type="text"name="jiaofu" class="layui-input" lay-verify="required"/>
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label ">是否教辅</label>-->
+            <!--<div class="layui-input-inline middle">-->
+                <!--<select type="text"name="jiaofu" lay-search="" lay-verify="required">-->
+                    <!--<option value="">请选择</option>-->
+                    <!--<option value="0">是</option>-->
+                    <!--<option value="1">否</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label ">出版社</label>
             <div class="layui-input-inline middle">
@@ -50,7 +62,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label ">状态</label>
             <div class="layui-input-inline middle">
-                <input type="text"  name="status" class="layui-input" lay-verify="required"/>
+                <select type="text" id="bookStatus"  name="bookStatus" lay-search="" lay-verify="required">
+                    <option value="">请选择</option>
+                </select>
             </div>
         </div>
         <!--<div class="layui-form-item">-->

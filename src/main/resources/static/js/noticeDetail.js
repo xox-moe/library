@@ -16,6 +16,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("button").addClass("layui-hide");
         console.log(parent.dataForChild);
         MOD.Form.fillForm($('#noticeDetail'),parent.dataForChild);
+        $("#time").val(parent.dataForChild.beginTime + " - " + parent.dataForChild.endTime).attr("disabled", "disabled");
         form.render();
     }else if(parent.actionType=='add'){
         $("#IDinput").addClass("layui-hide");
@@ -30,7 +31,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
     };
     laydate.render({
         elem: '#time'
-        , type: 'date'
+        , type: 'datetime'
         , range: true
         ,done:function (value, date, endDate) {
             setDate.min=value.split(" - ")[0];

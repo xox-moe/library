@@ -25,6 +25,24 @@ layui.use(['layer','element','table','form','laydate'], function(){
         form.render();
     }
 
+    $.ajax({
+        url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
+        , type: 'get'
+        , success: function (res) {
+            console.log(res.data);
+            MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
+            form.render()
+        }
+    });
+    $.ajax({
+        url: basePath + "status/listAllBookStatus"
+        , type: 'get'
+        , success: function (res) {
+            console.log(res.data);
+            MOD.Form.fillSelect($("#bookStatus"), res.data, "bookStatusId", "bookStatusName");
+            form.render()
+        }
+    });
     form.on('submit(save)',function(data){//保存
         var myurl;
         if(parent.actionType=='edit')

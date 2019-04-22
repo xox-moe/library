@@ -64,8 +64,8 @@ public class NoticeController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Notice notice = new Notice();
         notice.setMessage(message);
-        beginTime += " 00:00:00";
-        endTime += " 00:00:00";
+//        beginTime += " 00:00:00";
+//        endTime += " 00:00:00";
         notice.setBeginTime(LocalDateTime.parse(beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         notice.setEndTime(LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         notice.setCreateTime(LocalDateTime.now());
