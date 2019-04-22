@@ -13,6 +13,9 @@ import java.util.List;
 public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
 
 
+    BookMessage getBookMessageByBookMessageId(Long bookMessageId);
+
+
     @Query(nativeQuery = true,value = "select bookMsg.book_message_id as bookMessageId,  " +
             "       name as name ,  " +
             "       bookMsg.kind_id as kindId,  " +

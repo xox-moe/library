@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +74,8 @@ public class BookController extends BaseController {
     @RequestMapping(path = "addBook",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addBook(Book book){
-        book.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        book.setCreateTime(LocalDateTime.now());
+        book.setBookId(null);
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         book.setCreatorId(user.getUserId()+"");
@@ -88,10 +90,16 @@ public class BookController extends BaseController {
     @RequestMapping(path = "deleteBook",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(@RequestBody JSONObject object){
+        List<Long> list;
 
         if(object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
-        List<Long> list = (List<Long>) object.get("list");
+        try{
+            list = (List<Long>) object.get("list");
+        }catch (Exception ex){
+            return getFailure("请求格式不正确");
+        }
+
         List<Book> bookList = new ArrayList<>();
         for (Long aLong : list) {
             Book book = bookRepository.findByBookId(aLong);

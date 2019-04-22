@@ -6,6 +6,8 @@ import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.UserRepository;
 import moe.xox.library.dao.entity.User;
 import net.bytebuddy.description.field.FieldDescription;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -105,7 +107,12 @@ public class UserController extends BaseController {
     /**
      * 查询用户的收藏
      */
-
+    public ReturnBean listUserCollection(){
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getSession().getAttribute("user");
+        List<JSONObject> list = userRepository.listUserCollection(user.getUserId());
+        return getSuccess("OK", list, list.size());
+    }
 
 
 

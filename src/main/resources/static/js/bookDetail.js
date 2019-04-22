@@ -35,7 +35,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         }
     });
     $.ajax({
-        url: basePath + "status/listAllBookStatus"
+        url: basePath + "data/listAllBookStatus"
         , type: 'get'
         , success: function (res) {
             // console.log(res.data);
@@ -71,7 +71,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             },
             error:function(jqXHR)
             {
-                console.log('请求错误,错误的原因为:'+jqXHR.status)
+                // console.log('请求错误,错误的原因为:'+jqXHR.status)
             }
         });
         return false;

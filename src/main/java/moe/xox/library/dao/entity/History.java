@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,7 +17,7 @@ public class History {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long historyId;
   private Long userId;
-  private Long bookId;
-  private java.sql.Timestamp createTime;
+  private Long bookMessageId;
+  private LocalDateTime createTime;
 
 }
