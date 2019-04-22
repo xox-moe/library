@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,7 +25,7 @@ public class BookMessage {
   private String introduction;
   private Boolean status;
   private Long creatorId;
-  private java.sql.Timestamp createTime;
+  private LocalDateTime createTime;
   private String isbn;
 
 }

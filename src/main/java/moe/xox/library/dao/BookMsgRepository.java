@@ -62,4 +62,24 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             "                             group by book_message_id) bookNum\n" +
             "                            on book_message.book_message_id = bookNum.book_message_id")
     List<JSONObject> listTopTenBook();
+
+    @Query(nativeQuery = true,value = "select book_message_id as bookMessageId, name bookMassageName\n" +
+            "from book_message\n" +
+            "where status = true;")
+    List<JSONObject> listAllBookMsgIdAndName();
+
+    @Query(nativeQuery = true,value = "select *\n" +
+            "from book_message where status = true order by rand() limit :limit ;")
+    List<JSONObject> listBookMsgRandom(int limit);
+
+    @Query(nativeQuery = true,value = "select book_message_id as bookMessageId,\n" +
+            "       name as bookMassageName,\n" +
+            "       author,\n" +
+            "       publisher,\n" +
+            "       introduction\n" +
+            "from book_message\n" +
+            "where (name like concat('%', '', '%') or publisher like concat('%', '', '%') or\n" +
+            "       introduction like concat('%', '', '%') or author like concat('%', '', '%'))\n" +
+            "  and status = true;")
+    List<JSONObject> listBookMsgHomePage();
 }

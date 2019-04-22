@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -21,7 +22,7 @@ public class User {
   private String nickName;
   private String password;
 //  private Long roleId;
-  private java.sql.Timestamp birthday;
+  private LocalDate birthday;
   private String realName;
   private Long grade;
   private String department;

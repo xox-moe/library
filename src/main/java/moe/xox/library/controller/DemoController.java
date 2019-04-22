@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 /**
  * Hello world!
@@ -51,9 +52,9 @@ public class DemoController extends BaseController {
     @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     public ReturnBean queryUser(@RequestParam("userId") String userId) {
         System.out.println("queryUser:::" + userId);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         User user = new User(1L, "zjq@qq.com",
-                "终焉警钟", "admin", timestamp,
+                "终焉警钟", "admin", LocalDate.now(),
                 "admin", 2016L, "计算机", "软件工程", 1L);
         return   getSuccess("success",user,1);
     }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -91,6 +92,7 @@ public class BookMassageController extends BaseController {
     @RequestMapping(path = "updateBookMsg",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public  ReturnBean deleteBookMsg(BookMessage bookMessage){
+        bookMessage.setCreateTime(LocalDateTime.now());
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
@@ -107,13 +109,34 @@ public class BookMassageController extends BaseController {
     }
 
     /**
+     * 选取所有的book MessageId 和 name
+     */
+    @RequestMapping(path = "listAllBookMsgIdAndName",method = {RequestMethod.GET})
+    @ResponseBody
+    public ReturnBean listAllBookMsgIdAndName(){
+        List<JSONObject> list =  bookMsgRepository.listAllBookMsgIdAndName();
+        return getSuccess("OK", list, list.size());
+    }
+
+    /**
      * 图书推荐页面
      */
-
+    @RequestMapping(path = "listBookMsgRandom",method = {RequestMethod.GET})
+    @ResponseBody
+    public ReturnBean listBookMsgRandom(int limit){
+        List<JSONObject> list =  bookMsgRepository.listBookMsgRandom(limit);
+        return getSuccess("OK", list, list.size());
+    }
 
     /**
      * 主页的图书模糊查询页面
      */
+    @RequestMapping(path = "listBookMsgHomePage",method = {RequestMethod.GET})
+    @ResponseBody
+    public ReturnBean listBookMsgHomePage(){
+        List<JSONObject> list =  bookMsgRepository.listBookMsgHomePage();
+        return getSuccess("OK", list, list.size());
+    }
 
 
 
