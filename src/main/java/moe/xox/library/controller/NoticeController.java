@@ -10,6 +10,8 @@ import moe.xox.library.dao.entity.Notice;
 import moe.xox.library.dao.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +23,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
 @Controller
 @RequestMapping("gonggaoguanli")
 public class NoticeController extends BaseController {
+
+    Logger logger = LoggerFactory.getLogger(NoticeController.class);
+
+
     @Autowired
     NoticeRepository noticeRepository;
 
@@ -52,8 +59,15 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(path = "addNotice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean addNotice(Notice notice){
+    public  ReturnBean addNotice(String message,String beginTime,String endTime){
+//        logger.info(beginTime + "  " + endTime);
         Subject subject = SecurityUtils.getSubject();
+        Notice notice = new Notice();
+        notice.setMessage(message);
+        beginTime += " 00:00:00";
+        endTime += " 00:00:00";
+        notice.setBeginTime(LocalDateTime.parse(beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        notice.setEndTime(LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         notice.setCreateTime(LocalDateTime.now());
         User user = (User) subject.getSession().getAttribute("user");
         notice.setCreatorId(user.getUserId());
