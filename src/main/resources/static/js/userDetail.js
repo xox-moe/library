@@ -59,6 +59,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
         return false;
     });
 
+    laydate.render({
+        elem: "#birthday"
+        ,type: 'date'
+        // ,max: MOD.Now.nowDate()
+    });
+
     //关闭按钮
     $('button[type=close]').click(function(){
         var mywindow = parent.layer.getFrameIndex(window.name);

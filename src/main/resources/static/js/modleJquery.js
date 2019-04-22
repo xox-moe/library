@@ -215,6 +215,12 @@
 			return day;
         }
 	};
+    MOD.Now = {
+        nowDate: function () {
+            var now = new Date();
+            return now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+        }
+    };
 	MOD.Form=   {
 		 fillForm:function($form,data){
 			var jsonObj = data;		    
