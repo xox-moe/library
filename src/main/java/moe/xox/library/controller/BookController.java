@@ -7,6 +7,9 @@ import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BookMessage;
+import moe.xox.library.dao.entity.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -71,6 +74,9 @@ public class BookController extends BaseController {
     @ResponseBody
     public  ReturnBean addBook(Book book){
         book.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getSession().getAttribute("user");
+        book.setCreatorId(user.getUserId()+"");
         bookRepository.save(book);
         return getSuccess();
     }
