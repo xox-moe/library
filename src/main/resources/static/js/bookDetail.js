@@ -9,18 +9,18 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,form = layui.form
         ,laydate=layui.laydate;
 
-    console.log(parent.actionType);
+    // console.log(parent.actionType);
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
         $("form textarea").attr("readonly","readonly");
         $("button").addClass("layui-hide");
-        console.log(parent.dataForChild);
+        // console.log(parent.dataForChild);
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }else if(parent.actionType=='add'){
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
-        console.log(parent.dataForChild);
+        // console.log(parent.dataForChild);
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }
@@ -29,7 +29,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
         , type: 'get'
         , success: function (res) {
-            console.log(res.data);
+            // console.log(res.data);
             MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
             form.render()
         }
@@ -38,7 +38,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         url: basePath + "status/listAllBookStatus"
         , type: 'get'
         , success: function (res) {
-            console.log(res.data);
+            // console.log(res.data);
             MOD.Form.fillSelect($("#bookStatus"), res.data, "bookStatusId", "bookStatusName");
             form.render()
         }
