@@ -230,19 +230,16 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
                 console.log(data);
-                layui.use('jquery',
-                    function () {
-                        var $ = layui.$;
-                        $.ajax({
-                            type: 'post'
-                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
-                            // ajax请求路径
-                            data: data,
-                            success: function (data) {
-                                layer.msg('[ID: ' + data[0].id + '] ' + field + ' 字段更改为：' + value);
-                            }
-                        });
-                    });
+                $.ajax({
+                    type: 'post'
+                    ,url: basePath+"tushuxinxiguanli/updateBookMsg",
+                    // ajax请求路径
+                    data: data,
+                    success: function (data) {
+                        layer.msg('[ID: ' + data[0].id + '] ' + field + ' 字段更改为：' + value);
+                    }
+                });
+
             });
         //监听行工具事件
         table.on('tool(test1)',
@@ -386,7 +383,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'post'
-                            ,url: basePath+"/tushuxinxiguanli/updateBookMsg",
+                            ,url: basePath+"tushuxinxiguanli/updateBookMsg",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -537,7 +534,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'post'
-                            ,url: basePath+"/gonggaoguanli/updateNotice",
+                            ,url: basePath+"gonggaoguanli/updateNotice",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -841,7 +838,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'post'
-                            ,url: basePath+"/fankuiguanli/updateAdvice",
+                            ,url: basePath+"fankuiguanli/updateAdvice",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
