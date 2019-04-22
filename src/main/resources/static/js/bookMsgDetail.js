@@ -52,7 +52,7 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
     });
     form.on('submit(save)',function(data){//保存
         var myurl;
-        if(parent.actionType=='detail')
+        if(parent.actionType=='edit')
         {
            //修改
             myurl = "tushuxinxiguanli/updateBookMsg";

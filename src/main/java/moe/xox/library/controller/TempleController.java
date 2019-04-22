@@ -54,4 +54,9 @@ public class TempleController {
         return "userDetail";
     }
 
+    @RequestMapping("noticeDetail")
+    public String noticeDetail(){
+        return "noticeDetail";
+    }
+
 }

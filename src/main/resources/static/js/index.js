@@ -38,11 +38,11 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
             }
         })
     });
-    //商品详情页
+    //图书详情页
     $('.goods').on('click',function () {
         layer.open({
             type: 2,
-            title:"商品详情",
+            title:"图书详情",
             area: ['1000px', '680px'],
             skin: 'layui-layer-rim', //加上边框
             content:basePath+'good'

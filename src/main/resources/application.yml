@@ -24,7 +24,7 @@ spring:
       hibernate.format_sql: true
 
 server:
-  port: 8088
+  port: 8080
 
 #  serverlet:
 #    #解决路径问题

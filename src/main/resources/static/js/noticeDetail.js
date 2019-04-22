@@ -24,10 +24,23 @@ layui.use(['layer','element','table','form','laydate'], function(){
         MOD.Form.fillForm($('#noticeDetail'),parent.dataForChild);
         form.render();
     }
-
+   var setDate = {
+        min: ''
+        , max: ''
+    };
+    laydate.render({
+        elem: '#time'
+        , type: 'date'
+        , range: true
+        ,done:function (value, date, endDate) {
+            setDate.min=value.split(" - ")[0];
+            setDate.max=value.split(" - ")[1];
+            console.log(setDate);
+        }
+    });
     form.on('submit(save)',function(data){//保存
         var myurl;
-        if(parent.actionType=='detail')
+        if(parent.actionType=='edit')
         {
            //修改
             myurl = "gonggaoguanli/updateNotice";
@@ -37,6 +50,8 @@ layui.use(['layer','element','table','form','laydate'], function(){
             //添加
             myurl = "gonggaoguanli/addNotice";
         }
+        data.field.btime=setDate.min;
+        data.field.etime=setDate.max;
         $.ajax({
             url:basePath+myurl
             , type: 'post'

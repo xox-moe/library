@@ -161,7 +161,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         layer.open({
                             type: 2,
                             title:"新增图书",
-                            area: ['400px', '590px'],
+                            area: ['400px', '650px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
                             content:basePath+'bookMsgDetail'
                         });
@@ -178,7 +178,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             layer.open({
                                 type: 2,
                                 title:"图书信息管理详情",
-                                area: ['400px', '590px'],
+                                area: ['400px', '650px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                                 content:basePath+'bookMsgDetail'
                             });
@@ -255,7 +255,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"图书信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['400px', '650px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'bookMsgDetail'
                     });
@@ -292,7 +292,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"图书信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['400px', '650px'],
                         skin: 'layui-layer-molv', //加上边框
                         content:basePath+'bookMsgDetail'
                     });
@@ -313,7 +313,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         layer.open({
                             type: 2,
                             title:"新增图书",
-                            area: ['400px', '590px'],
+                            area: ['400px', '550px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
                             content:basePath+'bookDetail'
                         });
@@ -406,7 +406,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"图书信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['400px', '550px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'bookDetail'
                     });
@@ -464,7 +464,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         layer.open({
                             type: 2,
                             title:"新增公告",
-                            area: ['400px', '590px'],
+                            area: ['600px', '400px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
                             content:basePath+'noticeDetail'
                         });
@@ -480,7 +480,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             layer.open({
                                 type: 2,
                                 title:"公告信息管理详情",
-                                area: ['400px', '590px'],
+                                area: ['600px', '400px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                                 content:basePath+'noticeDetail'
                             });
@@ -557,7 +557,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"公告信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['600px', '400px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'noticeDetail'
                     });
@@ -594,7 +594,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"公告信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['600px', '400px'],
                         skin: 'layui-layer-molv', //加上边框
                         content:basePath+'noticeDetail'
                     });
@@ -768,7 +768,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         layer.open({
                             type: 2,
                             title:"新增建议",
-                            area: ['400px', '590px'],
+                            area: ['400px', '500px'],
                             skin: 'layui-layer-rim layui-layer-molv', //加上边框
                             content:basePath+'adviceDetail'
                         });
@@ -784,7 +784,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                             layer.open({
                                 type: 2,
                                 title:"建议信息管理详情",
-                                area: ['400px', '590px'],
+                                area: ['400px', '500px'],
                                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                                 content:basePath+'adviceDetail'
                             });
@@ -861,7 +861,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"建议信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['400px', '500px'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'adviceDetail'
                     });
@@ -898,7 +898,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     layer.open({
                         type: 2,
                         title:"建议信息管理详情",
-                        area: ['400px', '590px'],
+                        area: ['400px', '500px'],
                         skin: 'layui-layer-molv', //加上边框
                         content:basePath+'adviceDetail'
                     });

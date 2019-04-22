@@ -9,7 +9,7 @@
     <script type="text/javascript" src="js/jquery.js" ></script>
 </head>
 <body>
-<div style="width:350px;text-align:center;margin:30px;">
+<div style="width:550px;text-align:center;margin:30px;">
     <form action="" id="noticeDetail" class="layui-form layui-form-pane">
         <div class="layui-form-item" id="IDinput">
             <label class="layui-form-label ">ID</label>
@@ -18,31 +18,31 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">开始时间</label>
+            <label class="layui-form-label ">时间</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="btime" class="layui-input" lay-verify="required"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label ">结束时间</label>
-            <div class="layui-input-inline middle">
-                <input type="text" name="etime" class="layui-input" lay-verify="required"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label ">内容</label>
-            <div class="layui-input-inline middle">
-                <input type="text"name="msg" class="layui-input" lay-verify="required"/>
+                <input type="text" id="time" name="time" class="layui-input" lay-verify="required"/>
             </div>
         </div>
         <!--<div class="layui-form-item">-->
-            <!--<div class="layui-form-item layui-form-text">-->
-                <!--<label class="layui-form-label" >描述</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<textarea cols="18" rows="3" type="text"  name="introduction" class="layui-textarea" lay-verify="required"></textarea>-->
-                <!--</div>-->
-                <!--</div>-->
+            <!--<label class="layui-form-label ">结束时间</label>-->
+            <!--<div class="layui-input-inline middle">-->
+                <!--<input type="text" name="etime" class="layui-input" lay-verify="required"/>-->
             <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label ">内容</label>-->
+            <!--<div class="layui-input-inline middle">-->
+                <!--<textarea cols="18" rows="4" type="text"name="msg" class="layui-textarea" lay-verify="required"></textarea>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label" >内容</label>
+                <div class="layui-input-inline">
+                    <textarea cols="100" rows="3" type="text"  name="msg" class="layui-textarea" lay-verify="required"></textarea>
+                </div>
+                </div>
+            </div>
 
         <div class="layui-form-item forLastButton" >
             <button class="layui-btn small" lay-submit="" lay-filter="save">保存</button>
