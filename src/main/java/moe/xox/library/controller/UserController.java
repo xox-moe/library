@@ -127,7 +127,7 @@ public class UserController extends BaseController {
         User user = new User(userId, email, nickName, oldUser.getPassword(), LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
 //        userRepository.updateUserRole( userId,  roleId);
 
-        if(password == null || password.equals(""))
+        if(password != null || !password.equals(""))
             user.setPassword(password);
         UserRole userRole = userRoleRepository.findUserRoleByUserId(userId);
         if (userRole == null)
