@@ -115,10 +115,20 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {type:'checkbox',align:'center'},
                         {title:'序号',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'userId',align:'center'},
-                        {title:'用户名',field:'name',align:'center',edit: 'text'},
-                        {title:'性别',field:'sex',align:'center',edit: 'text'},
+                        {title:'用户名',field:'realName',align:'center',edit: 'text'},
+                        {title:'昵称',field:'nickName',align:'center',edit: 'text'},
+                        {title:'性别',field:'sex',align:'center',edit: 'text',templet:function (d) { 
+                            if(d.sex=='1'){
+                                return "男"
+                            }else if (d.sex=='0') {
+                                return "女"
+                            }else {
+                                return "未填写"
+                            }
+                            }},
                         {title:'生日',field:'birthday',align:'center',edit: 'text'},
-                        {title:'账号类型',field:'type',align:'center',edit: 'text'},
+                        {title:'邮箱',field:'email',align:'center'},
+                        // {title:'账号类型',field:'type',align:'center',edit: 'text'},
                         {title:'年级',field:'grade',align:'center',edit: 'text'},
                         {title:'学院',field:'department',align:'center',edit: 'text'},
                         {title:'专业',field:'major',align:'center',edit: 'text'},
@@ -685,6 +695,13 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
+                if(obj.data.sex=="男"||obj.data.sex==1){
+                    obj.data.sex=1;
+                } else if(obj.data.sex=="女"||obj.data.sex==0){
+                    obj.data.sex=0;
+                }else {
+                    obj.data.sex=3;
+                }
                 console.log(data);
                 layui.use('jquery',
                     function () {
