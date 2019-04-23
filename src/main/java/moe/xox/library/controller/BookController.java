@@ -8,6 +8,7 @@ import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.User;
+import moe.xox.library.project.BookStatusEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,8 @@ public class BookController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         book.setCreatorId(user.getUserId()+"");
+        book.setStatus(true);
+        book.setBookStatusId(BookStatusEnum.NORMAL.id);
         bookRepository.save(book);
         return getSuccess();
     }
@@ -114,10 +117,22 @@ public class BookController extends BaseController {
      * 修改Book表中一条数据
      * @param book
      * @return
+     *
+     *   private Long bookId;
+     *   private Long bookMessageId;
+     *   private Long bookStatusId;
+     *   private Long quality;
+     *   private String creatorId;
+     *   private LocalDateTime createTime;
+     *   private Boolean status;
      */
     @RequestMapping(path = "updateBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(Book book){
+    public  ReturnBean deleteBook(Long bookId,Long bookStatusId,Long quality){
+//        book.setStatus(true);
+        Book book = bookRepository.findByBookId(bookId);
+        book.setBookStatusId(bookStatusId);
+        book.setQuality(quality);
         bookRepository.save(book);
         return getSuccess();
     }
