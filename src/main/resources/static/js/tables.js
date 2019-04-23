@@ -45,7 +45,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                          {title:'分类',field:'kindName',align:'center'},
                          {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                          {title:'描述',field:'introduction',align:'center',edit: 'text',width:300},
-                         {title:'可借出/总数',field:'Num',align:'center',edit: 'text',templet:function (d) {
+                         {title:'可借出/总数',field:'Num',align:'center',templet:function (d) {
                                  return d.bookNum+"/"+d.totalNum;
                              }},
                          // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
@@ -67,10 +67,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {type:'checkbox',align:'center'},
                         {title:'序号',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'bookId',align:'center'},
-                        {title:'书名',field:'bookMessageName',align:'center',edit: 'text'},
-                        {title:'作者',field:'author',align:'center',edit: 'text'},
+                        {title:'书名',field:'bookMessageName',align:'center'},
+                        {title:'作者',field:'author',align:'center'},
                         // {title:'类别',field:'kindName',align:'center',edit: 'text'},
-                        {title:'出版社',field:'publisher',align:'center',edit: 'text'},
+                        {title:'出版社',field:'publisher',align:'center'},
                         {title:'品质',field:'qualityName',align:'center'},
                         {title:'状态',field:'bookStatusId',align:'center',templet:function (d) {
                                 return d.statusName;
@@ -94,8 +94,8 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {type:'checkbox',align:'center'},
                         {title:'序号',field:'',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'noticeId',align:'center'},
-                        {title:'开始时间',field:'beginTime',align:'center',edit: 'text'},
-                        {title:'结束时间',field:'endTime',align:'center',edit: 'text'},
+                        {title:'开始时间',field:'beginTime',align:'center'},
+                        {title:'结束时间',field:'endTime',align:'center'},
                         {title:'内容',field:'message',align:'center',edit: 'text'},
                         {title:'操作',align:'center',toolbar: '#barDemo3'}
                     ]]
@@ -783,31 +783,33 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                 console.log(checkStatus.data);
                 switch (obj.event) {
                     case 'add':
-                        actionType = 'add';
-                        layer.open({
-                            type: 2,
-                            title:"新增建议",
-                            area: ['400px', '500px'],
-                            skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                            content:basePath+'adviceDetail'
-                        });
+                        // actionType = 'add';
+                        // layer.open({
+                        //     type: 2,
+                        //     title:"新增建议",
+                        //     area: ['400px', '500px'],
+                        //     skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        //     content:basePath+'adviceDetail'
+                        // });
+                        layer.msg("不可新增");
                         break;
                     case 'update':
-                        if (data.length === 0) {
-                            layer.msg('请选择一行');
-                        } else if (data.length > 1) {
-                            layer.msg('只能同时编辑一个');
-                        } else {
-                            dataForChild = data[0];
-                            actionType='edit';
-                            layer.open({
-                                type: 2,
-                                title:"建议信息管理详情",
-                                area: ['400px', '500px'],
-                                skin: 'layui-layer-rim layui-layer-molv', //加上边框
-                                content:basePath+'adviceDetail'
-                            });
-                        }
+                        // if (data.length === 0) {
+                        //     layer.msg('请选择一行');
+                        // } else if (data.length > 1) {
+                        //     layer.msg('只能同时编辑一个');
+                        // } else {
+                        //     dataForChild = data[0];
+                        //     actionType='edit';
+                        //     layer.open({
+                        //         type: 2,
+                        //         title:"建议信息管理详情",
+                        //         area: ['400px', '500px'],
+                        //         skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        //         content:basePath+'adviceDetail'
+                        //     });
+                        // }
+                        layer.msg("不可修改");
                         break;
                     case 'delete':
                         if (data.length === 0) {
@@ -822,9 +824,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                     console.log("data[i].adviceId:");
                                     console.log(data[i].adviceId);
                                 }
-                                var mydata={
-                                    list:idList
-                                }
+                                var mydata = {
+                                    list: idList
+                                };
                                 console.log(idList);
                                 $.ajax({
                                     url: basePath + 'fankuiguanli/deleteAdvice'

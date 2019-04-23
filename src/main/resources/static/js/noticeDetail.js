@@ -25,7 +25,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         console.log(parent.dataForChild);
-        $("#time").val(parent.dataForChild.beginTime + " - " + parent.dataForChild.endTime).attr("disabled", "disabled");
+        $("#time").val(parent.dataForChild.beginTime + " - " + parent.dataForChild.endTime)
         MOD.Form.fillForm($('#noticeDetail'),parent.dataForChild);
         form.render();
         setDate.min=$("#time").val().split(" - ")[0];
