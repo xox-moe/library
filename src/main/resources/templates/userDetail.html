@@ -30,9 +30,21 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label ">邮箱</label>
+            <div class="layui-input-inline middle">
+                <input type="text" name="email" class="layui-input" lay-verify="required|email"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">密码</label>
+            <div class="layui-input-inline middle">
+                <input type="password" name="password" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label ">性别</label>
             <div class="layui-input-inline middle">
-                <select type="text" name="sex" lay-search="" lay-verify="required">
+                <select type="text" name="sex" lay-search="">
                     <option value="">请选择</option>
                     <option value="1">男</option>
                     <option value="0">女</option>
@@ -42,7 +54,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label ">生日</label>
             <div class="layui-input-inline middle">
-                <input type="text" id="birthday" name="birthday" class="layui-input" lay-verify="required"/>
+                <input type="text" id="birthday" name="birthday" class="layui-input"/>
             </div>
         </div>
       <div class="layui-form-item">
@@ -59,20 +71,20 @@
         <div class="layui-form-item">
             <label class="layui-form-label ">年级</label>
             <div class="layui-input-inline middle">
-                <input type="text"  name="grade" class="layui-input" lay-verify="required"/>
+                <input type="text"  name="grade" class="layui-input" />
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label ">学院</label>
             <div class="layui-input-inline middle">
-                <input type="text"  name="department" class="layui-input" lay-verify="required"/>
+                <input type="text"  name="department" class="layui-input" />
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label ">专业</label>
             <div class="layui-input-inline middle">
-                <input type="text"  name="major" class="layui-input" lay-verify="required"/>
+                <input type="text"  name="major" class="layui-input" />
             </div>
         </div>
 

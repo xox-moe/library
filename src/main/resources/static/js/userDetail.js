@@ -9,7 +9,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,form = layui.form
         ,laydate=layui.laydate;
 
-
+    console.log(parent.actionType);
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
         $("form textarea").attr("readonly","readonly");
