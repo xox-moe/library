@@ -68,8 +68,10 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'作者',field:'author',align:'center',edit: 'text'},
                         // {title:'类别',field:'kindName',align:'center',edit: 'text'},
                         {title:'出版社',field:'publisher',align:'center',edit: 'text'},
-                        {title:'品质',field:'quality',align:'center',edit: 'text'},
-                        {title:'状态',field:'statusName',align:'center'},
+                        {title:'品质',field:'quality',align:'center'},
+                        {title:'状态',field:'bookStatusId',align:'center',templet:function (d) {
+                                return d.bookStatusName;
+                            }},
                         {title:'可借出/总数',field:'Num',align:'center',edit: 'text',templet:function (d) {
                                 return d.bookNum+"/"+d.totalNum;
                             }},

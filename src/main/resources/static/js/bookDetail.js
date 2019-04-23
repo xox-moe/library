@@ -39,7 +39,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , type: 'get'
         , success: function (res) {
             // console.log(res.data);
-            MOD.Form.fillSelect($("#bookStatus"), res.data, "bookStatusId", "bookStatusName");
+            MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
             form.render()
         }
     });
