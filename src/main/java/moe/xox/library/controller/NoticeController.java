@@ -103,13 +103,21 @@ public class NoticeController extends BaseController {
     @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteNotice(Notice notice){
-        noticeRepository.save(notice);
+        Notice oldNotice = noticeRepository.findNoticeByNoticeId(notice.getNoticeId());
+        oldNotice.setMessage(notice.getMessage());
+        noticeRepository.save(oldNotice);
         return getSuccess();
     }
 
     /**
      * 首页显示当前有效的公告
      */
+    @RequestMapping(path = "listNowNotice",method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnBean listNowNotice(){
+        List<JSONObject> noticeList = noticeRepository.listNowNotice();
+        return getSuccess("OK",noticeList,noticeList.size());
+    }
 
 
 
