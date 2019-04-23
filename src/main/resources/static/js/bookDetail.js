@@ -13,6 +13,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
         $("form textarea").attr("readonly","readonly");
+        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("button").addClass("layui-hide");
         // console.log(parent.dataForChild);
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
