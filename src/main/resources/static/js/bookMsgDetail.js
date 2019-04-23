@@ -30,7 +30,7 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         , type: 'get'
         , success: function (res) {
             // console.log(res.data);
-            MOD.Form.fillSelect($("#kindName"), res.data, "kindId", "kindName");
+            MOD.Form.fillSelect($("#kindId"), res.data, "kindId", "kindName");
             form.render()
         }
     });
