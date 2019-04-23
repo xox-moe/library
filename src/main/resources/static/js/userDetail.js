@@ -62,7 +62,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
     laydate.render({
         elem: "#birthday"
         ,type: 'date'
-        // ,max: MOD.Now.nowDate()
+        ,max: MOD.Now.nowDate()
     });
 
     //关闭按钮

@@ -25,6 +25,15 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
         form.render();
     }
+    $.ajax({
+        url: basePath + "data/listAllBookKind"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("#kindName"), res.data, "kindId", "kindName");
+            form.render()
+        }
+    });
     var uploadInst = upload.render({
         elem: '#test1'
         ,url: '/upload/'

@@ -56,13 +56,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label ">品质</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="quality" class="layui-input" lay-verify="required"/>
+                <select type="text" id="" name="quality" lay-search="" lay-verify="required">
+                    <option value="">请选择</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label ">状态</label>
             <div class="layui-input-inline middle">
-                <select type="text" id="bookStatus"  name="bookStatus" lay-search="" lay-verify="required">
+                <select type="text" id="bookStatusId"  name="bookStatus" lay-search="" lay-verify="required">
                     <option value="">请选择</option>
                 </select>
             </div>

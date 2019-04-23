@@ -24,7 +24,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }
-
+    //填写select
     $.ajax({
         url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
         , type: 'get'
@@ -40,6 +40,15 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookStatus"), res.data, "bookStatusId", "bookStatusName");
+            form.render()
+        }
+    });
+    $.ajax({
+        url: basePath + "   "
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("#"), res.data, "", "");
             form.render()
         }
     });
@@ -62,7 +71,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             , success: function (res) {
                 if (res.code === 0) {
                     layer.alert("操作成功！", function () {
-                        parent.layui.table.reload('table1');
+                        parent.layui.table.reload('table2');
                         var myWindow = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(myWindow); //再执行关闭
                     });
