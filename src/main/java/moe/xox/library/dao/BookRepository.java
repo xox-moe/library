@@ -18,7 +18,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
 
     @Query(nativeQuery = true,value = "select book_id                     as bookId,\n" +
-            "       quality                     as quality,\n" +
+            "       quality                     as qualityId,\n" +
             "       bookMsg.book_message_id     as bookMessageId,\n" +
             "       name                        as bookMessageName,\n" +
             "       author                      as author,\n" +

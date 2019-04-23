@@ -8,6 +8,7 @@ import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.User;
+import moe.xox.library.project.BookQualityEnum;
 import moe.xox.library.project.BookStatusEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -62,6 +63,14 @@ public class BookController extends BaseController {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable);
         List<JSONObject> bookList = bookPage.getContent();
+        for (JSONObject object : bookList) {
+            Integer qualityId = (Integer) object.get("qualityId");
+            if(qualityId == null){
+                object.put("qualityName", "无数据");
+            }else{
+                object.put("qualityName", BookQualityEnum.getNameById(qualityId.longValue()));
+            }
+        }
         return getSuccess("success", bookList, bookPage.getTotalElements());
     }
 
@@ -134,11 +143,11 @@ public class BookController extends BaseController {
      */
     @RequestMapping(path = "updateBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteBook(Long bookId,Long bookStatusId,Long quality){
+    public  ReturnBean deleteBook(Long bookId,Long bookStatusId,Long qualityId){
 //        book.setStatus(true);
         Book book = bookRepository.findByBookId(bookId);
         book.setBookStatusId(bookStatusId);
-        book.setQuality(quality);
+        book.setQuality(qualityId);
         bookRepository.save(book);
         return getSuccess();
     }
