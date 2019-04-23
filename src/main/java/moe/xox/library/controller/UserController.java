@@ -77,12 +77,14 @@ public class UserController extends BaseController {
      */
     @RequestMapping(path = "addUser", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean addUser(String email,String nickName,String password,String birthday,String realName,Long grade,String department,String major,Long sex) {
+    public ReturnBean addUser(String email,String nickName,String password,String birthday,String realName,Long grade,String department,String major,Long sex,Long roleId) {
 
         birthday += " 00:00:00";
 //        LocalDateTime.parse(birthday).toLocalDate();
         User user = new User(null, email, nickName, password, LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
-        userRepository.save(user);
+        user = userRepository.save(user);
+        UserRole userRole = new UserRole( user.getUserId(), roleId,true);
+        userRoleRepository.save(userRole);
         return getSuccess("success");
     }
 
@@ -93,7 +95,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(path = "deleteUser", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean deleteBook(@RequestBody JSONObject object) {
+    public ReturnBean deleteUser(@RequestBody JSONObject object) {
 
         if (object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
