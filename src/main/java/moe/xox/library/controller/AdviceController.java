@@ -33,10 +33,10 @@ public class AdviceController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(Integer page,Integer limit){
+    public ReturnBean listAllAdvice(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<Advice> advicePage = adviceRepository.findAll(pageable);
-        List<Advice> advice = advicePage.getContent();
+        Page<JSONObject> advicePage = adviceRepository.findAllAdvice(pageable);
+        List<JSONObject> advice = advicePage.getContent();
         return getSuccess("success", advice, advicePage.getTotalElements());
     }
 
@@ -76,9 +76,23 @@ public class AdviceController extends BaseController {
      * @param advice
      * @return
      */
-    @RequestMapping(path = "updateAdvice",method = RequestMethod.POST)
+//    @RequestMapping(path = "updateAdvice",method = RequestMethod.POST)
+//    @ResponseBody
+//    public  ReturnBean updateAdvice(Advice advice){
+//        adviceRepository.save(advice);
+//        return getSuccess();
+//    }
+
+    /**
+     * 出
+     * @param
+     * @return
+     */
+    @RequestMapping(path = "handleAdvice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean updateAdvice(Advice advice){
+    public  ReturnBean handleAdvice(Long adviceId){
+        Advice advice = adviceRepository.findAdviceByAdviceId(adviceId);
+//        advice.setAdviceId();
         adviceRepository.save(advice);
         return getSuccess();
     }

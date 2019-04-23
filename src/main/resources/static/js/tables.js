@@ -45,6 +45,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                          {title:'分类',field:'kindName',align:'center'},
                          {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                          {title:'描述',field:'introduction',align:'center',edit: 'text',width:300},
+                         {title:'可借出/总数',field:'Num',align:'center',edit: 'text',templet:function (d) {
+                                 return d.bookNum+"/"+d.totalNum;
+                             }},
                          // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                          {title:'操作',align:'center',toolbar: '#barDemo'}
                   ]]
@@ -68,12 +71,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'作者',field:'author',align:'center',edit: 'text'},
                         // {title:'类别',field:'kindName',align:'center',edit: 'text'},
                         {title:'出版社',field:'publisher',align:'center',edit: 'text'},
-                        {title:'品质',field:'quality',align:'center'},
+                        {title:'品质',field:'qualityName',align:'center'},
                         {title:'状态',field:'bookStatusId',align:'center',templet:function (d) {
-                                return d.bookStatusName;
-                            }},
-                        {title:'可借出/总数',field:'Num',align:'center',edit: 'text',templet:function (d) {
-                                return d.bookNum+"/"+d.totalNum;
+                                return d.statusName;
                             }},
                         // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                         {title:'操作',align:'center',toolbar: '#barDemo2'}
@@ -151,9 +151,9 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {title:'序号',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'adviceId',align:'center'},
                         {title:'建议人ID',field:'userId',align:'center'},
-                        {title:'建议人姓名',field:'name',align:'center'},
+                        {title:'建议人姓名',field:'realName',align:'center'},
                         {title:'信息',field:'message',align:'center',width:350},
-                        {title:'状态',field:'state',align:'center',edit: 'text'},
+                        // {title:'状态',field:'state',align:'center',edit: 'text'},
                         // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                         {title:'操作',align:'center',toolbar: '#barDemo5'}
                     ]]

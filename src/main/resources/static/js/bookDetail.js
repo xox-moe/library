@@ -19,6 +19,8 @@ layui.use(['layer','element','table','form','laydate'], function(){
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }else if(parent.actionType=='add'){
+        $("input[name='publisher']").attr("readonly", "readonly");
+        $("input[name='author']").attr("readonly", "readonly");
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         // console.log(parent.dataForChild);
@@ -33,6 +35,18 @@ layui.use(['layer','element','table','form','laydate'], function(){
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
             form.render()
+            console.log($("#bookName").val())
+            $.ajax({
+                url:basePath+'tushuxinxiguanli/getBookMessageById'
+                ,data:{
+                    bookMessageId:$("#bookName").val()
+                }
+                ,success:function (res) {
+                    console.log(res)
+                    $("input[name='author']").val(res.data.author);
+                    $("input[name='publisher']").val(res.data.publisher);
+                }
+            });
         }
     });
     $.ajax({
@@ -45,13 +59,27 @@ layui.use(['layer','element','table','form','laydate'], function(){
         }
     });
     $.ajax({
-        url: basePath + "   "
+        url: basePath + "data/listAllQuality"
         , type: 'get'
         , success: function (res) {
             // console.log(res.data);
-            MOD.Form.fillSelect($("#"), res.data, "", "");
+            MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
             form.render()
         }
+    });
+
+    $("#bookName").change(function (d) {
+        console.log("val change");
+        $.ajax({
+            url:basePath+'tushuxinxiguanli/getBookMessageById'
+            ,data:{
+                bookMessageId:d.val()
+            }
+            ,success:function (res) {
+                $("input[name='author']").val(res.data.author);
+                $("input[name='publisher']").val(res.data.publisher);
+            }
+        })
     });
     form.on('submit(save)',function(data){//保存
         var myurl;

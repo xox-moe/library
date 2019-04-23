@@ -3,6 +3,8 @@ package moe.xox.library.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.dao.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,4 +54,19 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "                   on book_message.book_message_id = bookNum.book_message_id " +
             "where user_id = :userId;")
     List<JSONObject> listUserCollection(Long userId);
+
+    @Query(nativeQuery = true,value = "select user.user_id as userId,\n" +
+            "       email        as email,\n" +
+            "       nick_name    as nickName,\n" +
+            "       birthday     as birthday,\n" +
+            "       real_name    as realName,\n" +
+            "       grade        as grade,\n" +
+            "       department   as department,\n" +
+            "       major        as major,\n" +
+            "       sex          as sex,\n" +
+            "       role.role_id as roleId,\n" +
+            "       role_name as roleName\n" +
+            "from user left join user_role on user.user_id = user_role.user_id left join role on  role.role_id = user_role.role_id ",
+            countQuery = "select count(*) from user;")
+    Page<JSONObject> listAllUser(Pageable pageable);
 }

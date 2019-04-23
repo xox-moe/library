@@ -35,10 +35,10 @@ public class UserController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean showBookManagerTable(Integer page, Integer limit){
+    public ReturnBean listAllUser(Integer page, Integer limit){
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<User> userPage = userRepository.findAll(pageable);
-        List<User>userList=userPage.getContent();
+        Page<JSONObject> userPage = userRepository.listAllUser(pageable);
+        List<JSONObject>userList=userPage.getContent();
         return getSuccess("success", userList, userPage.getTotalElements());
     }
 

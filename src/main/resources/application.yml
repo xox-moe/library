@@ -8,7 +8,7 @@ spring:
     password: Af588JrFbKG8CcT3
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      max-lifetime: 1765000
+      max-lifetime: 60000
       maximum-pool-size: 2
   thymeleaf:
     mode: HTML5
