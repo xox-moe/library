@@ -67,13 +67,11 @@ layui.use(['layer','element','table','form','laydate'], function(){
             form.render()
         }
     });
-
-    $("#bookName").change(function (d) {
-        console.log("val change");
+    form.on('select(bookName)', function(d){
         $.ajax({
             url:basePath+'tushuxinxiguanli/getBookMessageById'
             ,data:{
-                bookMessageId:d.val()
+                bookMessageId:d.value
             }
             ,success:function (res) {
                 $("input[name='author']").val(res.data.author);
