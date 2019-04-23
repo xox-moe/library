@@ -7,6 +7,7 @@ import moe.xox.library.dao.UserRepository;
 import moe.xox.library.dao.UserRoleRepository;
 import moe.xox.library.dao.entity.User;
 import moe.xox.library.dao.entity.UserRole;
+import moe.xox.library.utils.ShiorUtils;
 import net.bytebuddy.description.field.FieldDescription;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -16,17 +17,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("yonghuguanli")
 public class UserController extends BaseController {
     @Autowired
@@ -43,7 +41,6 @@ public class UserController extends BaseController {
      * @return json
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public ReturnBean listAllUser(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> userPage = userRepository.listAllUser(pageable);
@@ -76,7 +73,6 @@ public class UserController extends BaseController {
      *   private Long sex;
      */
     @RequestMapping(path = "addUser", method = RequestMethod.POST)
-    @ResponseBody
     public ReturnBean addUser(String email,String nickName,String password,String birthday,String realName,Long grade,String department,String major,Long sex,Long roleId) {
 
         birthday += " 00:00:00";
@@ -94,7 +90,6 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(path = "deleteUser", method = RequestMethod.POST)
-    @ResponseBody
     public ReturnBean deleteUser(@RequestBody JSONObject object) {
 
         if (object == null || !object.containsKey("list"))
@@ -110,19 +105,30 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改User表中一条数据
-     *
-     * @param user
+     * 修改用户信息
+     * @param userId 用户ID
+     * @param roleId 角色ID
+     * @param email 邮箱
+     * @param nickName 昵称
+     * @param password 密码
+     * @param birthday
+     * @param realName
+     * @param grade
+     * @param department
+     * @param major
+     * @param sex
      * @return
      */
     @RequestMapping(path = "updateUser", method = RequestMethod.POST)
-    @ResponseBody
     @Transactional
-    public ReturnBean updateBook(Long userId,Long roleId,String email,String nickName,String password,String birthday,String realName,Long grade,String department,String major,Long sex) {
+    public ReturnBean updateUser(Long userId,Long roleId,String email,String nickName,String password,String birthday,String realName,Long grade,String department,String major,Long sex) {
         birthday += " 00:00:00";
         User oldUser = userRepository.findByUserId(userId);
-        User user = new User(userId, oldUser.getEmail(), nickName, oldUser.getPassword(), LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
+        User user = new User(userId, email, nickName, oldUser.getPassword(), LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
 //        userRepository.updateUserRole( userId,  roleId);
+
+        if(password == null || password.equals(""))
+            user.setPassword(password);
         UserRole userRole = userRoleRepository.findUserRoleByUserId(userId);
         if (userRole == null)
             userRole = new UserRole();
@@ -151,10 +157,18 @@ public class UserController extends BaseController {
         return getFailure("success", user);
     }
 
+    @RequestMapping("getCurrentUserInfo")
+    public ReturnBean getCurrentUserInfo() {
+        Long userId = ShiorUtils.getUserId();
+        User user = userRepository.findByUserId(userId);
+        return getSuccess("OK", user, 1);
+    }
+
 
     /**
      * 查询用户的收藏
      */
+    @RequestMapping("listUserCollection")
     public ReturnBean listUserCollection() {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
