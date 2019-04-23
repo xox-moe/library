@@ -102,12 +102,24 @@ public class BookMassageController extends BaseController {
      * 修改BookMsg表中一条数据
      * @param bookMessage
      * @return
+     *
+     *
+     *  private Long bookMessageId;
+     *   private String name;
+     *   private Long kindId;
+     *   private String author;
+     *   private String publisher;
+     *   private String introduction;
+     *   private Boolean status;
+     *   private Long creatorId;
+     *   private LocalDateTime createTime;
+     *   private String isbn;
      */
     @RequestMapping(path = "updateBookMsg",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public  ReturnBean deleteBookMsg(BookMessage bookMessage){
-        bookMessage.setCreateTime(LocalDateTime.now());
-        bookMessage.setStatus(true);
+    public  ReturnBean deleteBookMsg(Long bookMessageId,String name,Long kindId,String author,String publisher,String introduction,String ISBN){
+        Long userId = ShiorUtils.getUserId();
+        BookMessage bookMessage = new BookMessage(bookMessageId,name,kindId,author,publisher,introduction,true,userId,LocalDateTime.now(),ISBN);
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
