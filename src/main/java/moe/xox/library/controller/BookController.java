@@ -71,17 +71,23 @@ public class BookController extends BaseController {
      * 向Book表中新增一条图书信息
      * 反馈一条消息
      * @return msg
+     *
+     *
+     *  private Long bookId;
+     *   private Long bookMessageId;
+     *   private Long bookStatusId;
+     *   private Long quality;
      */
     @RequestMapping(path = "addBook",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean addBook(Book book){
-        book.setCreateTime(LocalDateTime.now());
-        book.setBookId(null);
+    public  ReturnBean addBook(Long bookMessageId,Long bookStatusId,Long qualityId){
+        Book book = new Book(null,bookMessageId,bookStatusId,qualityId,null,LocalDateTime.now(),true);
+//        book.setBookId(null);
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         book.setCreatorId(user.getUserId()+"");
-        book.setStatus(true);
-        book.setBookStatusId(BookStatusEnum.NORMAL.id);
+//        book.setStatus(true);
+//        book.setBookStatusId(BookStatusEnum.NORMAL.id);
         bookRepository.save(book);
         return getSuccess();
     }
@@ -93,19 +99,19 @@ public class BookController extends BaseController {
     @RequestMapping(path = "deleteBook",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean deleteBook(@RequestBody JSONObject object){
-        List<Long> list;
+        List<Integer> list;
 
         if(object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
         try{
-            list = (List<Long>) object.get("list");
+            list = (List<Integer>) object.get("list");
         }catch (Exception ex){
             return getFailure("请求格式不正确");
         }
 
         List<Book> bookList = new ArrayList<>();
-        for (Long aLong : list) {
-            Book book = bookRepository.findByBookId(aLong);
+        for (Integer aLong : list) {
+            Book book = bookRepository.findByBookId(aLong.longValue());
             book.setStatus(false);
             bookList.add(book);
         }

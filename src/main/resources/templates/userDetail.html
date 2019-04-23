@@ -18,7 +18,13 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label ">用户名</label>
+            <label class="layui-form-label ">姓名</label>
+            <div class="layui-input-inline middle">
+                <input type="text" name="realName" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">昵称</label>
             <div class="layui-input-inline middle">
                 <input type="text" name="nickName" class="layui-input" lay-verify="required"/>
             </div>
@@ -43,10 +49,8 @@
         <label class="layui-form-label ">账号类型</label>
         <div class="layui-input-inline middle">
             <label>
-                <select type="text" name="roleId" lay-search="" lay-verify="required">
+                <select type="text" id="roleId" name="roleId" lay-search="" lay-verify="required">
                     <option value="">请选择</option>
-                    <option value="0">user</option>
-                    <option value="1">admin</option>
                 </select>
             </label>
         </div>

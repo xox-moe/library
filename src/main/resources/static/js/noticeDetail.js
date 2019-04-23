@@ -8,7 +8,10 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,table = layui.table
         ,form = layui.form
         ,laydate=layui.laydate;
-
+    var setDate = {
+        min: ''
+        , max: ''
+    };
     console.log(parent.actionType);
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
@@ -25,11 +28,10 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("#time").val(parent.dataForChild.beginTime + " - " + parent.dataForChild.endTime).attr("disabled", "disabled");
         MOD.Form.fillForm($('#noticeDetail'),parent.dataForChild);
         form.render();
+        setDate.min=$("#time").val().split(" - ")[0];
+        setDate.max=$("#time").val().split(" - ")[1];
     }
-   var setDate = {
-        min: ''
-        , max: ''
-    };
+
     laydate.render({
         elem: '#time'
         , type: 'datetime'

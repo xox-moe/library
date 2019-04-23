@@ -8,6 +8,7 @@ import moe.xox.library.dao.NoticeRepository;
 import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.Notice;
 import moe.xox.library.dao.entity.User;
+import moe.xox.library.utils.ShiorUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -82,7 +83,7 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(path = "deleteNotice",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean updateNotice(@RequestBody JSONObject object){
+    public ReturnBean deleteNotice(@RequestBody JSONObject object){
 
         if(object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
@@ -102,10 +103,16 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(path = "updateNotice",method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteNotice(Notice notice){
-        Notice oldNotice = noticeRepository.findNoticeByNoticeId(notice.getNoticeId());
-        oldNotice.setMessage(notice.getMessage());
-        noticeRepository.save(oldNotice);
+    public  ReturnBean updateNotice(Long noticeId,String message,String beginTime,String endTime){
+
+//        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+        Notice notice = new Notice(noticeId, null,null,message, ShiorUtils.getUserId(),LocalDateTime.now());
+        notice.setBeginTime(LocalDateTime.parse(beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        notice.setEndTime(LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//        Notice oldNotice = noticeRepository.findNoticeByNoticeId(notice.getNoticeId());
+//        oldNotice.setMessage(notice.getMessage());
+        noticeRepository.save(notice);
         return getSuccess();
     }
 

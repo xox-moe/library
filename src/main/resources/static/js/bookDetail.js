@@ -24,6 +24,9 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         // console.log(parent.dataForChild);
+        $("#bookName").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("input[name='publisher']").attr("readonly", "readonly");
+        $("input[name='author']").attr("readonly", "readonly");
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }
@@ -37,7 +40,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             form.render()
             console.log($("#bookName").val())
             $.ajax({
-                url:basePath+'tushuxinxiguanli/getBookMessageById'
+                url:basePath+'tushuxinxiguanli/getAuthorAndPublisherByBookMsgId'
                 ,data:{
                     bookMessageId:$("#bookName").val()
                 }
@@ -69,7 +72,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
     });
     form.on('select(bookName)', function(d){
         $.ajax({
-            url:basePath+'tushuxinxiguanli/getBookMessageById'
+            url:basePath+'tushuxinxiguanli/getAuthorAndPublisherByBookMsgId'
             ,data:{
                 bookMessageId:d.value
             }

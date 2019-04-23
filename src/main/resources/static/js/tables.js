@@ -115,7 +115,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         {type:'checkbox',align:'center'},
                         {title:'序号',sort:'true',align:'center',type:'numbers',width:60},
                         {title:'ID',field:'userId',align:'center'},
-                        {title:'用户名',field:'realName',align:'center',edit: 'text'},
+                        {title:'姓名',field:'realName',align:'center',edit: 'text'},
                         {title:'昵称',field:'nickName',align:'center',edit: 'text'},
                         {title:'性别',field:'sex',align:'center',edit: 'text',templet:function (d) { 
                             if(d.sex=='1'){
@@ -365,7 +365,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 }
                                 console.log(idList);
                                 $.ajax({
-                                    url: basePath + 'tushuxinxiguanli/deleteBookMsg'
+                                    url: basePath + 'churukuguanli/deleteBook'
                                     ,contentType:'application/json'
                                     , data: JSON.stringify(mydata)
                                     ,type:'post'
@@ -398,7 +398,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         var $ = layui.$;
                         $.ajax({
                             type: 'post'
-                            ,url: basePath+"tushuxinxiguanli/updateBookMsg",
+                            ,url: basePath+"churukuguanli/updateBook",
                             // ajax请求路径
                             data: data,
                             success: function (data) {
@@ -431,7 +431,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 list:idList
                             };
                             $.ajax({
-                                url: basePath + 'tushuxinxiguanli/deleteBookMsg'
+                                url: basePath + 'churukuguanli/deleteBook'
                                 ,contentType:'application/json'
                                 , data: JSON.stringify(mydata)
                                 ,type:'post'

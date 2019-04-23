@@ -3,6 +3,7 @@ package moe.xox.library.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.dao.entity.User;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,7 +33,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "where email = :email ")
     Set<String> listRoleNamesByEmail(String email);
 
-    User findByUserId(Integer id);
+    User findByUserId(Long id);
 
 
     @Query(nativeQuery = true,value = "select collection.create_time as collectionTime,\n" +
@@ -69,4 +70,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "from user left join user_role on user.user_id = user_role.user_id left join role on  role.role_id = user_role.role_id ",
             countQuery = "select count(*) from user;")
     Page<JSONObject> listAllUser(Pageable pageable);
+
+//    @Update(value = "update  user_role  set  role_id =  :roleId , status = 1  where user_id = :userId ")
+//    void updateUserRole(Long userId, Long roleId);
 }

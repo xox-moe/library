@@ -26,6 +26,15 @@ layui.use(['layer','element','table','form','laydate'], function(){
         form.render();
     }
 
+    $.ajax({
+        url: basePath + 'data/listAllRole'
+        , type: 'get'
+        , success: function (res) {
+            MOD.Form.fillSelect($("#roleId"), res.data,"roleId", "roleName");
+            form.render()
+        }
+    });
+
     form.on('submit(save)',function(data){//保存
         var myurl;
         if(parent.actionType=='edit')

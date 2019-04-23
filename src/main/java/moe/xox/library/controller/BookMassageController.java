@@ -145,6 +145,14 @@ public class BookMassageController extends BaseController {
         return getSuccess("OK", list, list.size());
     }
 
+    @RequestMapping(path = "getAuthorAndPublisherByBookMsgId",method = {RequestMethod.GET})
+    @ResponseBody
+    public ReturnBean getAuthorAndPublisherByBookMsgId(Long bookMessageId){
+        JSONObject object = bookMsgRepository.getAuthorAndPublisherByBookMsgId(bookMessageId);
+        return getSuccess("OK", object, 1);
+    }
+
+
     /**
      * 图书推荐页面
      */

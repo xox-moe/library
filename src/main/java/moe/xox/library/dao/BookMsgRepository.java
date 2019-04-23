@@ -96,4 +96,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             "       introduction like concat('%', '', '%') or author like concat('%', '', '%'))\n" +
             "  and status = true;")
     List<JSONObject> listBookMsgHomePage();
+
+    @Query(nativeQuery = true,value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
+    JSONObject getAuthorAndPublisherByBookMsgId(Long bookMessageId);
 }
