@@ -31,6 +31,8 @@ public class BorrowService {
         if(oldBorrowInfo != null)
             return -1; //该书已被这位同学借走 不要重复提交
         Book book = bookRepository.findByBookId(bookId);
+        if(book == null)
+            return -3;
         if(book.getBookStatusId() != BookStatusEnum.NORMAL.getId()){
             return -2;//书已经借出
         }

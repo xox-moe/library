@@ -132,8 +132,18 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "where status = true;")
     List<JSONObject> listAllBookMsgIdAndName();
 
-    @Query(nativeQuery = true, value = "select *\n" +
-            "from book_message where status = true order by rand() limit :limit ;")
+    @Query(nativeQuery = true, value = "select book_message_id as bookMessageId,\n" +
+            "       name as name,\n" +
+            "       kind_id as kindId,\n" +
+            "       author,\n" +
+            "       publisher,\n" +
+            "       introduction,\n" +
+            "       status,\n" +
+            "       ISBN\n" +
+            "from book_message\n" +
+            "where status = true\n" +
+            "order by rand()\n" +
+            "limit :limit ;")
     List<JSONObject> listBookMsgRandom(@Param("limit")int limit);
 
     @Query(nativeQuery = true, value = "select book_message_id as bookMessageId,\n" +

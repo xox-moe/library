@@ -21,6 +21,8 @@ public class BorrowController extends BaseController {
                 return getFailure("该书已被这位同学借走 不要重复提交");
             case -2:
                 return getFailure("书已经借出");
+            case -3:
+                return getFailure("请求参数不正确,不存在该书");
             case 0:
                 return getSuccess();
             default:

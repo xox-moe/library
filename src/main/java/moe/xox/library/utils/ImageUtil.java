@@ -12,7 +12,7 @@ import org.apache.commons.codec.binary.Base64;
 public class ImageUtil {
 
 
-    public static String bastPath = "C:\\Users\\xoxmo\\IdeaProjects\\re_library\\src\\main\\resources\\img";
+    public static String bastPath = "F:\\library\\image";
 
 
     //将图片装换为base64字符串
@@ -34,7 +34,7 @@ public class ImageUtil {
         inputStream.read(bytes);
         inputStream.close();
         Base64 encoder = new Base64();
-        return "data:image/"+ imageFormat+";base64,"+encoder.encode(bytes);
+        return "data:image/"+ imageFormat+";base64,"+ new String(encoder.encode(bytes)) ;
     }
 
 

@@ -1,25 +1,22 @@
 package moe.xox.library.controller;
 
 import moe.xox.library.controller.vo.ReturnBean;
+import moe.xox.library.utils.ImageUtil;
+import moe.xox.library.utils.StringUtil;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static io.swagger.models.refs.RefType.PATH;
+
+@RestController
 public class ImageController extends BaseController {
 
-    /***
-     * 图片查询demo
-     */
 
-    /**
-     * 获取资料列表
-     * @param courseId
-     * @param courseTypeId
-     * @return
-     * @throws IllegalAccessException
-     * @throws IOException
-     */
 //    public List<Map> getMaterialTypeByCourseId(String courseId, Integer courseTypeId) throws IllegalAccessException, IOException {
 //        //获取文件列表
 //        List<MaterialType> list = materialTypeRepository.findAllByCourseTypeId(courseTypeId);
@@ -49,8 +46,10 @@ public class ImageController extends BaseController {
 //    }
 
 
-    public ReturnBean getImg(String msg) {
-
-        return super.getSuccess(msg);
+    @RequestMapping("getImg")
+    public ReturnBean getImg(String msg) throws IOException {
+        String path = "F:\\library\\image\\123.png";
+        String img = ImageUtil.imageToString(path);
+        return getSuccess("OK",img,1);
     }
 }
