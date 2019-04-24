@@ -168,8 +168,8 @@ public class BookMassageController extends BaseController {
      */
     @RequestMapping(path = "listBookMsgHomePage", method = {RequestMethod.GET})
     @ResponseBody
-    public ReturnBean listBookMsgHomePage(String name, String publisher, String introduction, String author) {
-        List<JSONObject> list = bookMsgRepository.listBookMsgHomePage(name, publisher, introduction, author);
+    public ReturnBean listBookMsgHomePage(String unionSearch) {
+        List<JSONObject> list = bookMsgRepository.listBookMsgHomePage(unionSearch);
         return getSuccess("OK", list, list.size());
     }
 

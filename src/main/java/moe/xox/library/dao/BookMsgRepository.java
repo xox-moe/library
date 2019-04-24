@@ -93,11 +93,10 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       publisher,\n" +
             "       introduction\n" +
             "from book_message\n" +
-            "where (name like concat('%', '', '%') or publisher like concat('%', '', '%') or\n" +
-            "       introduction like concat('%', '', '%') or author like concat('%', '', '%'))\n" +
+            "where (name like concat('%', :unionSearch, '%') or publisher like concat('%', :unionSearch, '%') or\n" +
+            "       introduction like concat('%', :unionSearch, '%') or author like concat('%', :unionSearch, '%'))\n" +
             "  and status = true;")
-    List<JSONObject> listBookMsgHomePage(@Param("name") String name, @Param("publisher") String publisher,
-                                         @Param("introduction") String introduction, @Param("author") String author);
+    List<JSONObject> listBookMsgHomePage(@Param("unionSearch") String unionSearch);
 
     @Query(nativeQuery = true, value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
     JSONObject getAuthorAndPublisherByBookMsgId(@Param("bookMessageId") Long bookMessageId);
