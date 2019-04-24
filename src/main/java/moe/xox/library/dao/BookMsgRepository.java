@@ -14,7 +14,36 @@ import java.util.List;
 public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
 
 
-    BookMessage getBookMessageByBookMessageId(Long bookMessageId);
+    @Query(nativeQuery = true,value = "select bookMsg.book_message_id     as bookMessageId,\n" +
+            "       name                        as name,\n" +
+            "       bookMsg.kind_id             as kindId,\n" +
+            "       author                      as author,\n" +
+            "       publisher                   as publisher,\n" +
+            "       introduction                as introduction,\n" +
+            "       bookMsg.status              as status,\n" +
+            "       creator_id                  as creatorId,\n" +
+            "       create_time                 as createTime,\n" +
+            "       ISBN                        as ISBN,\n" +
+            "       kind_name                   as kindName,\n" +
+            "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
+            "       IFNULL(bookNum.totalNum, 0) as totalNum\n" +
+            "from book_message bookMsg\n" +
+            "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
+            "         left join (select book_message_id, IFNULL(count(*), 0) as freeNum\n" +
+            "                    from book\n" +
+            "                    where book_status_id = 4\n" +
+            "                      and status = true\n" +
+            "                    group by book_message_id) freeNum\n" +
+            "                   on bookMsg.book_message_id = freeNum.book_message_id\n" +
+            "         left join (select book_message_id, IFNULL(count(*), 0) as totalNum\n" +
+            "                    from book\n" +
+            "                    where status = true\n" +
+            "                      and (book_status_id = 4 or book_status_id = 1)\n" +
+            "                    group by book_message_id) bookNum\n" +
+            "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
+            "where bookMsg.status = true\n" +
+            "  and bookMsg.book_message_id = :bookMessageId ;")
+    JSONObject getBookMessageByBookMessageId(Long bookMessageId);
 
 
     @Query(nativeQuery = true, value = "select bookMsg.book_message_id     as bookMessageId,\n" +
@@ -78,6 +107,26 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "                            on book_message.book_message_id = bookNum.book_message_id")
     List<JSONObject> listTopTenBook();
 
+    @Query(nativeQuery = true,value = "select\n" +
+            "       collectionNum,\n" +
+            "       book_message.book_message_id as bookMessageId,\n" +
+            "       name as name,\n" +
+            "       kind_id as kindId,\n" +
+            "       author as author,\n" +
+            "       publisher as publisher,\n" +
+            "       introduction as intorudction,\n" +
+            "       IFNULL(bookNum,0) as freeNum\n" +
+            "from (select book_message_id, count(*) as collectionNum\n" +
+            "from collection\n" +
+            "group by book_message_id order by collectionNum desc limit 10 ) collectionTen   \n" +
+            " left join book_message on collectionTen.book_message_id = book_message.book_message_id\n" +
+            "         left join (select book_message_id, IFNULL(count(*), 0) as bookNum\n" +
+            "                    from book\n" +
+            "                    where book_status_id = 4\n" +
+            "                    group by book_message_id) bookNum\n" +
+            "                   on book_message.book_message_id = bookNum.book_message_id;")
+    List<JSONObject> listTopTenCollectionBook();
+
     @Query(nativeQuery = true, value = "select book_message_id as bookMessageId, name bookMassageName , author as author,publisher as publisher  \n" +
             "from book_message\n" +
             "where status = true;")
@@ -85,7 +134,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
 
     @Query(nativeQuery = true, value = "select *\n" +
             "from book_message where status = true order by rand() limit :limit ;")
-    List<JSONObject> listBookMsgRandom(int limit);
+    List<JSONObject> listBookMsgRandom(@Param("limit")int limit);
 
     @Query(nativeQuery = true, value = "select book_message_id as bookMessageId,\n" +
             "       name as bookMassageName,\n" +

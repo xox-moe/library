@@ -98,6 +98,7 @@
             <artifactId>common-io</artifactId>
             <version>3.3</version>
         </dependency>
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -110,15 +111,21 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.5.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>5.0.0.Alpha2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-all</artifactId>-->
+<!--            <version>5.0.0.Alpha2</version>-->
+<!--        </dependency>-->
 
+<!--        为了支持Java最新的时间包-->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
     </dependencies>
