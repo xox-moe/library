@@ -29,6 +29,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
         }
     })
 $('.collection').on('click',function () {
+
     layer.tips('没服务收藏成功', '.collection', {
         tips: [2, '#78BA32']
     });

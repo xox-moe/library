@@ -384,12 +384,12 @@
                                         <div class="layui-col-md5" style="margin: 30px">
                                             <div class="grid-demo grid-demo-bg1">
                                                 <span style="color:red;">最畅销</span>
-                                                <table class="layui-table" lay-data="{url:'',  id:'test'}" lay-skin="line" lay-filter="rank">
+                                                <table class="layui-table" lay-data="{url:'tushuxinxiguanli/listTopTenBook',  id:'test'}" lay-skin="line" lay-filter="rank">
                                                     <thead>
                                                     <tr>
                                                         <th lay-data="{type:'numbers',width:80,align:'center'}">排名</th>
-                                                        <th lay-data="{field:'',width:300,align:'center'}">书名</th>
-                                                        <th lay-data="{field:'',width:301,align:'center'}">作者</th>
+                                                        <th lay-data="{field:'name',width:300,align:'center'}">书名</th>
+                                                        <th lay-data="{field:'author',width:306,align:'center'}">作者</th>
                                                     </tr>
                                                     </thead>
                                                 </table>
@@ -398,12 +398,12 @@
                                         <div class="layui-col-md5" style="margin: 30px">
                                             <div class="grid-demo">
                                                 <span style="color: red">收藏最多</span>
-                                                <table class="layui-table" lay-data="{url:'',  id:'test'}" lay-skin="line" lay-filter="rank">
+                                                <table class="layui-table" lay-data="{url:'tushuxinxiguanli/listTopTenCollectionBook',  id:'test'}" lay-skin="line" lay-filter="rank">
                                                     <thead>
                                                     <tr>
                                                         <th lay-data="{type:'numbers',width:80,align:'center'}">排名</th>
-                                                        <th lay-data="{field:'',width:300,align:'center'}">书名</th>
-                                                        <th lay-data="{field:'',width:301,align:'center'}">作者</th>
+                                                        <th lay-data="{field:'name',width:300,align:'center'}">书名</th>
+                                                        <th lay-data="{field:'author',width:306,align:'center'}">作者</th>
                                                     </tr>
                                                     </thead>
                                                 </table>
@@ -720,6 +720,57 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">图书信息管理</div>
                                 <div class="layui-card-body" pad15="">
+                                    <form action="" class="layui-form layui-form-pane" id="bookForm">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">书名</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="bookNum" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">作者</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="author" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">分类</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="kindId" lay-search="">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">出版社</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="publisher" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">有无库存</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="" lay-search="" >
+                                                        <option value="">请选择</option>
+                                                        <option value="">有</option>
+                                                        <option value="">无</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table1" lay-filter="test1"></table>
                                     <script type="text/html" id="barDemo">
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -741,6 +792,62 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">出入库管理</div>
                                 <div class="layui-card-body" pad15="">
+                                    <form action="" class="layui-form layui-form-pane" id="bookMsgForm">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">书名</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="bookNum" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">作者</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="author" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">出版社</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="publisher" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">品质</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="qualityId" lay-search="" >
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">借阅人</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="" lay-search="" >
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">状态</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="bookStatusId" lay-search="" >
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table2" lay-filter="test2"></table>
                                     <script type="text/html" id="barDemo2">
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -762,6 +869,32 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">公告管理</div>
                                 <div class="layui-card-body" pad15="">
+                                    <form action="" class="layui-form layui-form-pane" id="noticeForm">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">开始时间</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">结束时间</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table3" lay-filter="test3"></table>
                                     <script type="text/html" id="barDemo3">
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -783,6 +916,71 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">用户管理</div>
                                 <div class="layui-card-body" pad15="">
+                                    <form action="" class="layui-form layui-form-pane" id="userForm">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">姓名</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">昵称</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">生日</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">邮箱</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">年级</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">学院</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">专业</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">账号类型</label>
+                                                <div class="layui-input-inline middle">
+                                                    <select name="roleId" lay-search="" >
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table4" lay-filter="test4"></table>
                                     <script type="text/html" id="barDemo4">
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -804,6 +1002,32 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">反馈管理</div>
                                 <div class="layui-card-body" pad15="">
+                                    <form action="" class="layui-form layui-form-pane" id="adviceForm">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">建议人ID</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">姓名</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-inline">
+                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <table class="layui-hide" id="table5" lay-filter="test5"></table>
                                     <script type="text/html" id="barDemo5">
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>

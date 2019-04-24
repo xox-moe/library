@@ -72,6 +72,11 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                         // {title:'类别',field:'kindName',align:'center',edit: 'text'},
                         {title:'出版社',field:'publisher',align:'center'},
                         {title:'品质',field:'qualityName',align:'center'},
+                        {title:'借阅人',field:'',align:'center',templet:function (d) {
+                                if(d.bookStatusId!=1){
+                                    return "暂无";
+                                }
+                            }},
                         {title:'状态',field:'bookStatusId',align:'center',templet:function (d) {
                                 return d.statusName;
                             }},

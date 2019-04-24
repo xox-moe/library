@@ -23,6 +23,42 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         //,height: 100
     });
 
+    //填写select
+    $.ajax({
+        url: basePath + "data/listAllBookKind"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("select[name='kindId']"), res.data, "kindId", "kindName");
+            from.render();
+        }
+    });
+    $.ajax({
+        url: basePath + "data/listAllBookStatus"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("select[name='bookStatusId']"), res.data, "bookStatusId", "bookStatusName");
+            form.render()
+        }
+    });
+    $.ajax({
+        url: basePath + "data/listAllQuality"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("select[name='qualityId']"), res.data, "qualityId", "qualityName");
+            form.render()
+        }
+    });
+    $.ajax({
+        url: basePath + 'data/listAllRole'
+        , type: 'get'
+        , success: function (res) {
+            MOD.Form.fillSelect($("select[name='roleId']"), res.data,"roleId", "roleName");
+            form.render();
+        }
+    });
     //主页书籍
     function homeGoods(unionSearch){
         $.ajax({

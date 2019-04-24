@@ -72,6 +72,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("input[name='publisher']").attr("readonly", "readonly");
         $("input[name='author']").attr("readonly", "readonly");
         $("#IDinput").addClass("layui-hide");
+        $("#bookNum").removeClass("layui-hide")
     }else if(parent.actionType=='edit'){
         // console.log(parent.dataForChild);
         $("#bookName").attr("readonly", "readonly").attr("disabled", "disabled");
@@ -131,4 +132,11 @@ layui.use(['layer','element','table','form','laydate'], function(){
         parent.layer.close(mywindow); //再执行关闭
     });
 
+    form.verify({
+        moreThanOne:function (value) {
+            if (value < 0||value>1000) {
+                return "数值不合理";
+            }
+        }
+    });
 });
