@@ -9,15 +9,65 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,form = layui.form
         ,laydate=layui.laydate;
 
-    // console.log(parent.actionType);
+    //填写select
+    $.ajax({
+        url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
+            if(parent.actionType=='detail'||parent.actionType=='edit'){
+                MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
+                form.render();
+            }
+            form.render()
+            console.log($("#bookName").val())
+            $.ajax({
+                url:basePath+'tushuxinxiguanli/getAuthorAndPublisherByBookMsgId'
+                ,data:{
+                    bookMessageId:$("#bookName").val()
+                }
+                ,success:function (res) {
+                    console.log(res);
+                    $("input[name='author']").val(res.data.author);
+                    $("input[name='publisher']").val(res.data.publisher);
+                    form.render();
+                }
+            });
+        }
+    });
+    $.ajax({
+        url: basePath + "data/listAllBookStatus"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
+            if(parent.actionType=='detail'||parent.actionType=='edit'){
+                MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
+                form.render();
+            }
+            form.render()
+        }
+    });
+    $.ajax({
+        url: basePath + "data/listAllQuality"
+        , type: 'get'
+        , success: function (res) {
+            // console.log(res.data);
+            MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
+            if(parent.actionType=='detail'||parent.actionType=='edit'){
+                MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
+                form.render();
+            }
+            form.render()
+        }
+    });
+    console.log(parent.actionType);
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");
         $("form textarea").attr("readonly","readonly");
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("button").addClass("layui-hide");
-        // console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
-        form.render();
     }else if(parent.actionType=='add'){
         $("input[name='publisher']").attr("readonly", "readonly");
         $("input[name='author']").attr("readonly", "readonly");
@@ -30,46 +80,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
         form.render();
     }
-    //填写select
-    $.ajax({
-        url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
-        , type: 'get'
-        , success: function (res) {
-            // console.log(res.data);
-            MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
-            form.render()
-            console.log($("#bookName").val())
-            $.ajax({
-                url:basePath+'tushuxinxiguanli/getAuthorAndPublisherByBookMsgId'
-                ,data:{
-                    bookMessageId:$("#bookName").val()
-                }
-                ,success:function (res) {
-                    console.log(res)
-                    $("input[name='author']").val(res.data.author);
-                    $("input[name='publisher']").val(res.data.publisher);
-                }
-            });
-        }
-    });
-    $.ajax({
-        url: basePath + "data/listAllBookStatus"
-        , type: 'get'
-        , success: function (res) {
-            // console.log(res.data);
-            MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
-            form.render()
-        }
-    });
-    $.ajax({
-        url: basePath + "data/listAllQuality"
-        , type: 'get'
-        , success: function (res) {
-            // console.log(res.data);
-            MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
-            form.render()
-        }
-    });
+
     form.on('select(bookName)', function(d){
         $.ajax({
             url:basePath+'tushuxinxiguanli/getAuthorAndPublisherByBookMsgId'

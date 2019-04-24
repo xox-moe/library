@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -98,5 +99,5 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
     List<JSONObject> listBookMsgHomePage();
 
     @Query(nativeQuery = true,value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
-    JSONObject getAuthorAndPublisherByBookMsgId(Long bookMessageId);
+    JSONObject getAuthorAndPublisherByBookMsgId(@Param("bookMessageId") Long bookMessageId);
 }

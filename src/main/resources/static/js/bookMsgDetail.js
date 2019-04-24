@@ -10,31 +10,31 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         ,laydate=layui.laydate
         ,upload=layui.upload;
 
-    console.log(parent.actionType);
-    if(parent.actionType=='detail'){
-        $("form input").attr("readonly","readonly");
-        $("form textarea").attr("readonly","readonly");
-        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
-        $("button").addClass("layui-hide");
-        console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
-        form.render();
-    }else if(parent.actionType=='add'){
-        $("#IDinput").addClass("layui-hide");
-    }else if(parent.actionType=='edit'){
-        console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
-        form.render();
-    }
     $.ajax({
         url: basePath + "data/listAllBookKind"
         , type: 'get'
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#kindId"), res.data, "kindId", "kindName");
-            form.render()
+            form.render();
+            if(parent.actionType=='detail'||parent.actionType=='edit'){
+                // $("#kindId").val(parent.dataForChild.kindId);
+                MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+                form.render();
+            }
         }
     });
+    console.log(parent.actionType);
+    if(parent.actionType=='detail'){
+        $("form input").attr("readonly","readonly");
+        $("form textarea").attr("readonly","readonly");
+        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("button").addClass("layui-hide");
+    }else if(parent.actionType=='add'){
+        $("#IDinput").addClass("layui-hide");
+    }else if(parent.actionType=='edit'){
+        console.log(parent.dataForChild);
+    }
     var uploadInst = upload.render({
         elem: '#test1'
         ,url: '/upload/'
