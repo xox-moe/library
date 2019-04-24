@@ -43,7 +43,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
             "where bookMsg.status = true\n" +
             "  and bookMsg.book_message_id = :bookMessageId ;")
-    JSONObject getBookMessageByBookMessageId(Long bookMessageId);
+    JSONObject getBookMessageByBookMessageId(@Param("bookMessageId") Long bookMessageId);
 
 
     @Query(nativeQuery = true, value = "select bookMsg.book_message_id     as bookMessageId,\n" +
