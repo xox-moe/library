@@ -22,6 +22,96 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         //,tool: []
         //,height: 100
     });
+
+    //主页书籍
+    function homeGoods(unionSearch){
+        $.ajax({
+            url:basePath+'tushuxinxiguanli/listBookMsgHomePage'
+            ,type:'get'
+            ,data:{
+                unionSearch: unionSearch
+            }
+            ,success:function (res) {
+                $.each(res.data,function (i,item) {
+                    console.log(item.bookMessageId);
+                    if (i == 4) {
+                        return false;
+                    }
+                    $("#showGoods").last().append(
+                        '<div class=" goods layui-col-xs2 animated fadeIn" id="showGoods-'+item.bookMessageId+'">' +
+                        '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
+                        '<a href="javascript:;">' +
+                        '<img style="width: 100%;" src="img/商品.jpg">' +
+                        '</a>' +
+                        '<a href="javascript:;">' +
+                        '<div class="cmdlist-text">' +
+                        '<p class="info">书名:' + item.bookMassageName + '</p>' +
+                        '<p class="info" style="color: grey">作者:' + item.author + '</p>' +
+                        '</div>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                });
+                //图书详情页
+                $('.goods').on('click',function (data) {
+                    dataForChild=data.currentTarget.id.split("-")[1];
+                    console.log(dataForChild);
+                    layer.open({
+                        type: 2,
+                        title:"图书详情",
+                        area: ['1000px', '680px'],
+                        skin: 'layui-layer-rim', //加上边框
+                        content:basePath+'good'
+                    });
+                });
+            }
+        });
+    }
+    //图书推荐书籍
+    function recomendGoods(){
+        $.ajax({
+            url:basePath+'tushuxinxiguanli/listBookMsgRandom'
+            ,type:'get'
+            ,data:{
+                limit:5
+            }
+            ,success:function (res) {
+                $("#recommend").empty();
+                $.each(res.data, function (i, item) {
+                    $("#recommend").last().append(
+                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" id=recommendId-"'+item.bookMessageId+'">' +
+                        '<div class="grid-demo grid-demo-bg1">' +
+                        '<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">' +
+                        '<div class="layui-col-md12">' +
+                        '<div class="grid-demo grid-demo-bg1">' +
+                        '<img style="width: 100%;" src="img/商品.jpg">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="layui-col-md12">' +
+                        '<div class="cmdlist-text" style="">' +
+                        '<p class="info">' +item.introduction+
+                        '</p> </div> </div> </div> </div> </div>'
+                    )
+                });
+                //图书详情页
+                $('.goods').on('click',function (data) {
+                    console.log(data);
+                    dataForChild=data.currentTarget.id.split("-")[1];
+                    console.log(dataForChild);
+                    layer.open({
+                        type: 2,
+                        title:"图书详情",
+                        area: ['1000px', '680px'],
+                        skin: 'layui-layer-rim', //加上边框
+                        content:basePath+'good'
+                    });
+                });
+            }
+        })
+    }
+    homeGoods('');
+
     //监听导航点击
     element.on('nav(demo)', function(elem){
         var layuiId =( $(this).parent().attr('id').split('-')[1])%16;//标号
@@ -35,13 +125,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
             }
         });
         if (layuiId == 4) {//图书推荐
-            $.ajax({
-                url:basePath+''
-                ,type:'get'
-                ,success:function (res) {
-
-                }
-            })
+            recomendGoods();
         }
         if(layuiId==5){//个人信息
             $.ajax({
@@ -73,51 +157,10 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
             });
         }
     });
-    $.ajax({
-        url:basePath+'tushuxinxiguanli/listBookMsgHomePage'
-        ,type:'get'
-        ,data:{
-            unionSearch: ''
-        }
-        ,success:function (res) {
-            $.each(res.data,function (i,item) {
-                if (i == 4) {
-                    return false;
-                }
-                $("#showGoods").last().append(
-                    '<div class=" goods layui-col-xs2 animated fadeIn" id="'+item.bookMessageId+'">' +
-                    '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
-                    '<a href="javascript:;">' +
-                    '<img style="width: 100%;" src="img/商品.jpg">' +
-                    '</a>' +
-                    '<a href="javascript:;">' +
-                    '<div class="cmdlist-text">' +
-                    '<p class="info">书名:' + item.bookMassageName + '</p>' +
-                    '<p class="info" style="color: grey">作者:' + item.author + '</p>' +
-                    '</div>' +
-                    '</a>' +
-                    '</div>' +
-                    '</div>'
-                );
-            });
-        }
-    });
 
-    //图书详情页
-    $('.goods').on('click',function (data) {
-        dataForChild=data.id;
-        console.log(data);
-        layer.open({
-            type: 2,
-            title:"图书详情",
-            area: ['1000px', '680px'],
-            skin: 'layui-layer-rim', //加上边框
-            content:basePath+'good'
-        });
-    });
+
     //修改个人信息
     element.on('button(setmyinfo)', function(elem){
-
 
     });
     //搜索按钮点击
@@ -126,33 +169,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         setTimeout(function(){
             layer.closeAll('loading');
         }, 1500);
-        $.ajax({
-            url:basePath+'tushuxinxiguanli/listBookMsgHomePage'
-            ,type:'get'
-            ,data: {
-                unionSearch: $("input[name='index_search']").val()
-            }
-            ,success:function (res) {
-                $("#showGoods").empty();
-                $.each(res.data,function (i,item) {
-                    $("#showGoods").last().append(
-                        '<div class=" goods layui-col-xs2 animated fadeIn" id="'+item.bookMessageId+'">' +
-                        '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
-                        '<a href="javascript:;">' +
-                        '<img style="width: 100%;" src="img/商品.jpg">' +
-                        '</a>' +
-                        '<a href="javascript:;">' +
-                        '<div class="cmdlist-text">' +
-                        '<p class="info">书名:' + item.bookMassageName + '</p>' +
-                        '<p class="info" style="color: grey">作者:' + item.author + '</p>' +
-                        '</div>' +
-                        '</a>' +
-                        '</div>' +
-                        '</div>'
-                    )
-                });
-            }
-        });
+        $("#showGoods").empty();
+        var unionSearch = $("input[name='index_search']").val();
+        homeGoods(unionSearch);
+    });
+    //换一批
+    $("#reloadRecommend").on('click', function () {
+        $("#recommend").empty();
+        recomendGoods();
     });
     //重新填写按钮
     $('#userInfoReset').on('click',function () {

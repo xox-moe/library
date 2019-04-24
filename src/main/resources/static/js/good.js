@@ -12,28 +12,57 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
         about: false
     }); //引用code方法
 
+    $.ajax({
+        url:basePath+'tushuxinxiguanli/getBookMessageById'
+        ,data:{
+            bookMessageId: parent.dataForChild
+        }
+        ,success:function (res) {
+            if (res.code == 0) {
+                console.log(res.data);
+                $("#introduction").text(res.data.introduction);
+                $("#name").text(res.data.name);
+                $("#author").text(res.data.author);
+                $("#publisher").text(res.data.publisher);
+                $("#totalNum").text(res.data.totalNum);
+            }
+        }
+    })
 $('.collection').on('click',function () {
-    layer.tips('收藏成功', '.collection', {
+    layer.tips('没服务收藏成功', '.collection', {
         tips: [2, '#78BA32']
     });
 });
 
 
 $('.borrow').on('click',function () {
-    var id = '123456';
-    layer.msg('借出图书<br>'+'图书Id:'+id, {
-        time: 20000, //20s后自动关闭
-        btn: ['确认', '取消']
-        ,yes: function(){
-            layer.closeAll();
-            layer.tips('借出成功','.borrow',{
-                tips: [2, '#78BA32']
-            })
+    $.ajax({
+        url:basePath+'borrow/borrowBook'
+        ,data:{
+            bookMessageId: parent.dataForChild
         }
-        ,btn2: function(){
-            layer.closeAll();
+        ,success:function (res) {
+            if (res == 0) {
+                layer.msg('借出图书<br>'+'图书Id:'+id, {
+                    time: 20000, //20s后自动关闭
+                    btn: ['确认', '取消']
+                    ,yes: function(){
+                        layer.closeAll();
+                        layer.tips('借出成功','.borrow',{
+                            tips: [2, '#78BA32']
+                        })
+                    }
+                    ,btn2: function(){
+                        layer.closeAll();
+                    }
+                });
+            }
+        }
+        ,error:function (res) {
+            layer.msg(res.msg);
         }
     });
+
 })
 });
 
