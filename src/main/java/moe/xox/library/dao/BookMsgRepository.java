@@ -11,13 +11,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
+public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
 
 
     BookMessage getBookMessageByBookMessageId(Long bookMessageId);
 
 
-    @Query(nativeQuery = true,value = "select bookMsg.book_message_id     as bookMessageId,\n" +
+    @Query(nativeQuery = true, value = "select bookMsg.book_message_id     as bookMessageId,\n" +
             "       name                        as name,\n" +
             "       bookMsg.kind_id             as kindId,\n" +
             "       author                      as author,\n" +
@@ -48,7 +48,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             countQuery = "select count(*) from book_message where book_message.status = true ;")
     Page<JSONObject> listBookMsgManageInfo(Pageable pageable);
 
-    @Query(nativeQuery = true,value = "\n" +
+    @Query(nativeQuery = true, value = "\n" +
             "select topTen.book_message_id as bookMessageId,\n" +
             "       borrowCount,\n" +
             "       name,\n" +
@@ -78,16 +78,16 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             "                            on book_message.book_message_id = bookNum.book_message_id")
     List<JSONObject> listTopTenBook();
 
-    @Query(nativeQuery = true,value = "select book_message_id as bookMessageId, name bookMassageName , author as author,publisher as publisher  \n" +
+    @Query(nativeQuery = true, value = "select book_message_id as bookMessageId, name bookMassageName , author as author,publisher as publisher  \n" +
             "from book_message\n" +
             "where status = true;")
     List<JSONObject> listAllBookMsgIdAndName();
 
-    @Query(nativeQuery = true,value = "select *\n" +
+    @Query(nativeQuery = true, value = "select *\n" +
             "from book_message where status = true order by rand() limit :limit ;")
     List<JSONObject> listBookMsgRandom(int limit);
 
-    @Query(nativeQuery = true,value = "select book_message_id as bookMessageId,\n" +
+    @Query(nativeQuery = true, value = "select book_message_id as bookMessageId,\n" +
             "       name as bookMassageName,\n" +
             "       author,\n" +
             "       publisher,\n" +
@@ -96,8 +96,9 @@ public interface BookMsgRepository extends JpaRepository<BookMessage,Long> {
             "where (name like concat('%', '', '%') or publisher like concat('%', '', '%') or\n" +
             "       introduction like concat('%', '', '%') or author like concat('%', '', '%'))\n" +
             "  and status = true;")
-    List<JSONObject> listBookMsgHomePage();
+    List<JSONObject> listBookMsgHomePage(@Param("name") String name, @Param("publisher") String publisher,
+                                         @Param("introduction") String introduction, @Param("author") String author);
 
-    @Query(nativeQuery = true,value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
+    @Query(nativeQuery = true, value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
     JSONObject getAuthorAndPublisherByBookMsgId(@Param("bookMessageId") Long bookMessageId);
 }
