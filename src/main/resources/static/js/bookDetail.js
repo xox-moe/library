@@ -77,8 +77,6 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("#bookName").attr("readonly", "readonly").attr("disabled", "disabled");
         $("input[name='publisher']").attr("readonly", "readonly");
         $("input[name='author']").attr("readonly", "readonly");
-        MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
-        form.render();
     }
 
     form.on('select(bookName)', function(d){
