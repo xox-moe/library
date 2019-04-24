@@ -15,15 +15,9 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("form textarea").attr("readonly","readonly");
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("button").addClass("layui-hide");
-        console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#userDetail'),parent.dataForChild);
-        form.render();
     }else if(parent.actionType=='add'){
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
-        console.log(parent.dataForChild);
-        MOD.Form.fillForm($('#userDetail'),parent.dataForChild);
-        form.render();
     }
 
     $.ajax({
@@ -31,7 +25,10 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , type: 'get'
         , success: function (res) {
             MOD.Form.fillSelect($("#roleId"), res.data,"roleId", "roleName");
-            form.render()
+            if (parent.actionType == 'detail' || parent.actionType == 'edit') {
+                MOD.Form.fillForm($('#userDetail'),parent.dataForChild);
+            }
+            form.render();
         }
     });
 
