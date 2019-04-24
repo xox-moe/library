@@ -17,6 +17,7 @@ public class History {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long historyId;
   private Long userId;
+
   private Long bookMessageId;
   private LocalDateTime createTime;
 

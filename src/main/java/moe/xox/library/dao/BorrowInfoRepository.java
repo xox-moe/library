@@ -37,6 +37,10 @@ public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Integer>
             "left join book_kind on book_kind.kind_id = book_message.kind_id where user_id = '1' ")
     Page<BorrowInfo> findBorrowInfoByUserId(long userId, Pageable pageable);
 
+    BorrowInfo findBorrowInfoByBookId(Long bookId);
+
+    BorrowInfo findBorrowInfoByBookIdAndIfReturnIsFalse(Long bookId);
+
 
 //    @Query(nativeQuery = true,value = "",countQuery = "")
 //    List<BorrowInfo> findBorrowInfoByUserId(int userId, Pageable pageable);

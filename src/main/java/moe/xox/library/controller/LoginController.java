@@ -78,6 +78,15 @@ public class LoginController extends BaseController{
         return getSuccess("success", user, 1);
     }
 
+    @ApiOperation(value = "用户登出",notes = "test")
+    @RequestMapping(value = "lohOut",method = RequestMethod.GET)
+    public ReturnBean lohOut(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return getSuccess();
+    }
+
+
 //    @ApiOperation(value = "通过昵称获取用户列表",notes = "记得后面把密码去掉")
 //    @RequestMapping(value = "getUserByNickname",method = RequestMethod.GET)
 //    public ReturnBean listUserByNickname(String nickname){

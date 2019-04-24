@@ -54,6 +54,7 @@ public class BorrowService {
             return -1;//查无此借书记录
         borrowInfo.setBackTime(new Timestamp(System.currentTimeMillis()));
         borrowInfo.setBackQuality(quality);
+        borrowInfo.setIfReturn(true);
         Book book = bookRepository.findByBookId(bookId);
         book.setBookStatusId(BookStatusEnum.NORMAL.getId());
         bookRepository.save(book);
@@ -67,4 +68,19 @@ public class BorrowService {
         return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
     }
 
+    public int backBook(Long bookId, Long quality) {
+        Book book = bookRepository.findByBookId(bookId);
+        BorrowInfo borrowInfo = borrowInfoRepository.findBorrowInfoByBookIdAndIfReturnIsFalse(bookId);
+        if(book == null)
+            return -1;
+        if(borrowInfo == null)
+            return -2;
+        book.setBookStatusId(BookStatusEnum.NORMAL.getId());
+        bookRepository.save(book);
+        borrowInfo.setBackTime(new Timestamp(System.currentTimeMillis()));
+        borrowInfo.setBackQuality(quality);
+        borrowInfo.setIfReturn(true);
+        borrowInfoRepository.save(borrowInfo);
+        return 0;
+    }
 }
