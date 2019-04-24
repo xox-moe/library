@@ -425,54 +425,12 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">
                                     图书推荐
-                                    <button class="layui-btn layui-bg-red" style="float: right;height: 2.5em;margin-top: 0.3em;">换一批
+                                    <button class="layui-btn layui-bg-red"  type="button" id="reloadRecommend" style="float: right;height: 2.5em;margin-top: 0.3em;">换一批
                                     </button>
                                 </div>
                                 <div class="layui-card-body" pad15="">
                                     <div class="">
-                                        <div class=" layui-row" style="padding: 0 5%;">
-
-                                            <div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;">
-                                                <div class="grid-demo grid-demo-bg1">
-                                                    <div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">
-                                                        <div class="layui-col-md12">
-                                                            <div class="grid-demo grid-demo-bg1">
-                                                                <img style="width: 100%;" src="img/商品.jpg">
-                                                            </div>
-                                                        </div>
-                                                        <div class="layui-col-md12">
-                                                            <div class="cmdlist-text" style="">
-                                                                <p class="info">
-                                                                    推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由推荐理由</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!--<div class="goods layui-col-sm3 animated zoomIn">
-                                        <div class="grid-demo grid-demo-bg1">
-                                            <div class="layui-row grid-demo" style="background-color: #a9c6de;">
-                                                <div class="layui-col-md8">
-                                                    <div class="grid-demo grid-demo-bg1">
-                                                        <img style="width: 100%;" src="img/商品.jpg"></div>
-                                                </div>
-                                                <div class="layui-col-md4">
-                                                    <div class="grid-demo grid-demo-bg1" style="background-color: #a9c6de;">求配色方案</div>
-                                                    <div class="grid-demo grid-demo-bg2" style="background-color: #a9c6de;">作者</div>
-                                                </div>
-                                                <div class="layui-col-md12">
-                                                    <div class="grid-demo grid-demo-bg3" style="background-color: #a9c6de;">
-                                                        <p class="line-limit-length">
-                                                            理由推荐理由推荐理由推荐理由推荐理由推荐理
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    -->
-
+                                        <div class=" layui-row" style="padding: 0 5%;" id="recommend">
                                         </div>
                                     </div>
                                 </div>
@@ -552,18 +510,6 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <!--<div class="layui-form-item">-->
-                                            <!--<label class="layui-form-label">手机</label>-->
-                                            <!--<div class="layui-input-inline">-->
-                                                <!--<input type="text" name="cellphone" value="" lay-verify="phone"-->
-                                                       <!--autocomplete="off" class="layui-input"></div>-->
-                                        <!--</div>-->
-                                        <!--<div class="layui-form-item">-->
-                                            <!--<label class="layui-form-label">邮箱</label>-->
-                                            <!--<div class="layui-input-inline">-->
-                                                <!--<input type="text" name="email" value="" lay-verify="email"-->
-                                                       <!--autocomplete="off" class="layui-input"></div>-->
-                                        <!--</div>-->
                                         <div class="layui-form-item layui-form-text">
                                             <label class="layui-form-label">备注</label>
                                             <div class="layui-input-block">
@@ -641,58 +587,6 @@
                                             </li>
                                         </ul>
 
-                                        <!--<div class="layui-row myrow" style="margin-top:20px;">
-                                            <div class="layui-col-md10">
-                                                <div class="layui-row grid-demo">
-                                                    <div class="layui-col-md2">
-                                                        <div class="grid-demo grid-demo-bg1">
-                                                            <img style="width: 100%" src="img/商品.jpg"></div>
-                                                    </div>
-                                                    <div class="layui-col-md9">
-                                                        <div class="grid-demo grid-demo-bg2">提取码</div>
-                                                        <div class="grid-demo grid-demo-bg2">书名</div>
-                                                        <button class="layui-btn" style="float: right;">延期</button>
-                                                        <div class="grid-demo grid-demo-bg2">借书日期</div>
-                                                        <div class="grid-demo grid-demo-bg2">还书日期</div>
-                                                    </div>
-                                                    <div class="layui-col-md12">
-                                                        <div class="grid-demo grid-demo-bg3">
-                                                            <div class="grid-demo grid-demo-bg2 time" style="float: right;color:red">剩余时间:
-                                                                <text>?</text>天</div>
-                                                            <span class="layui-badge layui-hide layui-bg-green reStatus" style="float: right;">已还书</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-row myrow" style="margin-top:20px;">
-                                            <div class="layui-row " style="margin-top:20px;">
-                                                <div class="layui-col-md10">
-                                                    <div class="layui-row grid-demo">
-                                                        <div class="layui-col-md2">
-                                                            <div class="grid-demo grid-demo-bg1">
-                                                                <img style="width: 100%" src="img/商品.jpg"></div>
-                                                        </div>
-                                                        <div class="layui-col-md9">
-                                                            <div class="grid-demo grid-demo-bg2">提取码</div>
-                                                            <div class="grid-demo grid-demo-bg2">书名</div>
-                                                            <button class="layui-btn" style="float: right;">延期</button>
-                                                            <div class="grid-demo grid-demo-bg2">借书日期</div>
-                                                            <div class="grid-demo grid-demo-bg2">还书日期</div>
-                                                        </div>
-                                                        <div class="layui-col-md12">
-                                                            <div class="grid-demo grid-demo-bg3">
-                                                                <span class="layui-badge layui-hide layui-bg-green reStatus" style="float: right;">未还书</span>
-                                                                <div class="grid-demo grid-demo-bg2 time" style="float: right;color:red">剩余时间:
-                                                                    <text>?</text>天</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
-
                                     </div>
                                 </div>
                             </div>
@@ -731,47 +625,6 @@
                                                 </div>
                                             </li>
                                         </ul>
-
-                                        <!--<div class="layui-row" style="margin-top:20px;">
-                                            <div class="layui-col-md10">
-                                                <div class="layui-row grid-demo">
-                                                    <div class="layui-col-md2">
-                                                        <div class="grid-demo grid-demo-bg1">
-                                                            <img style="width: 100%" src="img/商品.jpg"></div>
-                                                    </div>
-                                                    <div class="layui-col-md9">
-                                                        <div class="grid-demo grid-demo-bg2">提取码</div>
-                                                        <div class="grid-demo grid-demo-bg2">书名</div>
-                                                        <div class="grid-demo grid-demo-bg2">作者</div>
-                                                        <a href="" class="layui-btn layui-btn-primary" style="float: right">取消收藏</a>
-                                                        <div class="grid-demo grid-demo-bg2">出版社</div>
-                                                    </div>
-                                                    <div class="layui-col-md12">
-                                                        <div class="grid-demo grid-demo-bg3"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="layui-row" style="margin-top:20px;">
-                                            <div class="layui-col-md10">
-                                                <div class="layui-row grid-demo">
-                                                    <div class="layui-col-md2">
-                                                        <div class="grid-demo grid-demo-bg1">
-                                                            <img style="width: 100%" src="img/商品.jpg"></div>
-                                                    </div>
-                                                    <div class="layui-col-md9">
-                                                        <div class="grid-demo grid-demo-bg2">提取码</div>
-                                                        <div class="grid-demo grid-demo-bg2">书名</div>
-                                                        <div class="grid-demo grid-demo-bg2">作者</div>
-                                                        <a href="" class="layui-btn layui-btn-primary" style="float: right">取消收藏</a>
-                                                        <div class="grid-demo grid-demo-bg2">出版社</div>
-                                                    </div>
-                                                    <div class="layui-col-md12">
-                                                        <div class="grid-demo grid-demo-bg3"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -920,7 +773,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <!--页面14用户管理-->
             <div class="layui-nav-content layui-hide" id="nav-content-14">
