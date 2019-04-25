@@ -172,7 +172,9 @@ public class UserController extends BaseController {
     public ReturnBean listUserCollection() {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
-        List<JSONObject> list = userRepository.listUserCollection(user.getUserId());
+//        List<JSONObject> list = userRepository.listUserCollection(user.getUserId());
+        System.out.println(ShiorUtils.getUserId());
+        List<JSONObject> list = userRepository.listUserCollection(ShiorUtils.getUserId());
         return getSuccess("OK", list, list.size());
     }
 

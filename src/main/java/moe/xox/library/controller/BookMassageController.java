@@ -56,9 +56,9 @@ public class BookMassageController extends BaseController {
 
 
     @RequestMapping(value = "getBookMessageById", method = RequestMethod.GET)
-    public ReturnBean getBookMessageById(Long bookMessageId) {
-        JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId);
-        History history = new History(null, ShiorUtils.getUserId(), bookMessageId, LocalDateTime.now());
+    public ReturnBean getBookMessageById(Integer bookMessageId) {
+        JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId.longValue());
+        History history = new History(null, ShiorUtils.getUserId(), bookMessageId.longValue(), LocalDateTime.now());
         historyRepository.save(history);
         return getSuccess("OK", object, 1);
     }
