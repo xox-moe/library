@@ -59,6 +59,21 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
             form.render();
         }
     });
+    //打开详情页
+    function showGoods(){
+        $('.goods').on('click',function (data) {
+            console.log(data);
+            dataForChild=data.currentTarget.id.split("-")[1];
+            console.log(dataForChild);
+            layer.open({
+                type: 2,
+                title:"图书详情",
+                area: ['1000px', '680px'],
+                skin: 'layui-layer-rim', //加上边框
+                content:basePath+'good'
+            });
+        });
+    }
     //主页书籍
     function homeGoods(unionSearch){
         $.ajax({
@@ -70,7 +85,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
             ,success:function (res) {
                 $.each(res.data,function (i,item) {
                     console.log(item.bookMessageId);
-                    if (i == 4) {
+                    if (i === 4) {
                         return false;
                     }
                     $("#showGoods").last().append(
@@ -90,17 +105,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                     );
                 });
                 //图书详情页
-                $('.goods').on('click',function (data) {
-                    dataForChild=data.currentTarget.id.split("-")[1];
-                    console.log(dataForChild);
-                    layer.open({
-                        type: 2,
-                        title:"图书详情",
-                        area: ['1000px', '680px'],
-                        skin: 'layui-layer-rim', //加上边框
-                        content:basePath+'good'
-                    });
-                });
+                showGoods();
             }
         });
     }
@@ -131,33 +136,22 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                     )
                 });
                 //图书详情页
-                $('.goods').on('click',function (data) {
-                    console.log(data);
-                    dataForChild=data.currentTarget.id.split("-")[1];
-                    console.log(dataForChild);
-                    layer.open({
-                        type: 2,
-                        title:"图书详情",
-                        area: ['1000px', '680px'],
-                        skin: 'layui-layer-rim', //加上边框
-                        content:basePath+'good'
-                    });
-                });
+                showGoods();
             }
         })
     }
     homeGoods('');
     //我的借阅
-    function collectionPane(){
+    function borrowPane(){
         $.ajax({
-            url: basePath + 'yonghuguanli/listUserCollection'
+            url: basePath + ''
             , type: 'get'
             , success: function (res) {
-                $("#bookul").empty();
-                if (res.code == '0') {
-                    $.each(res.data, function (i, item){
-                        $("#bookul").last().append(
-                            '<li style="display: flex;">' +
+                $("#bookBorrow").empty();
+                if (res.code == 0) {
+                    $.each(res.data, function (i, item) {
+                        $("#bookBorrow").last().append(
+                            '<li style="display: flex;" class="goods"id="BorrowId-' + res.data.bookMessageId + '">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">应还日期</span>' +
                             '</div>' +
@@ -169,38 +163,91 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
-                            '<p>' + "????" + '</p>' +
+                            '<p>' + "一个暂时没有的借阅日期" + '</p>' +
                             '</div>' +
                             '<div style="flex-grow: 2;width: 10em;">' +
                             '<p>一个暂时没有的订单号</p>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn" id="delay-"' + res.data.bookMessageId + '>取消收藏</button>' +
+                            '<button class="layui-btn" id="delay-' + res.data.bookMessageId + '">延期</button>' +
                             '</div>' +
                             '</li>'
                         );
-
-                        // $("#delay-" + res.data.bookMessageId).click(function (data) {
-                        //     $('.goods').on('click',function (data) {
-                        //         console.log(data);
-                        //         dataForChild=data.currentTarget.id.split("-")[1];
-                        //         console.log(dataForChild);
-                        //         layer.open({
-                        //             type: 2,
-                        //             title:"图书详情",
-                        //             area: ['1000px', '680px'],
-                        //             skin: 'layui-layer-rim', //加上边框
-                        //             content:basePath+'good'
-                        //         });
-                        //     });
-                        // })
-                    })
-
+                    });
                 }
-
+                showGoods();
             }
         });
-
+    }
+    //我的收藏
+    function collectionPane(){
+        $.ajax({
+            url: basePath + 'yonghuguanli/listUserCollection'
+            , type: 'get'
+            , success: function (res) {
+                $("#bookul").empty();
+                if (res.code === 0) {
+                    $.each(res.data, function (i, item) {
+                        $("#bookul").last().append(
+                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ res.data.bookMessageId + '">' +
+                            '<div style="flex-grow: 1;width: 5em;">' +
+                            '<span style="font-size: 1em;">序号:' + i + '</span>' +
+                            '</div>' +
+                            '<div style="flex-grow: 1;width: 5em;">' +
+                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '</div>' +
+                            '<div style="flex-grow: 3;width: 15em;">' +
+                            '<p>书名:' + item.bookMessageName + '</p>' +
+                            '<p>作者:' + item.author + '</p>' +
+                            '<p>类别:' + item.kindName + '</p>' +
+                            '<p>出版社:' + item.publisher + '</p>' +
+                            '<p><span>' + "num" + '</span></p>' +
+                            '</div>' +
+                            '<div style="flex-grow: 3;width: 10em;">' +
+                            '<button class="layui-btn" id="collection-' + res.data.bookMessageId + '">取消收藏</button>' +
+                            '</div>' +
+                            '</li>'
+                        );
+                    });
+                    //图书详情页
+                    showGoods();
+                }
+            }
+        });
+    }
+    //浏览历史
+    function history(){
+        $.ajax({
+            url: basePath + ''
+            , type: 'get'
+            , success: function (res) {
+                $("#history").empty();
+                if (res.code == '0') {
+                    $.each(res.data, function (i, item) {
+                        $("#history").last().append(
+                            '<li style="display: flex;">'+
+                            '<div style="flex-grow: 1;width: 5em;">'+
+                            '<span style="font-size: 1em;">浏览日期</span>'+
+                            '</div>'+
+                            '<div style="flex-grow: 1.2;width: 5em;">'+
+                            '<img style="width: 100%" src="img/商品.jpg">'+
+                            '</div>'+
+                            '<div style="flex-grow: 2.5;width: 15em;">'+
+                            '<p>书名:' + item.bookMessageName + '</p>' +
+                            '<p>作者:' + item.author + '</p>' +
+                            '<p>类别:' + item.kindName + '</p>' +
+                            '<p>出版社:' + item.publisher + '</p>' +
+                            '</div>'+
+                            '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
+                            '<p>简介:' + item.introduction + '</p>'+
+                            '</div>'+
+                            '</li>'
+                        );
+                    });
+                    showGoods();
+                }
+            }
+        });
     }
     //监听导航点击
     element.on('nav(demo)', function(elem){
@@ -246,8 +293,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                 }
             });
         }
-        if (layuiId == 7) {
+        if (layuiId == 6) {//我的借阅
+            borrowPane();
+        }
+        if(layuiId==7){//我的收藏
             collectionPane();
+        }
+        if (layuiId == 8) {//浏览历史
+            history();
         }
     });
 
