@@ -8,7 +8,7 @@ import moe.xox.library.dao.HistoryRepository;
 import moe.xox.library.dao.entity.BookMessage;
 //import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.dao.entity.History;
-import moe.xox.library.utils.ShiorUtils;
+import moe.xox.library.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,7 +58,7 @@ public class BookMassageController extends BaseController {
     @RequestMapping(value = "getBookMessageById", method = RequestMethod.GET)
     public ReturnBean getBookMessageById(Integer bookMessageId) {
         JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId.longValue());
-        History history = new History(null, ShiorUtils.getUserId(), bookMessageId.longValue(), LocalDateTime.now());
+        History history = new History(null, ShiroUtils.getUserId(), bookMessageId.longValue(), LocalDateTime.now());
         historyRepository.save(history);
         return getSuccess("OK", object, 1);
     }
@@ -117,7 +117,7 @@ public class BookMassageController extends BaseController {
     @RequestMapping(path = "updateBookMsg", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public ReturnBean deleteBookMsg(Long bookMessageId, String name, Long kindId, String author, String publisher, String introduction, String ISBN) {
-        Long userId = ShiorUtils.getUserId();
+        Long userId = ShiroUtils.getUserId();
         BookMessage bookMessage = new BookMessage(bookMessageId, name, kindId, author, publisher, introduction, true, userId, LocalDateTime.now(), ISBN);
         bookMsgRepository.save(bookMessage);
         return getSuccess();

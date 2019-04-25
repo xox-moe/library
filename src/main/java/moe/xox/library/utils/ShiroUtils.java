@@ -4,7 +4,7 @@ import moe.xox.library.dao.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-public class ShiorUtils {
+public class ShiroUtils {
 
 
     public static Long getUserId(){

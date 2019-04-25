@@ -6,13 +6,31 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ImageUtil {
 
 
-    public static String bastPath = "F:\\library\\image";
+    public static String saveFile(MultipartFile file, String path) {
+        String originalFileName = file.getOriginalFilename();
+        // 获取图片后缀
+        String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
+        // 生成图片存储的名称，UUID 避免相同图片名冲突，并加上图片后缀
+        String fileName = UUID.randomUUID().toString() + suffix;
+        path += "/" + fileName;
+        File saveFile = new File(path);
+        try {
+            // 将上传的文件保存到服务器文件系统
+            file.transferTo(saveFile);
+            // 记录服务器文件系统图片名称
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
+    }
 
 
     //将图片装换为base64字符串

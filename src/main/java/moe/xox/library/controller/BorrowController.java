@@ -14,8 +14,8 @@ public class BorrowController extends BaseController {
     BorrowService borrowService;
 
     @RequestMapping("borrowBook")
-    public ReturnBean borrowBook(Long userId, Long bookId) {
-        int flag = borrowService.borrowBook(userId, bookId);
+    public ReturnBean borrowBook(Long userId, Long bookMessageId) {
+        int flag = borrowService.borrowBook(userId, bookMessageId);
         switch (flag) {
             case -1:
                 return getFailure("该书已被这位同学借走 不要重复提交");

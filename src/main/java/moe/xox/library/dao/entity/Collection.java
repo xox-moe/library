@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -17,6 +18,6 @@ public class Collection {
   private Long collectionId;
   private Long userId;
   private Long bookMessageId;
-  private java.sql.Timestamp createTime;
+  private LocalDateTime createTime;
 
 }

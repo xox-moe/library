@@ -1,15 +1,20 @@
 package moe.xox.library.controller;
 
 import moe.xox.library.controller.vo.ReturnBean;
+import moe.xox.library.project.FILE_PATH;
 import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.StringUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static io.swagger.models.refs.RefType.PATH;
 
@@ -51,5 +56,11 @@ public class ImageController extends BaseController {
         String path = "F:\\library\\image\\123.png";
         String img = ImageUtil.imageToString(path);
         return getSuccess("OK",img,1);
+    }
+
+    @RequestMapping("setImg")
+    public ReturnBean setImg(@RequestParam("img") MultipartFile file) throws IOException {
+        String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
+        return getSuccess("OK",fileName,1);
     }
 }

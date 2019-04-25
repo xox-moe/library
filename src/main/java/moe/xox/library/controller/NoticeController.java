@@ -3,12 +3,10 @@ package moe.xox.library.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
-import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.NoticeRepository;
-import moe.xox.library.dao.entity.BookMessage;
 import moe.xox.library.dao.entity.Notice;
 import moe.xox.library.dao.entity.User;
-import moe.xox.library.utils.ShiorUtils;
+import moe.xox.library.utils.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -107,7 +105,7 @@ public class NoticeController extends BaseController {
 
 //        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-        Notice notice = new Notice(noticeId, null,null,message, ShiorUtils.getUserId(),LocalDateTime.now());
+        Notice notice = new Notice(noticeId, null,null,message, ShiroUtils.getUserId(),LocalDateTime.now());
         notice.setBeginTime(LocalDateTime.parse(beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         notice.setEndTime(LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 //        Notice oldNotice = noticeRepository.findNoticeByNoticeId(notice.getNoticeId());

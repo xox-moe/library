@@ -37,8 +37,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
 
     @Query(nativeQuery = true,value = "select collection.create_time as collectionTime,\n" +
-            "       book_message.book_message_id as bookMessageTime,\n" +
+            "       book_message.book_message_id as bookMessageTime,\n " +
+            "       collection_id                as collectionId," +
             "       name as bookMessageName,\n" +
+            "       collection.book_message_id as bookMessageId,\n" +
             "       kind_name as kindName,\n" +
             "       author as author,\n" +
             "       publisher as publisher,\n" +
@@ -53,8 +55,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "                    where book_status_id = 4\n" +
             "                    group by book_message_id) bookNum\n" +
             "                   on book_message.book_message_id = bookNum.book_message_id " +
-            "where user_id = :userId ")
-    List<JSONObject> listUserCollection(@Param("userId")Long userId);
+            "where user_id = :userId  ")
+    List<JSONObject> listUserCollection(Long userId);
 
     @Query(nativeQuery = true,value = "select user.user_id as userId,\n" +
             "       email        as email,\n" +
