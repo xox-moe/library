@@ -2,8 +2,10 @@ package moe.xox.library.service;
 
 import moe.xox.library.dao.BookRepository;
 import moe.xox.library.dao.BorrowInfoRepository;
+import moe.xox.library.dao.OrderRepository;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BorrowInfo;
+import moe.xox.library.dao.entity.Order;
 import moe.xox.library.project.BookStatusEnum;
 import moe.xox.library.utils.ShiroUtils;
 import org.slf4j.Logger;
@@ -13,9 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Service
 public class BorrowService {
@@ -27,37 +31,47 @@ public class BorrowService {
     @Autowired
     BookRepository bookRepository;
 
-    public int borrowBook(long userId,long bookMessageId){
+    @Autowired
+    OrderRepository orderRepository;
 
+
+
+    @Transactional
+    public int borrowBook(long userId, long bookId, String code) {
+
+        //借出图书
+        Order order = orderRepository.findOrderByUserIdAndCodeAndStatusIsTrue(userId,code);
+        Book book = bookRepository.findByBookId(bookId);
+
+        if (!book.getBookMessageId().equals(order.getBookMessageId())) {
+            return -1; //预约与取出的书的类别不符
+        }
+        if(order.isIfTakeAway()){
+            return -2; //该预约已经取走书本了
+        }
+        if(!book.getBookStatusId().equals(BookStatusEnum.NORMAL.id)){
+            return -3;//数据显示本书已经借出,请管理员进行后台检查
+        }
+
+        order.setIfTakeAway(true);
+        book.setBookStatusId(BookStatusEnum.OUT.id);
+
+
+        BorrowInfo borrowInfo = new BorrowInfo(null, userId, bookId,false, LocalDateTime.now(), book.getQuality(), null, null);
+
+
+        bookRepository.save(book);
+        orderRepository.save(order);
+        borrowInfoRepository.save(borrowInfo);
         return 0;
-//        BorrowInfo oldBorrowInfo = borrowInfoRepository.findAllByUserIdAndBookIdAndIfReturnIsFalse(userId, bookId);
-//        if(oldBorrowInfo != null)
-//            return -1; //该书已被这位同学借走 不要重复提交
-//        Book book = bookRepository.findByBookId(bookId);
-//        if(book == null)
-//            return -3;
-//        if(book.getBookStatusId() != BookStatusEnum.NORMAL.getId()){
-//            return -2;//书已经借出
-//        }
-//        BorrowInfo borrowInfo = new BorrowInfo();
-//        borrowInfo.setUserId(userId);
-//        borrowInfo.setBookId(bookId);
-//        borrowInfo.setIfReturn(false);
-//        borrowInfo.setOutQuality(book.getQuality());
-//        borrowInfo.setOutTime(new Timestamp(System.currentTimeMillis()));
-//
-//        book.setBookStatusId(1L);
-//
-//        bookRepository.save(book);
-//        borrowInfoRepository.save(borrowInfo);
-//        return 0;
+
     }
 
     public int returnBook(long userId,long bookId,long quality ){
         BorrowInfo borrowInfo = borrowInfoRepository.findAllByUserIdAndBookIdAndIfReturnIsFalse(userId, bookId);
         if(borrowInfo == null)
             return -1;//查无此借书记录
-        borrowInfo.setBackTime(new Timestamp(System.currentTimeMillis()));
+        borrowInfo.setBackTime(LocalDateTime.now());
         borrowInfo.setBackQuality(quality);
         borrowInfo.setIfReturn(true);
         Book book = bookRepository.findByBookId(bookId);
@@ -67,12 +81,7 @@ public class BorrowService {
         return 0;
     }
 
-    @RequestMapping("findBorrowInfoByUserId")
-    public Page<BorrowInfo> findBorrowInfoByUserId( int page, int limit){
-        Long userId = ShiroUtils.getUserId();
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
-    }
+
 
     public int backBook(Long bookId, Long quality) {
         Book book = bookRepository.findByBookId(bookId);
@@ -83,7 +92,7 @@ public class BorrowService {
             return -2;
         book.setBookStatusId(BookStatusEnum.NORMAL.getId());
         bookRepository.save(book);
-        borrowInfo.setBackTime(new Timestamp(System.currentTimeMillis()));
+        borrowInfo.setBackTime(LocalDateTime.now());
         borrowInfo.setBackQuality(quality);
         borrowInfo.setIfReturn(true);
         borrowInfoRepository.save(borrowInfo);

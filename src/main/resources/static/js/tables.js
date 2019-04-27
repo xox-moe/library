@@ -362,7 +362,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 var idList=[];
                                 for(var i=0;i<data.length;i++) {
                                     idList[i]=data[i].bookId;
-                                    console.log("data[i].bookId:");
+                                    console.log("data[i].bookMessageId:");
                                     console.log(data[i].bookId);
                                 }
                                 var mydata={

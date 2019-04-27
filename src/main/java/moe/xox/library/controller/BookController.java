@@ -82,7 +82,7 @@ public class BookController extends BaseController {
      * @return msg
      *
      *
-     *  private Long bookId;
+     *  private Long bookMessageId;
      *   private Long bookMessageId;
      *   private Long bookStatusId;
      *   private Long quality;
@@ -91,7 +91,7 @@ public class BookController extends BaseController {
     @ResponseBody
     public  ReturnBean addBook(Long bookMessageId,Long bookStatusId,Long qualityId){
         Book book = new Book(null,bookMessageId,bookStatusId,qualityId,null,LocalDateTime.now(),true);
-//        book.setBookId(null);
+//        book.setBookMessageId(null);
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         book.setCreatorId(user.getUserId()+"");
@@ -133,7 +133,7 @@ public class BookController extends BaseController {
      * @param book
      * @return
      *
-     *   private Long bookId;
+     *   private Long bookMessageId;
      *   private Long bookMessageId;
      *   private Long bookStatusId;
      *   private Long quality;

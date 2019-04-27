@@ -1,8 +1,14 @@
 package moe.xox.library.controller;
 
 import moe.xox.library.controller.vo.ReturnBean;
+import moe.xox.library.dao.BorrowInfoRepository;
+import moe.xox.library.dao.entity.BorrowInfo;
 import moe.xox.library.service.BorrowService;
+import moe.xox.library.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,9 +19,19 @@ public class BorrowController extends BaseController {
     @Autowired
     BorrowService borrowService;
 
+    @Autowired
+    BorrowInfoRepository borrowInfoRepository;
+
+    /**
+     *
+     * @param userId  用户ID
+     * @param bookId 借出书的类别ID
+     * @param code 预约代码
+     * @return
+     */
     @RequestMapping("borrowBook")
-    public ReturnBean borrowBook(Long userId, Long bookMessageId) {
-        int flag = borrowService.borrowBook(userId, bookMessageId);
+    public ReturnBean borrowBook(Long userId, Long bookId,String code) {
+        int flag = borrowService.borrowBook(userId, bookId,code);
         switch (flag) {
             case -1:
                 return getFailure("该书已被这位同学借走 不要重复提交");
@@ -32,8 +48,8 @@ public class BorrowController extends BaseController {
 
 
 //    @RequestMapping("returnBook")
-//    public ReturnBean returnBook(Long userId, Long bookId,Long quality) {
-//        int flag = borrowService.returnBook(userId, bookId,quality);
+//    public ReturnBean returnBook(Long userId, Long bookMessageId,Long quality) {
+//        int flag = borrowService.returnBook(userId, bookMessageId,quality);
 //        if (flag == -1) {
 //            return getFailure("查无此借书记录");
 //        }
@@ -53,6 +69,13 @@ public class BorrowController extends BaseController {
             default:
                 return getSuccess();
         }
+    }
+
+    @RequestMapping("findBorrowInfoByUserId")
+    public Page<BorrowInfo> findBorrowInfoByUserId(int page, int limit){
+        Long userId = ShiroUtils.getUserId();
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
     }
 
 

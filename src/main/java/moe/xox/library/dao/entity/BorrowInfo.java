@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,9 +19,9 @@ public class BorrowInfo {
   private Long userId;
   private Long bookId;
   private Boolean ifReturn;
-  private java.sql.Timestamp outTime;
+  private LocalDateTime outTime;
   private Long outQuality;
-  private java.sql.Timestamp backTime;
+  private LocalDateTime backTime;
   @Column(name = "bakcQuality")
   private Long backQuality;
 

@@ -95,8 +95,11 @@ public class NoticeController extends BaseController {
     }
 
     /**
-     * 从Notice表中更新条图书信息
-     * @param notice
+     * 从Notice表中更新公告信息
+     * @param noticeId
+     * @param message
+     * @param beginTime
+     * @param endTime
      * @return
      */
     @RequestMapping(path = "updateNotice",method = RequestMethod.POST)

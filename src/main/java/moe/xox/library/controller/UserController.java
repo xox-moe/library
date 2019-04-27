@@ -160,6 +160,10 @@ public class UserController extends BaseController {
         return getFailure("success", user);
     }
 
+    /**
+     * 获取当前用户的信息
+     * @return
+     */
     @RequestMapping("getCurrentUserInfo")
     public ReturnBean getCurrentUserInfo() {
         Long userId = ShiroUtils.getUserId();
@@ -216,7 +220,7 @@ public class UserController extends BaseController {
     public ReturnBean deleteCollectionById(Long collectionId){
         Collection collection = collectionRepository.findCollectionByCollectionId(collectionId);
         if(!collection.getUserId().equals(ShiroUtils.getUserId()))
-            return getFailure("请确认这是您的收藏,不要尝试删除不属于您的接口");
+            return getFailure("请确认这是您的收藏,不要尝试删除不属于您的收藏");
         collectionRepository.delete(collection);
         return getSuccess();
     }
