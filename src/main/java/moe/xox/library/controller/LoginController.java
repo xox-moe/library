@@ -80,8 +80,8 @@ public class LoginController extends BaseController{
     }
 
     @ApiOperation(value = "用户登出",notes = "test")
-    @RequestMapping(value = "lohOut",method = RequestMethod.GET)
-    public ReturnBean lohOut(){
+    @RequestMapping(value = "logOut",method = RequestMethod.GET)
+    public ReturnBean logOut(){
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return getSuccess();
