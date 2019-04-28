@@ -35,11 +35,11 @@ public class BorrowController extends BaseController {
         int flag = borrowService.borrowBook(userId, bookId,code);
         switch (flag) {
             case -1:
-                return getFailure("该书已被这位同学借走 不要重复提交");
+                return getFailure("预约与取出的书的类别不符");
             case -2:
-                return getFailure("书已经借出");
+                return getFailure("该预约已经取走书本了");
             case -3:
-                return getFailure("请求参数不正确,不存在该书");
+                return getFailure("数据显示本书已经借出,请管理员进行后台检查");
             case 0:
                 return getSuccess();
             default:
@@ -73,9 +73,7 @@ public class BorrowController extends BaseController {
     }
 
     /**
-     * 删除一本书  会确实是该用户删除自己的书
-     *
-     * @return 成功或者失败
+     * @return 查询我当前的借阅的东西的记录
      */
     @RequestMapping("listMyBorrow")
     public ReturnBean listMyBorrow(int page, int limit) {
