@@ -77,15 +77,16 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     }
     //新进图书
     function newBooks() {
-        $({
-            url:basePath+''
+        console.log("ok")
+        $.ajax({
+            url:basePath+'churukuguanli/listNewBook'
             ,type:'get'
-            ,succes:function (res) {
+            ,success:function (res) {
                 if (res.code == 0) {
                     $("#newBook").empty();
                     $.each(res.data,function (i, item) {
                         $("#newBook").last().append(
-                            '<div class="goods layui-col-xs2 animated fadeIn">'+
+                            '<div class="goods layui-col-xs2 animated fadeIn"id="newBook-'+item.bookMessageId+'">'+
                             '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">'+
                             '<a href="javascript:;">'+
                             '<img style="width: 100%;" src="img/商品.jpg">'+
@@ -294,10 +295,10 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     }
     //监听导航点击
     element.on('nav(demo)', function(elem){
-        var layuiId =( $(this).parent().attr('id').split('-')[1])%16;//标号
+        var layuiId =( $(this).parent().attr('id').split('-')[1])%17;//标号
+        console.log(layuiId);
         $('#nav-content-'+layuiId).removeClass('layui-hide').siblings().addClass('layui-hide');//显示当前隐藏其他
         if (layuiId == 0) {
-            console.log(basePath)
             $.ajax({
                 type: 'get',
                 url: basePath + 'logOut',
@@ -355,6 +356,9 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         }
         if (layuiId == 8) {//浏览历史
             history();
+        }
+        if(layuiId==16){
+
         }
     });
 
