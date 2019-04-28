@@ -2,6 +2,7 @@ package moe.xox.library.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.dao.entity.Book;
+import moe.xox.library.dao.entity.BorrowInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -73,4 +74,17 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "group by bookMsg.book_message_id, name, bookMsg.kind_id, author, publisher, introduction, ISBN, kind_name,bookNum\n" +
             "order by  book.create_time limit 10\n")
     List<JSONObject> listNewBook();
+
+    @Query(nativeQuery = true,value = "select borrow_id    as borrowId,\n" +
+            "       user_id      as userId,\n" +
+            "       book_id      as bookId,\n" +
+            "       if_return    as ifReturn,\n" +
+            "       out_time     as outTime,\n" +
+            "       out_quality  as outQuality,\n" +
+            "       back_time    as backTime,\n" +
+            "       bakc_quality as backQuanlity\n" +
+            "from borrow_info\n" +
+            "where book_id = :bookId \n" +
+            "order by out_time desc")
+    List<BorrowInfo> listBookHistory(Long bookId);
 }

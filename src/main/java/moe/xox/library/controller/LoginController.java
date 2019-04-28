@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -81,6 +82,7 @@ public class LoginController extends BaseController{
 
     @ApiOperation(value = "用户登出",notes = "test")
     @RequestMapping(value = "logOut",method = RequestMethod.GET)
+    @ResponseBody
     public ReturnBean logOut(){
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
