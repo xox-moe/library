@@ -295,9 +295,22 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     //监听导航点击
     element.on('nav(demo)', function(elem){
         var layuiId =( $(this).parent().attr('id').split('-')[1])%16;//标号
-        console.log("页面:"+layuiId);
         $('#nav-content-'+layuiId).removeClass('layui-hide').siblings().addClass('layui-hide');//显示当前隐藏其他
-
+        if (layuiId == 0) {
+            console.log(basePath)
+            $.ajax({
+                type: 'get',
+                url: basePath + 'logOut',
+                success: function (res) {
+                    if (res.code === 0) {
+                        window.location.href = basePath + "login";
+                    }
+                },
+                error: function (jqXHR) {
+                    console.log("请求发送失败，原因是：" + jqXHR.status)
+                }
+            })
+        }
         if (layuiId == 2) {//新进图书
             newBooks();
         }
@@ -305,7 +318,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             recomendGoods();
         }
         if (layuiId == 5) {//个人信息
-
             $.ajax({
                 url: basePath + 'data/listAllRole'
                 , type: 'get'
