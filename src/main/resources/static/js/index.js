@@ -261,7 +261,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     //浏览历史
     function history(){
         $.ajax({
-            url: basePath + ''
+            url: basePath + 'yonghuguanli/listUserHistory'
             , type: 'get'
             , success: function (res) {
                 $("#history").empty();

@@ -28,7 +28,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
             }
         }
     });
-$('.collection').on('click',function () {
+$("#collection").on('click',function () {
  $.ajax({
      url:basePath+'yonghuguanli/collectionBook'
      ,data:{
@@ -39,11 +39,29 @@ $('.collection').on('click',function () {
              layer.tips('收藏成功', '.collection', {
                  tips: [2, '#78BA32']
              });
+             $("#collection").addClass("layui-hide");
+             $("#deleteCollection").removeClass("layui-hide");
          }
      }
  })
 });
-
+    $("#deleteCollection").on('click',function () {
+        $.ajax({
+            url:basePath+'yonghuguanli/deleteCollectionById'
+            ,data:{
+                bookMessageId: parent.dataForChild
+            }
+            ,success:function (res) {
+                if (res.code == 0) {
+                    layer.tips('取消收藏', '.collection', {
+                        tips: [2, '#78BA32']
+                    });
+                    $("#deleteCollection").addClass("layui-hide");
+                    $("#collection").removeClass("layui-hide");
+                }
+            }
+        })
+    });
 
 $('.borrow').on('click',function () {
     $.ajax({
@@ -53,17 +71,14 @@ $('.borrow').on('click',function () {
         }
         ,success:function (res) {
             if (res == 0) {
-                layer.msg('借出图书<br>'+'图书Id:'+id, {
+                layer.msg('预约成功<br>'+'图书Id:'+id, {
                     time: 20000, //20s后自动关闭
-                    btn: ['确认', '取消']
+                    btn: ['确认']
                     ,yes: function(){
                         layer.closeAll();
-                        layer.tips('借出成功','.borrow',{
+                        layer.tips('预约成功','.borrow',{
                             tips: [2, '#78BA32']
                         })
-                    }
-                    ,btn2: function(){
-                        layer.closeAll();
                     }
                 });
             }
