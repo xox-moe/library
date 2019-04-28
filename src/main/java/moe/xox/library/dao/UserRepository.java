@@ -56,7 +56,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "                    group by book_message_id) bookNum\n" +
             "                   on book_message.book_message_id = bookNum.book_message_id " +
             "where user_id = :userId  ")
-    List<JSONObject> listUserCollection(Long userId);
+    List<JSONObject> listUserCollection(@Param("userId") Long userId);
 
     @Query(nativeQuery = true,value = "select user.user_id as userId,\n" +
             "       email        as email,\n" +

@@ -63,7 +63,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     //打开详情页
     function showGoods(){
         $('.goods').on('click',function (data) {
-            console.log(data);
+            console.log(data.currentTarget.id);
             dataForChild=data.currentTarget.id.split("-")[1];
             console.log(dataForChild);
             layer.open({
@@ -150,7 +150,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 $("#recommend").empty();
                 $.each(res.data, function (i, item) {
                     $("#recommend").last().append(
-                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" id=recommendId-"'+item.bookMessageId+'">' +
+                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" id="recommendId-'+item.bookMessageId+'">' +
                         '<div class="grid-demo grid-demo-bg1">' +
                         '<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">' +
                         '<div class="layui-col-md12">' +
@@ -180,7 +180,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code == 0) {
                     $.each(res.data, function (i, item) {
                         $("#bookBorrow").last().append(
-                            '<li style="display: flex;" class="goods"id="BorrowId-' + res.data.bookMessageId + '">' +
+                            '<li style="display: flex;" class="goods"id="BorrowId-' + item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">应还日期</span>' +
                             '</div>' +
@@ -198,7 +198,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<p>一个暂时没有的订单号</p>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn" id="delay-' + res.data.bookMessageId + '">延期</button>' +
+                            '<button class="layui-btn" id="delay-' + item.bookMessageId + '">延期</button>' +
                             '</div>' +
                             '</li>'
                         );
@@ -218,7 +218,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code === 0) {
                     $.each(res.data, function (i, item) {
                         $("#bookul").last().append(
-                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ res.data.bookMessageId + '">' +
+                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">序号:' + i + '</span>' +
                             '</div>' +
@@ -233,7 +233,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<p><span>' + "num" + '</span></p>' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 10em;">' +
-                            '<button class="layui-btn layui-bg-red" id="collection-' + res.data.bookMessageId + '">取消收藏</button>' +
+                            '<button class="layui-btn layui-bg-red" id="collection-' + item.bookMessageId + '">取消收藏</button>' +
                             '</div>' +
                             '</li>'
                         );
@@ -268,7 +268,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code == '0') {
                     $.each(res.data, function (i, item) {
                         $("#history").last().append(
-                            '<li style="display: flex;">'+
+                            '<li style="display: flex;" class="goods" id="history-'+item.bookMessageId+'">'+
                             '<div style="flex-grow: 1;width: 5em;">'+
                             '<span style="font-size: 1em;">浏览日期</span>'+
                             '</div>'+
