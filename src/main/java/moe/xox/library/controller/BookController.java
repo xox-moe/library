@@ -39,6 +39,7 @@ public class BookController extends BaseController {
      *
      */
     @RequestMapping(value = "listNewBook", method = RequestMethod.GET)
+    @ResponseBody
     public ReturnBean listNewBook() {
         List<JSONObject> jsonObjects = bookRepository.listNewBook();
         return getSuccess("success", jsonObjects, jsonObjects.size());
