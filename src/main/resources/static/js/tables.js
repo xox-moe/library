@@ -1,12 +1,13 @@
 //JavaScript代码区域
 var dataForChild;
 var actionType;
-layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
+layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
     function () {
         var $ = layui.jquery;
         var element = layui.element //导航的hover效果、二级菜单等功能，需要依赖element模块
             ,
-            layer = layui.layer;
+            layer = layui.layer,
+        laydate = layui.laydate;
         var table = layui.table;
         form = layui.form;
         layui.code({
@@ -26,6 +27,21 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
         getChoose.onclick = function () {
             alert(layedit.getSelection(index));
         };
+        var noticeTime = {
+            beginTime: ""
+            , endTime: ""
+        };
+        laydate.render({
+            elem: "#noticeTime"
+            , type: "datetime"
+            ,range:true
+            ,done:function (value,date,endDate) {
+                noticeTime.beginTime = value.split(" - ")[0];
+                noticeTime.endTime = value.split(" - ")[1];
+                console.log(noticeTime);
+
+            }
+        });
         var tableActive ={
             table1:function(){
               table.render({
@@ -81,7 +97,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                                 return d.statusName;
                             }},
                         // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
-                        {title:'操作',align:'center',toolbar: '#barDemo2'}
+                        {title:'操作',align:'center',toolbar: '#barDemo2',width:250}
                     ]]
                     ,data:[{}]//假数据放这
                 });
@@ -315,7 +331,20 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
                 }
             });
-
+        //搜索按钮
+        $("#bookMsgSearch").click(function (data) {
+            table.reload('table1',{
+                url:basePath+'tushuxinxiguanli'//数据接口
+                ,where:{
+                    bookMessageId: $("#bookMsgForm input[name='bookMessageId']").val()
+                    ,name: $("#bookMsgForm [name='name']").val()
+                    ,author:  $("#bookMsgForm [name='author']").val()
+                    ,kindId: $("#bookMsgForm [name='kindId']").val()
+                    ,publisher: $("#bookMsgForm [name='publisher']").val()
+                    ,bookNum: $("#bookMsgForm [name='bookNum']").val()
+                }
+            })
+        });
         //出入库管理
         //table2
         table.on('toolbar(test2)',
@@ -417,7 +446,35 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
             function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data //获得当前行数据
                     ,layEvent = obj.event; //获得 lay-event 对应的值
-                if (layEvent === 'detail') {
+                if(layEvent==='borrow'){
+                    actionType = 'borrow';
+                    layer.prompt({title: '请询问订单号，填写并确认', formType: 1}, function(pass, index){
+                        if(pass==data)
+                            layer.close(index);
+                        layer.prompt({title: '请输入借书人ID，并确认', formType: 1}, function(userId, index){
+                            layer.close(index);
+                            $.ajax({
+                                url:basePath+'borrow/borrowBook'
+                                ,data:{
+                                    userId:userId
+                                    ,code:pass
+                                    ,bookMessageId: parent.dataForChild
+                                }
+                                ,success:function (res) {
+                                    if (res.code == 0) {
+                                        layer.msg(text+"借出"+data.bookMessageName+"<br>"+"消息:"+res.msg);
+                                    }
+                                }
+                                ,error:function (res) {
+                                    layer.msg(res.msg);
+                                }
+                            });
+                        });
+                    });
+                    $.ajax({
+
+                    });
+                } else if (layEvent === 'detail') {
                     actionType='detail';
                     dataForChild=data;
                     layer.open({
@@ -466,7 +523,21 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
                 }
             });
-
+        //搜索按钮
+        $("#bookSearch").click(function (data) {
+            table.reload('table2',{
+                url:basePath+'churukuguanli'//数据接口
+                ,where:{
+                    bookId: $("#bookForm [name='bookId']").val()
+                    ,bookMessageName: $("#bookForm [name='bookMessageName']").val()
+                    ,author: $("#bookForm [name='author']").val()
+                    ,qualityId: $("#bookForm [name='qualityId']").val()
+                    ,publisher: $("#bookForm [name='publisher']").val()
+                    ,bookStatusId:$("#bookForm [name='bookStatusId']").val()
+                    ,code: $("#bookForm [name='code']").val()
+                }
+            })
+        });
         //公告管理
         //table3
         table.on('toolbar(test3)',
@@ -617,7 +688,17 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
                 }
             });
-
+        //搜索按钮
+        $("#noticeSearch").click(function (data) {
+            table.reload('table3',{
+                url:basePath+'gonggaoguanli'//数据接口
+                ,where:{
+                    noticeId: $("#noticeForm [name='noticeId']").val()
+                    , beginTime: noticeTime.beginTime
+                    , endTime: noticeTime.endTime
+                }
+            })
+        });
 
         //用户管理
         //table4
@@ -776,8 +857,24 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
                 }
             });
+        //搜索按钮
+        $("#userSearch").click(function (data) {
 
-
+            table.reload('table4',{
+                url:basePath+'yonghuguanli'//数据接口
+                ,where:{
+                    userId: $("#userForm [name='userId']").val()
+                    ,realName: $("#userForm [name='realName']").val()
+                    ,nickName:$("#userForm [name='nickName']").val()
+                    ,birthday: $("#userForm [name='birthday']").val()
+                    ,email:$("#userForm [name='email']").val()
+                    ,grade: $("#userForm [name='grade']").val()
+                    ,department: $("#userForm [name='department']").val()
+                    ,major: $("#userForm [name='major']").val()
+                    ,roleId: $("#userForm [name='roleId']").val()
+                }
+            })
+        });
         //反馈管理
         //table5
         table.on('toolbar(test5)',
@@ -930,9 +1027,21 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit'],
                     });
                 }
             });
+        //搜索按钮
+        $("#adviceSearch").click(function (data) {
+            table.reload('table5',{
+                url:basePath+'fankuiguanli'//数据接口
+                ,where:{
+                    adviceId: $("#adviceForm [name='adviceId']").val()
+                    ,userId: $("#adviceForm [name='userId']").val()
+                    ,realName:$("#adviceForm [name='realName']").val()
+                }
+            })
+        });
         //点击导航条时，渲染对应的表格
-  $('.tablePage').on('click', function(){
-    var othis = $(this), type = othis.data('type');
-    tableActive[type] ? tableActive[type].call(this, othis) : '';
-});
+        $('.tablePage').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            tableActive[type] ? tableActive[type].call(this, othis) : '';
+        });
+
     });

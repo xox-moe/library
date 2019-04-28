@@ -346,22 +346,22 @@
                                     </form>
                                     <!--商品展示-->
                                     <div class="layui-fluid layadmin-cmdlist-fluid">
-                                        <div class="layui-row layui-col-space30">
+                                        <div class="layui-row layui-col-space30" id="newBook">
                                             <!--商品-->
 
-                                            <div class="goods layui-col-xs2 animated fadeIn">
-                                                <div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">
-                                                    <a href="javascript:;">
-                                                        <img style="width: 100%;" src="img/商品.jpg">
-                                                    </a>
-                                                    <a href="javascript:;">
-                                                        <div class="cmdlist-text" >
-                                                            <p class="info">书名</p>
-                                                            <p class="info" style="color: grey">作者</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <!--<div class="goods layui-col-xs2 animated fadeIn">-->
+                                                <!--<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">-->
+                                                    <!--<a href="javascript:;">-->
+                                                        <!--<img style="width: 100%;" src="img/商品.jpg">-->
+                                                    <!--</a>-->
+                                                    <!--<a href="javascript:;">-->
+                                                        <!--<div class="cmdlist-text" >-->
+                                                            <!--<p class="info">书名</p>-->
+                                                            <!--<p class="info" style="color: grey">作者</p>-->
+                                                        <!--</div>-->
+                                                    <!--</a>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
 
                                         </div>
                                     </div>
@@ -604,7 +604,7 @@
                                 <div class="layui-card-body" pad15="">
                                     <div style="width: 100%;white-space:nowrap;overflow: hidden; text-overflow: ellipsis;">
 
-                                        <ul class="bookul" id="bookul">
+                                        <ul class="bookul " id="bookul">
                                             <!--<li style="display: flex;">-->
                                                 <!--<div style="flex-grow: 1;width: 5em;">-->
                                                     <!--<span style="font-size: 1em;">序号</span>-->
@@ -719,18 +719,18 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">图书信息管理</div>
                                 <div class="layui-card-body" pad15="">
-                                    <form action="" class="layui-form layui-form-pane" id="bookForm">
+                                    <form action="" class="layui-form layui-form-pane" id="bookMsgForm">
                                         <div class="layui-form-item">
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="bookMessageId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">书名</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="bookNum" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="name" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
@@ -757,7 +757,7 @@
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">有无库存</label>
                                                 <div class="layui-input-inline middle">
-                                                    <select name="" lay-search="" >
+                                                    <select name="" lay-search="bookNum" >
                                                         <option value="">请选择</option>
                                                         <option value="">有</option>
                                                         <option value="">无</option>
@@ -765,7 +765,7 @@
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
-                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                                <button class="layui-btn" type="button" lay-filter="reload" id="bookMsgSearch">搜索</button>
                                             </div>
                                         </div>
                                     </form>
@@ -791,18 +791,18 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">出入库管理</div>
                                 <div class="layui-card-body" pad15="">
-                                    <form action="" class="layui-form layui-form-pane" id="bookMsgForm">
+                                    <form action="" class="layui-form layui-form-pane" id="bookForm">
                                         <div class="layui-form-item">
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="bookId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">书名</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="bookNum" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="bookMessageName" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
@@ -815,6 +815,12 @@
                                                 <label class="layui-form-label">出版社</label>
                                                 <div class="layui-input-block middle">
                                                     <input type="text" name="publisher" autocomplete="off" class="layui-input"/>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">订单号</label>
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="code" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
@@ -841,14 +847,20 @@
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="layui-inline">
-                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                                <button class="layui-btn" type="button" id="bookSearch">搜索</button>
                                             </div>
                                         </div>
                                     </form>
                                     <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table2" lay-filter="test2"></table>
                                     <script type="text/html" id="barDemo2">
+                                        {{# if(true){ }}
+                                        <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="borrow">借出</a>
+                                        {{# }else{ }}
+                                        <button class="layui-btn layui-btn-xs layui-btn-disabled" disabled="disabled" lay-event="borrow">借出</button>
+                                        {{# } }}
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -873,23 +885,17 @@
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="noticeId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
-                                                <label class="layui-form-label">开始时间</label>
-                                                <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                <label class="layui-form-label">时段</label>
+                                                <div class="layui-input-block longer">
+                                                    <input type="text"  name="noticeTime" id="noticeTime" autocomplete="off" class="layui-input longer"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
-                                                <label class="layui-form-label">结束时间</label>
-                                                <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
-                                                </div>
-                                            </div>
-                                            <div class="layui-inline">
-                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                                <button class="layui-btn" type="button" id="noticeSearch">搜索</button>
                                             </div>
                                         </div>
                                     </form>
@@ -920,50 +926,50 @@
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="userId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">姓名</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="realName" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">昵称</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="nickName" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">生日</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="birthday" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">邮箱</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="email" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
 
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">年级</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="grade" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">学院</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="department" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">专业</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="major" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
@@ -975,7 +981,7 @@
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
-                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                                <button class="layui-btn" type="button" id="userSearch">搜索</button>
                                             </div>
                                         </div>
                                     </form>
@@ -1006,24 +1012,24 @@
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="adviceId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">建议人ID</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="userId" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">姓名</label>
                                                 <div class="layui-input-block middle">
-                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
+                                                    <input type="text" name="realName" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
 
                                             <div class="layui-inline">
-                                                <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="reload">搜索</button>
+                                                <button class="layui-btn" type="button" id="adviceSearch">搜索</button>
                                             </div>
                                         </div>
                                     </form>

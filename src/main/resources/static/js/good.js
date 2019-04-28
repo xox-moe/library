@@ -13,11 +13,11 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
     }); //引用code方法
 
     $.ajax({
-        url:basePath+'tushuxinxiguanli/getBookMessageById'
-        ,data:{
+        url: basePath + 'tushuxinxiguanli/getBookMessageById'
+        , data: {
             bookMessageId: parent.dataForChild
         }
-        ,success:function (res) {
+        , success: function (res) {
             if (res.code == 0) {
                 console.log(res.data);
                 $("#introduction").text(res.data.introduction);
@@ -27,12 +27,21 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#totalNum").text(res.data.totalNum);
             }
         }
-    })
-$('.collection').on('click',function () {
-
-    layer.tips('没服务收藏成功', '.collection', {
-        tips: [2, '#78BA32']
     });
+$('.collection').on('click',function () {
+ $.ajax({
+     url:basePath+'yonghuguanli/collectionBook'
+     ,data:{
+         bookMessageId: parent.dataForChild
+     }
+     ,success:function (res) {
+         if (res.code == 0) {
+             layer.tips('收藏成功', '.collection', {
+                 tips: [2, '#78BA32']
+             });
+         }
+     }
+ })
 });
 
 

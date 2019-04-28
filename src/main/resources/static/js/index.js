@@ -1,10 +1,11 @@
 //JavaScript代码区域
 var dataForChild;
 
-layui.use(['layer','element','table','form','code','layedit','carousel'], function() {
+layui.use(['layer','element','table','form','code','layedit','carousel','laydate'], function() {
     var $ = layui.jquery;
     var element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
-        , layer = layui.layer;
+        , layer = layui.layer
+        , laydate = layui.laydate;
     var table = layui.table;
     form = layui.form;
     var carousel = layui.carousel;
@@ -30,7 +31,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("select[name='kindId']"), res.data, "kindId", "kindName");
-            from.render();
+            form.render();
         }
     });
     $.ajax({
@@ -73,6 +74,34 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                 content:basePath+'good'
             });
         });
+    }
+    //新进图书
+    function newBooks() {
+        $({
+            url:basePath+''
+            ,type:'get'
+            ,succes:function (res) {
+                if (res.code == 0) {
+                    $("#newBook").empty();
+                    $.each(res.data,function (i, item) {
+                        $("#newBook").last().append(
+                            '<div class="goods layui-col-xs2 animated fadeIn">'+
+                            '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">'+
+                            '<a href="javascript:;">'+
+                            '<img style="width: 100%;" src="img/商品.jpg">'+
+                            '</a>'+
+                            '<a href="javascript:;">'+
+                            '<div class="cmdlist-text" >'+
+                            '<p class="info">书名:'+res.data.bookName+'</p>'+
+                            '<p class="info" style="color: grey">作者:'+res.data.author+'</p>'+
+                            '</div></a></div></div>'
+                        )
+                    })
+                }
+                //图书详情
+                showGoods();
+            }
+        })
     }
     //主页书籍
     function homeGoods(unionSearch){
@@ -204,10 +233,24 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
                             '<p><span>' + "num" + '</span></p>' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 10em;">' +
-                            '<button class="layui-btn" id="collection-' + res.data.bookMessageId + '">取消收藏</button>' +
+                            '<button class="layui-btn layui-bg-red" id="collection-' + res.data.bookMessageId + '">取消收藏</button>' +
                             '</div>' +
                             '</li>'
                         );
+                        $("#collection-"+res.data.bookMessageId).click(function (data) {
+                            $.ajax({
+                                url:basePath+'yonghuguanli/deleteCollectionById'
+                                ,data:{
+                                    collectionId: parent.dataForChild.collectionId
+                                },
+                                success:function (res) {
+                                    if (res.code == 0) {
+                                        $("#collection"-res.data.bookMessageId).addClass("layui-btn-primary")
+                                    }
+                                }
+
+                            })
+                        })
                     });
                     //图书详情页
                     showGoods();
@@ -255,34 +298,32 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         console.log("页面:"+layuiId);
         $('#nav-content-'+layuiId).removeClass('layui-hide').siblings().addClass('layui-hide');//显示当前隐藏其他
 
-        $('.reStatus').each(function () {
-            // alert($(this).text());
-            if($(this).text()==="已还书"){
-                $(this).removeClass('layui-hide').siblings().addClass("layui-hide");
-            }
-        });
+        if (layuiId == 2) {//新进图书
+            newBooks();
+        }
         if (layuiId == 4) {//图书推荐
             recomendGoods();
         }
-        if(layuiId==5){//个人信息
+        if (layuiId == 5) {//个人信息
+
             $.ajax({
                 url: basePath + 'data/listAllRole'
                 , type: 'get'
                 , success: function (res) {
-                    MOD.Form.fillSelect($("#roleId"), res.data,"roleId", "roleName");
+                    MOD.Form.fillSelect($("#roleId"), res.data, "roleId", "roleName");
                     form.render();
                     $.ajax({
-                        url:basePath+'yonghuguanli/getCurrentUserInfo'
-                        ,type:'get'
-                        ,success:function (rul) {
+                        url: basePath + 'yonghuguanli/getCurrentUserInfo'
+                        , type: 'get'
+                        , success: function (rul) {
                             console.log($("#userMsg"));
                             console.log(rul.data);
-                            MOD.Form.fillForm($("#userMsg"),rul.data);
+                            MOD.Form.fillForm($("#userMsg"), rul.data);
                             if (rul.data.sex == '0') {
                                 $("input[name='sex'][title='女']").attr("checked", "checked");
                                 $("input[name='sex'][title='男']").removeAttr("checked");
                                 form.render();
-                            }else {
+                            } else {
                                 $("input[name='sex'][title='男']").attr("checked", "checked");
                                 $("input[name='sex'][title='女']").removeAttr("checked");
                                 form.render()
@@ -296,7 +337,8 @@ layui.use(['layer','element','table','form','code','layedit','carousel'], functi
         if (layuiId == 6) {//我的借阅
             borrowPane();
         }
-        if(layuiId==7){//我的收藏
+        if (layuiId == 7) {//我的收藏
+
             collectionPane();
         }
         if (layuiId == 8) {//浏览历史
