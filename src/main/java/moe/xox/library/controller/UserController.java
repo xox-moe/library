@@ -33,6 +33,7 @@ public class UserController extends BaseController {
     @Autowired
     UserRoleRepository userRoleRepository;
 
+    @Autowired
     CollectionRepository collectionRepository;
 
     /**
