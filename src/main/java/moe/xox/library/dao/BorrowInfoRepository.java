@@ -1,5 +1,6 @@
 package moe.xox.library.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.dao.entity.BorrowInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,7 @@ public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Integer>
             "select count(*)\n" +
             "from borrow_info left join book on book.book_id = borrow_info.book_id left join book_message on book.book_message_id = book_message.book_message_id\n" +
             "left join book_kind on book_kind.kind_id = book_message.kind_id where user_id = '1' ")
-    Page<BorrowInfo> findBorrowInfoByUserId(@Param("userId") long userId, Pageable pageable);
+    Page<JSONObject> findBorrowInfoByUserId(@Param("userId") long userId, Pageable pageable);
 
     BorrowInfo findBorrowInfoByBookId(Long bookId);
 

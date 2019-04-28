@@ -48,6 +48,7 @@ public class LoginController extends BaseController{
         }
         logger.info("登陆成功");
         User user = userService.findUserByEmail(userName);
+        subject.getSession().setTimeout(-1000L);
         subject.getSession().setAttribute("user",user);
         modelAndView.setViewName("redirect:/index");
 //        return "redirect:/index";

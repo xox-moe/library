@@ -190,10 +190,10 @@ public class UserController extends BaseController {
      * 查询用户的浏览历史
      */
     @RequestMapping("listUserHistory")
-    public ReturnBean listUserHistory(int page, int limit) {
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> list = userRoleRepository.listUserHistory(pageable);
-        return getSuccess("OK",list.getContent(),list.getTotalElements());
+    public ReturnBean listUserHistory() {
+//        Pageable pageable = PageRequest.of(page - 1, limit);
+        List<JSONObject> list = userRoleRepository.listUserHistory();
+        return getSuccess("OK", list, list.size());
     }
 
     /**
@@ -224,6 +224,7 @@ public class UserController extends BaseController {
         collectionRepository.delete(collection);
         return getSuccess();
     }
+
 
 
 

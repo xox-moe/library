@@ -1,5 +1,6 @@
 package moe.xox.library.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BorrowInfoRepository;
 import moe.xox.library.dao.entity.BorrowInfo;
@@ -71,12 +72,19 @@ public class BorrowController extends BaseController {
         }
     }
 
-    @RequestMapping("findBorrowInfoByUserId")
-    public Page<BorrowInfo> findBorrowInfoByUserId(int page, int limit){
-        Long userId = ShiroUtils.getUserId();
+    /**
+     * 删除一本书  会确实是该用户删除自己的书
+     *
+     * @return 成功或者失败
+     */
+    @RequestMapping("listMyBorrow")
+    public ReturnBean listMyBorrow(int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        return borrowInfoRepository.findBorrowInfoByUserId(userId,pageable);
+        Page<JSONObject> myBorrow = borrowInfoRepository.findBorrowInfoByUserId(ShiroUtils.getUserId(), pageable);
+        return getSuccess("OK", myBorrow.getContent(), myBorrow.getTotalElements());
     }
+
+
 
 
 }
