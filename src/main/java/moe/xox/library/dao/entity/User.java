@@ -20,8 +20,11 @@ public class User {
   private Long userId;
   private String email;
   private String nickName;
+//  @Column(name = "img_name")
+  private String imgName;
   private String password;
-//  private Long roleId;
+  //  private Long roleId;
+
   private LocalDate birthday;
   private String realName;
   private Long grade;

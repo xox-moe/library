@@ -52,10 +52,14 @@ public class ImageController extends BaseController {
 
 
     @RequestMapping("getImg")
-    public ReturnBean getImg(String msg) throws IOException {
-        String path = "F:\\library\\image\\123.png";
-        String img = ImageUtil.imageToString(path);
-        return getSuccess("OK",img,1);
+    public ReturnBean getImg(String fileName) throws IOException {
+        String path = "F:\\library\\image\\" + fileName ;
+        try{
+            String img = ImageUtil.imageToString(path);
+            return getSuccess("OK",img,1);
+        } catch (IOException ioex){
+            return getFailure(ioex.getMessage());
+        }
     }
 
     @RequestMapping("setImg")

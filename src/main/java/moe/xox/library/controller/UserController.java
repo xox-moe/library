@@ -1,6 +1,7 @@
 package moe.xox.library.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.CollectionRepository;
@@ -9,16 +10,22 @@ import moe.xox.library.dao.UserRoleRepository;
 import moe.xox.library.dao.entity.Collection;
 import moe.xox.library.dao.entity.User;
 import moe.xox.library.dao.entity.UserRole;
+import moe.xox.library.project.FILE_PATH;
+import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,6 +34,9 @@ import java.util.List;
 @RestController
 @RequestMapping("yonghuguanli")
 public class UserController extends BaseController {
+
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     UserRepository userRepository;
 
@@ -76,11 +86,16 @@ public class UserController extends BaseController {
      * private Long sex;
      */
     @RequestMapping(path = "addUser", method = RequestMethod.POST)
-    public ReturnBean addUser(String email, String nickName, String password, String birthday, String realName, Long grade, String department, String major, Long sex, Long roleId) {
+    public ReturnBean addUser(String email, String nickName, String password, String birthday, String realName, Long grade, String department, String major, Long sex, Long roleId, @RequestParam(value = "img", required = false) MultipartFile file) {
 
         birthday += " 00:00:00";
 //        LocalDateTime.parse(birthday).toLocalDate();
-        User user = new User(null, email, nickName, password, LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
+
+        String fileName = "";
+        if (file != null)
+            fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
+
+        User user = new User(null, email, nickName, fileName, password, LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
         user = userRepository.save(user);
         UserRole userRole = new UserRole(user.getUserId(), roleId, true);
         userRoleRepository.save(userRole);
@@ -128,7 +143,7 @@ public class UserController extends BaseController {
     public ReturnBean updateUser(Long userId, Long roleId, String email, String nickName, String password, String birthday, String realName, Long grade, String department, String major, Long sex) {
         birthday += " 00:00:00";
         User oldUser = userRepository.findByUserId(userId);
-        User user = new User(userId, email, nickName, oldUser.getPassword(), LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
+        User user = new User(userId, email, nickName, oldUser.getImgName(), oldUser.getPassword(), LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(), realName, grade, department, major, sex);
 //        userRepository.updateUserRole( userId,  roleId);
 
         if (password != null || !password.equals(""))
@@ -142,6 +157,17 @@ public class UserController extends BaseController {
         userRoleRepository.save(userRole);
         userRepository.save(user);
         return getSuccess("success");
+    }
+
+    @RequestMapping(path = "changeImg", method = RequestMethod.POST)
+    @Transactional
+    public ReturnBean changeImg(@RequestParam("img") MultipartFile file) {
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getSession().getAttribute("user");
+        String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
+        user.setImgName(fileName);
+        userRepository.save(user);
+        return getSuccess("OK", fileName, 1);
     }
 
 
@@ -163,13 +189,21 @@ public class UserController extends BaseController {
 
     /**
      * 获取当前用户的信息
+     *
      * @return
      */
     @RequestMapping("getCurrentUserInfo")
-    public ReturnBean getCurrentUserInfo() {
+    public ReturnBean getCurrentUserInfo() throws IOException {
         Long userId = ShiroUtils.getUserId();
         User user = userRepository.findByUserId(userId);
-        return getSuccess("OK", user, 1);
+        JSONObject object = (JSONObject) JSON.toJSON(user);
+//        if (user.getImgName() != null && !user.getImgName().equals(""))
+        try {
+            object.put("img", ImageUtil.imageToString("F:\\library\\image\\" + user.getImgName()));
+        } catch (Exception ex) {
+            logger.info(ex.getMessage());
+        }
+        return getSuccess("OK", object, 1);
     }
 
 
@@ -214,19 +248,18 @@ public class UserController extends BaseController {
 
     /**
      * 删除一本书  会确实是该用户删除自己的书
+     *
      * @param collectionId 收藏ID
      * @return 成功或者失败
      */
     @RequestMapping("deleteCollectionById")
-    public ReturnBean deleteCollectionById(Long collectionId){
+    public ReturnBean deleteCollectionById(Long collectionId) {
         Collection collection = collectionRepository.findCollectionByCollectionId(collectionId);
-        if(!collection.getUserId().equals(ShiroUtils.getUserId()))
+        if (!collection.getUserId().equals(ShiroUtils.getUserId()))
             return getFailure("请确认这是您的收藏,不要尝试删除不属于您的收藏");
         collectionRepository.delete(collection);
         return getSuccess();
     }
-
-
 
 
 }

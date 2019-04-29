@@ -53,10 +53,10 @@ public class DemoController extends BaseController {
     public ReturnBean queryUser(@RequestParam("userId") String userId) {
         System.out.println("queryUser:::" + userId);
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        User user = new User(1L, "zjq@qq.com",
-                "终焉警钟", "admin", LocalDate.now(),
-                "admin", 2016L, "计算机", "软件工程", 1L);
-        return   getSuccess("success",user,1);
+//        User user = new User(1L, "zjq@qq.com",
+//                "终焉警钟", "admin", LocalDate.now(),
+//                "admin", 2016L, "计算机", "软件工程", 1L);
+        return   getSuccess("success",null,1);
     }
 
 }
