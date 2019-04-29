@@ -94,8 +94,8 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '</a>'+
                             '<a href="javascript:;">'+
                             '<div class="cmdlist-text" >'+
-                            '<p class="info">书名:'+res.data.bookName+'</p>'+
-                            '<p class="info" style="color: grey">作者:'+res.data.author+'</p>'+
+                            '<p class="info">书名:'+item.name+'</p>'+
+                            '<p class="info" style="color: grey">作者:'+item.author+'</p>'+
                             '</div></a></div></div>'
                         )
                     })
@@ -295,9 +295,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                 },
                                 success:function (res) {
                                     if (res.code == 0) {
-                                        $("#collection-" + item.collectionId).addClass("animated bounceOut");
-                                        setTimeout(collectionPane(),"2000");
-
+                                        $("#collectionPane-" + item.collectionId).fadeOut();
                                     }
                                 }
                             });
@@ -329,13 +327,13 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<img style="width: 100%" src="img/商品.jpg">'+
                             '</div>'+
                             '<div style="flex-grow: 2.5;width: 15em;">'+
-                            '<p>书名:' + item.bookMessageName + '</p>' +
+                            '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
                             '</div>'+
                             '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
-                            '<p>简介:' + item.introduction + '</p>'+
+                            '<p>简介:' + item.intorduciton+ '</p>'+
                             '</div>'+
                             '</li>'
                         );

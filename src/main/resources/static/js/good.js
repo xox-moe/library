@@ -64,5 +64,11 @@ $("#collection").on('click',function () {
             }
         })
     });
+
+    //关闭按钮
+    $('button[type=close]').click(function(){
+        var mywindow = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(mywindow); //再执行关闭
+    });
 });
 
