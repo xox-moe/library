@@ -63,8 +63,8 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     //打开详情页
     function showGoods(){
         $('.goods').on('click',function (data) {
-            console.log(data.currentTarget.id);
-            dataForChild=data.currentTarget.id.split("-")[1];
+            console.log(data.currentTarget);
+            dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
             console.log(dataForChild);
             layer.open({
                 type: 2,
@@ -73,6 +73,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 skin: 'layui-layer-rim', //加上边框
                 content:basePath+'good'
             });
+            return false
         });
     }
     //新进图书
@@ -86,15 +87,15 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                     $("#newBook").empty();
                     $.each(res.data,function (i, item) {
                         $("#newBook").last().append(
-                            '<div class="goods layui-col-xs2 animated fadeIn"id="newBook-'+item.bookMessageId+'">'+
+                            '<div class="goods layui-col-xs2 animated fadeIn"name="newBook-'+item.bookMessageId+'">'+
                             '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">'+
                             '<a href="javascript:;">'+
                             '<img style="width: 100%;" src="img/商品.jpg">'+
                             '</a>'+
                             '<a href="javascript:;">'+
                             '<div class="cmdlist-text" >'+
-                            '<p class="info">书名:'+res.data.bookName+'</p>'+
-                            '<p class="info" style="color: grey">作者:'+res.data.author+'</p>'+
+                            '<p class="info">书名:'+item.name+'</p>'+
+                            '<p class="info" style="color: grey">作者:'+item.author+'</p>'+
                             '</div></a></div></div>'
                         )
                     })
@@ -119,7 +120,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         return false;
                     }
                     $("#showGoods").last().append(
-                        '<div class=" goods layui-col-xs2 animated fadeIn" id="showGoods-'+item.bookMessageId+'">' +
+                        '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
                         '<a href="javascript:;">' +
                         '<img style="width: 100%;" src="img/商品.jpg">' +
@@ -151,7 +152,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 $("#recommend").empty();
                 $.each(res.data, function (i, item) {
                     $("#recommend").last().append(
-                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" id="recommendId-'+item.bookMessageId+'">' +
+                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" name="recommendId-'+item.bookMessageId+'">' +
                         '<div class="grid-demo grid-demo-bg1">' +
                         '<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">' +
                         '<div class="layui-col-md12">' +
@@ -173,23 +174,23 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     homeGoods('');
     //我的借阅
     function borrowPane(){
+        $("#bookBorrow").empty();
         $.ajax({
-            url: basePath + ''
+            url: basePath + 'order/listMyOrder'
             , type: 'get'
             , success: function (res) {
-                $("#bookBorrow").empty();
                 if (res.code == 0) {
                     $.each(res.data, function (i, item) {
                         $("#bookBorrow").last().append(
-                            '<li style="display: flex;" class="goods"id="BorrowId-' + item.bookMessageId + '">' +
+                            '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">应还日期</span>' +
+                            '<span style="font-size: 1em;">预约日期:</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
                             '<img style="width: 100%" src="img/商品.jpg">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
-                            '<p>书名:' + item.bookMessageName + '</p>' +
+                            '<p>书名:' + item.bookName + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
@@ -201,13 +202,60 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<button class="layui-btn" id="delay-' + item.bookMessageId + '">延期</button>' +
                             '</div>' +
-                            '</li>'
+                            '</div>'
                         );
                     });
                 }
                 showGoods();
             }
         });
+        $.ajax({
+            url: basePath + 'borrow/listMyBorrow'
+            , type: 'get'
+            ,data:{
+                page:1
+                ,limit:10
+            }
+            , success: function (res) {
+                if (res.code == 0) {
+                    $.each(res.data, function (i, item) {
+                        $("#bookBorrow").last().append(
+                            '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
+                            '<div style="flex-grow: 1;width: 5em;">' +
+                            '<span style="font-size: 1em;">应还日期</span>' +
+                            '</div>' +
+                            '<div style="flex-grow: 1.2;width: 5em;">' +
+                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '</div>' +
+                            '<div style="flex-grow: 3;width: 15em;">' +
+                            '<p>书名:' + item.bookName + '</p>' +
+                            '<p>作者:' + item.author + '</p>' +
+                            '<p>类别:' + item.kindName + '</p>' +
+                            '<p>出版社:' + item.publisher + '</p>' +
+                            '<p>' + "借阅日期" +item.outTime+ '</p>' +
+                            '</div>' +
+                            '<div style="flex-grow: 2;width: 10em;">' +
+                            '<p id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</p>' +
+                            '</div>' +
+                            '<div style="flex-grow: 1;width: 5em;">' +
+                            '<button class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
+                            '</div>' +
+                            '</li>'
+                        );
+
+
+
+                        if (item.ifReturn == false) {
+                            $("#returnTiem" + item.borrowId).addClass("layui-hide");
+                        }else{
+                            $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
+                        }
+                    });
+                }
+                showGoods();
+            }
+        });
+
     }
     //我的收藏
     function collectionPane(){
@@ -219,7 +267,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code === 0) {
                     $.each(res.data, function (i, item) {
                         $("#bookul").last().append(
-                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.bookMessageId + '">' +
+                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.collectionId + '" name="collectionPane'+item.bookMessageId+'">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">序号:' + i + '</span>' +
                             '</div>' +
@@ -234,23 +282,25 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<p><span>' + "num" + '</span></p>' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 10em;">' +
-                            '<button class="layui-btn layui-bg-red" id="collection-' + item.bookMessageId + '">取消收藏</button>' +
+                            '<button class="layui-btn layui-bg-red" id="collection-' + item.collectionId + '">取消收藏</button>' +
                             '</div>' +
                             '</li>'
                         );
-                        $("#collection-"+res.data.bookMessageId).click(function (data) {
+                        $("#collection-"+item.collectionId).on('click',function (event){
+                            console.log("OK");
                             $.ajax({
                                 url:basePath+'yonghuguanli/deleteCollectionById'
                                 ,data:{
-                                    collectionId: parent.dataForChild.collectionId
+                                    collectionId: item.collectionId
                                 },
                                 success:function (res) {
                                     if (res.code == 0) {
-                                        $("#collection"-res.data.bookMessageId).addClass("layui-btn-primary")
+                                        $("#collectionPane-" + item.collectionId).fadeOut();
                                     }
                                 }
-
-                            })
+                            });
+                            event.stopPropagation()
+                            return false
                         })
                     });
                     //图书详情页
@@ -269,7 +319,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code == '0') {
                     $.each(res.data, function (i, item) {
                         $("#history").last().append(
-                            '<li style="display: flex;" class="goods" id="history-'+item.bookMessageId+'">'+
+                            '<li style="display: flex;" class="goods" name="history-'+item.bookMessageId+'">'+
                             '<div style="flex-grow: 1;width: 5em;">'+
                             '<span style="font-size: 1em;">浏览日期</span>'+
                             '</div>'+
@@ -277,13 +327,13 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<img style="width: 100%" src="img/商品.jpg">'+
                             '</div>'+
                             '<div style="flex-grow: 2.5;width: 15em;">'+
-                            '<p>书名:' + item.bookMessageName + '</p>' +
+                            '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
                             '</div>'+
                             '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
-                            '<p>简介:' + item.introduction + '</p>'+
+                            '<p>简介:' + item.intorduciton+ '</p>'+
                             '</div>'+
                             '</li>'
                         );

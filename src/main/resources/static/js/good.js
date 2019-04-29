@@ -41,6 +41,7 @@ $("#collection").on('click',function () {
              });
              $("#collection").addClass("layui-hide");
              $("#deleteCollection").removeClass("layui-hide");
+             // location.reload();
          }
      }
  })
@@ -49,7 +50,7 @@ $("#collection").on('click',function () {
         $.ajax({
             url:basePath+'yonghuguanli/deleteCollectionById'
             ,data:{
-                bookMessageId: parent.dataForChild
+                collectionId: parent.dataForChild
             }
             ,success:function (res) {
                 if (res.code == 0) {
@@ -58,36 +59,16 @@ $("#collection").on('click',function () {
                     });
                     $("#deleteCollection").addClass("layui-hide");
                     $("#collection").removeClass("layui-hide");
+                    // location.reload();
                 }
             }
         })
     });
 
-$('.borrow').on('click',function () {
-    $.ajax({
-        url:basePath+'borrow/borrowBook'
-        ,data:{
-            bookMessageId: parent.dataForChild
-        }
-        ,success:function (res) {
-            if (res == 0) {
-                layer.msg('预约成功<br>'+'图书Id:'+id, {
-                    time: 20000, //20s后自动关闭
-                    btn: ['确认']
-                    ,yes: function(){
-                        layer.closeAll();
-                        layer.tips('预约成功','.borrow',{
-                            tips: [2, '#78BA32']
-                        })
-                    }
-                });
-            }
-        }
-        ,error:function (res) {
-            layer.msg(res.msg);
-        }
+    //关闭按钮
+    $('button[type=close]').click(function(){
+        var mywindow = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(mywindow); //再执行关闭
     });
-
-})
 });
 
