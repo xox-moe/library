@@ -124,7 +124,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             ,success:function (res) {
                 $.each(res.data,function (i,item) {
                     console.log(item.bookMessageId);
-                    if (i === 4) {
+                    if (i === 10) {
                         return false;
                     }
                     $("#showGoods").last().append(
