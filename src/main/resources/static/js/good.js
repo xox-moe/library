@@ -1,6 +1,6 @@
 //JavaScript代码区域
 var dataForChild;
-var ChildForParent;
+var childData;
 layui.use(['layer','element','table','form','code','layedit'], function() {
 
     var $ = layui.jquery;
@@ -25,6 +25,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#author").text(res.data.author);
                 $("#publisher").text(res.data.publisher);
                 $("#totalNum").text(res.data.totalNum);
+                childData = res.data;
             }
         }
     });
@@ -48,7 +49,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
         $.ajax({
             url:basePath+'order/cancelOrder'
             ,data:{
-                orderId: parent.dataForChild.orderId
+                orderId: childData.orderId
             }
             ,success:function (res) {
                 if (res.code == 0) {
@@ -84,7 +85,7 @@ $("#collection").on('click',function () {
         $.ajax({
             url:basePath+'yonghuguanli/deleteCollectionById'
             ,data:{
-                collectionId: parent.dataForChild.collectionId
+                collectionId: childData.collectionId
             }
             ,success:function (res) {
                 if (res.code == 0) {
