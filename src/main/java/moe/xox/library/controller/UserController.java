@@ -199,7 +199,7 @@ public class UserController extends BaseController {
         JSONObject object = (JSONObject) JSON.toJSON(user);
 //        if (user.getImgName() != null && !user.getImgName().equals(""))
         try {
-            object.put("img", ImageUtil.imageToString("F:\\library\\image\\" + user.getImgName()));
+            object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH +"\\"+ user.getImgName()));
         } catch (Exception ex) {
             logger.info(ex.getMessage());
         }

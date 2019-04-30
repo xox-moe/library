@@ -61,6 +61,13 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             form.render();
         }
     });
+    $.ajax({
+        url:basePath+'yonghuguanli/getCurrentUserInfo'
+        ,type:"get"
+        ,success:function (res) {
+            $("#headImg").attr("src", res.data.img);
+        }
+    })
     //打开详情页
     function showGoods(){
         $('.goods').on('click',function (data) {
@@ -441,9 +448,9 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                 form.render()
                             }
                             if (rul.data.img != null) {
-                                $("#myImg").attr("src", rul.data.img);
+                                $("#myImg").find("img").attr("src", rul.data.img);
                             }
-                            console.log("OK");
+                            console.log(rul.data.img);
 
                             form.render();
                         }
@@ -462,7 +469,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             history();
         }
         if(layuiId==16){
-
+            actionType = 'fastBorrow';
+            layer.open({
+                type: 2,
+                title:"借出图书",
+                area: ['400px', '550px'],
+                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                content:basePath+'bookDetail'
+            });
         }
     });
 

@@ -16,7 +16,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
@@ -42,7 +42,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
@@ -55,7 +55,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
@@ -78,6 +78,30 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("#bookName").attr("readonly", "readonly").attr("disabled", "disabled");
         $("input[name='publisher']").attr("readonly", "readonly");
         $("input[name='author']").attr("readonly", "readonly");
+    }else if (parent.actionType == 'borrow') {
+        $("form input").attr("readonly","readonly");
+        $("form textarea").attr("readonly","readonly");
+        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("#save").addClass("layui-hide");
+        $("#borrow").removeClass("layui-hide");
+    }else if (parent.actionType == 'fastBorrow') {
+        $("#save").addClass("layui-hide");
+        $("#borrow").removeClass("layui-hide");
+        $("input").attr("readonly", "readonly");
+        $("form textarea").attr("readonly","readonly");
+        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("input[name='bookId']").prop("readonly",false)
+        $("input[name='bookId']").blur(function (data) {
+            $.ajax({
+                url:basePath+''
+                ,type:'get'
+                ,success:function (res) {
+                    if (res.code == 0) {
+                        MOD.Form.fillForm($('#bookDetail'),res.data);
+                    }
+                }
+            })
+        });
     }
 
     form.on('select(bookName)', function(d){
@@ -126,6 +150,32 @@ layui.use(['layer','element','table','form','laydate'], function(){
         return false;
     });
 
+    $("#borrow").click(function (data) {
+        layer.prompt({title: '请询问订单号，填写并确认', formType: 0}, function (pass, index1) {
+            if (pass == data)
+                layer.close(index1);
+            layer.prompt({title: '请输入借书人ID，并确认', formType: 0}, function (userId, index2) {
+                layer.closeAll();
+                $.ajax({
+                    url: basePath + 'borrow/borrowBook'
+                    , data: {
+                        userId: userId
+                        , code: pass
+                        , bookMessageId: parent.dataForChild.bookMessageId
+                    }
+                    , success: function (res) {
+                        if (res.code == 0) {
+                            layer.msg(text + "借出" + data.bookMessageName + "<br>" + "消息:" + res.msg);
+                        }
+                    }
+                    , error: function (res) {
+                        layer.msg(res.msg);
+                    }
+                });
+            });
+        });
+    });
+
     //关闭按钮
     $('button[type=close]').click(function(){
         var mywindow = parent.layer.getFrameIndex(window.name);
@@ -139,4 +189,5 @@ layui.use(['layer','element','table','form','laydate'], function(){
             }
         }
     });
+
 });
