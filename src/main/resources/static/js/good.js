@@ -26,6 +26,14 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#publisher").text(res.data.publisher);
                 $("#totalNum").text(res.data.totalNum);
                 childData = res.data;
+                if (childData.ifOrder == true) {
+                    $("#deleteBorrow").removeClass("layui-hide");
+                    $("#borrow").addClass("layui-hide");
+                }
+                if (childData.ifCollection == true) {
+                    $("#deleteCollection").removeClass("layui-hide");
+                    $("#collection").addClass("layui-hide");
+                }
             }
         }
     });
@@ -37,7 +45,8 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
             }
             ,success:function (res) {
                 if (res.code == 0) {
-                    layer.msg('预约成功你的预约号码为:' + res.data);
+                    layer.msg('预约成功你的预约号码为:' + res.data.code);
+                    childData.orderId = res.data.orderId;
                     $("#borrow").addClass("layui-hide");
                     $("#deleteBorrow").removeClass("layui-hide");
                     // location.reload();
@@ -74,6 +83,7 @@ $("#collection").on('click',function () {
              layer.tips('收藏成功', '.collection', {
                  tips: [2, '#78BA32']
              });
+             childData.collectionId = res.data.collectionId;
              $("#collection").addClass("layui-hide");
              $("#deleteCollection").removeClass("layui-hide");
              // location.reload();

@@ -182,6 +182,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     homeGoods('');
     //我的借阅
     function borrowPane(){
+        var flag = 0;
         $("#bookBorrow").empty();
         $.ajax({
             url: basePath + 'order/listMyOrder'
@@ -198,69 +199,82 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<img style="width: 100%" src="img/商品.jpg">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
-                            '<p>书名:' + item.bookName + '</p>' +
+                            '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
                             '<p>' + "一个暂时没有的借阅日期" + '</p>' +
                             '</div>' +
                             '<div style="flex-grow: 2;width: 10em;">' +
-                            '<p>一个暂时没有的订单号</p>' +
+                            '<p>订单号:'+item.code+'</p>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn" id="delay-' + item.bookMessageId + '">延期</button>' +
+                            '<button class="layui-btn" id="borrow-' + item.bookMessageId + '">取消预约</button>' +
                             '</div>' +
                             '</div>'
                         );
+                        $("#borrow-"+item.bookMessageId).on('click',function (event){
+                            console.log("OK");
+                            $.ajax({
+                                url:basePath+'order/cancelOrder'
+                                ,data:{
+                                    orderId: item.orderId
+                                },
+                                success:function (res) {
+                                    if (res.code == 0) {
+                                        $("#BorrowId-" + item.bookMessageId).fadeOut();
+                                    }
+                                }
+                            });
+                            event.stopPropagation()
+                            return false
+                        })
                     });
-                }
-                showGoods();
-            }
-        });
-        $.ajax({
-            url: basePath + 'borrow/listMyBorrow'
-            , type: 'get'
-            ,data:{
-                page:1
-                ,limit:10
-            }
-            , success: function (res) {
-                if (res.code == 0) {
-                    $.each(res.data, function (i, item) {
-                        $("#bookBorrow").last().append(
-                            '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">应还日期</span>' +
-                            '</div>' +
-                            '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="img/商品.jpg">' +
-                            '</div>' +
-                            '<div style="flex-grow: 3;width: 15em;">' +
-                            '<p>书名:' + item.bookName + '</p>' +
-                            '<p>作者:' + item.author + '</p>' +
-                            '<p>类别:' + item.kindName + '</p>' +
-                            '<p>出版社:' + item.publisher + '</p>' +
-                            '<p>' + "借阅日期" +item.outTime+ '</p>' +
-                            '</div>' +
-                            '<div style="flex-grow: 2;width: 10em;">' +
-                            '<p id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</p>' +
-                            '</div>' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
-                            '</div>' +
-                            '</li>'
-                        );
-
-
-
-                        if (item.ifReturn == false) {
-                            $("#returnTiem" + item.borrowId).addClass("layui-hide");
-                        }else{
-                            $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
+                    $.ajax({
+                        url: basePath + 'borrow/listMyBorrow'
+                        , type: 'get'
+                        ,data:{
+                            page:1
+                            ,limit:10
+                        }
+                        , success: function (res) {
+                            if (res.code == 0) {
+                                $.each(res.data, function (i, item) {
+                                    $("#bookBorrow").last().append(
+                                        '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
+                                        '<div style="flex-grow: 1;width: 5em;">' +
+                                        '<span style="font-size: 1em;">应还日期</span>' +
+                                        '</div>' +
+                                        '<div style="flex-grow: 1.2;width: 5em;">' +
+                                        '<img style="width: 100%" src="img/商品.jpg">' +
+                                        '</div>' +
+                                        '<div style="flex-grow: 3;width: 15em;">' +
+                                        '<p>书名:' + item.bookName + '</p>' +
+                                        '<p>作者:' + item.author + '</p>' +
+                                        '<p>类别:' + item.kindName + '</p>' +
+                                        '<p>出版社:' + item.publisher + '</p>' +
+                                        '<p>' + "借阅日期" +item.outTime+ '</p>' +
+                                        '</div>' +
+                                        '<div style="flex-grow: 2;width: 10em;">' +
+                                        '<p id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</p>' +
+                                        '</div>' +
+                                        '<div style="flex-grow: 1;width: 5em;">' +
+                                        '<button class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
+                                        '</div>' +
+                                        '</li>'
+                                    );
+                                    if (item.ifReturn == false) {
+                                        $("#returnTiem" + item.borrowId).addClass("layui-hide");
+                                    }else{
+                                        $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
+                                    }
+                                });
+                                if (flag === 0)
+                                    showGoods();
+                            }
                         }
                     });
                 }
-                showGoods();
             }
         });
 
