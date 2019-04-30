@@ -1,11 +1,12 @@
 //JavaScript代码区域
 var dataForChild;
 
-layui.use(['layer','element','table','form','code','layedit','carousel','laydate','upload'], function() {
+layui.use(['layer','element','table','form','code','layedit','carousel','laydate','upload','flow'], function() {
     var $ = layui.jquery;
     var element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
         , layer = layui.layer
-        , upload=layui.upload
+        , upload = layui.upload
+        , flow = layui.flow
         , laydate = layui.laydate;
     var table = layui.table;
     form = layui.form;
@@ -70,12 +71,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     })
     //打开详情页
     function showGoods(){
-        $('.goods').on('click',function (data) {
+        console.log("绑定详情页事件");
+        $('.goods').click(function (data) {
             console.log(data.currentTarget);
             dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
             console.log(dataForChild);
             layer.open({
                 type: 2,
+                id:"goodsPage",
                 title:"图书详情",
                 area: ['1000px', '680px'],
                 skin: 'layui-layer-rim', //加上边框
@@ -115,6 +118,10 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     }
     //主页书籍
     function homeGoods(unionSearch){
+        var homeGoodsCount=0;
+        var homeGoodsPage=0;
+        var homeGoodsLimit=5;
+        var AllDate = [];
         $.ajax({
             url:basePath+'tushuxinxiguanli/listBookMsgHomePage'
             ,type:'get'
@@ -122,12 +129,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 unionSearch: unionSearch
             }
             ,success:function (res) {
+                homeGoodsCount=res.count;
+                homeGoodsPage = res.count / homeGoodsLimit;
                 $.each(res.data,function (i,item) {
                     console.log(item.bookMessageId);
                     if (i === 10) {
                         return false;
                     }
-                    $("#showGoods").last().append(
+                    AllDate.push(
                         '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
                         '<a href="javascript:;">' +
@@ -140,11 +149,43 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         '</div>' +
                         '</a>' +
                         '</div>' +
-                        '</div>'
-                    );
+                        '</div>');
+                    // $("#showGoods").last().append(
+                    //     '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
+                    //     '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
+                    //     '<a href="javascript:;">' +
+                    //     '<img style="width: 100%;" src="img/商品.jpg">' +
+                    //     '</a>' +
+                    //     '<a href="javascript:;">' +
+                    //     '<div class="cmdlist-text">' +
+                    //     '<p class="info">书名:' + item.bookMassageName + '</p>' +
+                    //     '<p class="info" style="color: grey">作者:' + item.author + '</p>' +
+                    //     '</div>' +
+                    //     '</a>' +
+                    //     '</div>' +
+                    //     '</div>'
+                    // );
                 });
                 //图书详情页
-                showGoods();
+
+                flow.load({
+                    elem: '#showGoods' //流加载容器
+                    ,scrollElem: '#showGoods' //滚动条所在元素，一般不用填，此处只是演示需要。
+                    ,done: function(page, next){ //执行下一页的回调
+                        //数据插入
+                        setTimeout(function(){
+                            var lis = [];
+                            console.log(page);
+                            for(var i = (page-1)*homeGoodsLimit; i < (page)*homeGoodsLimit; i++){
+                                lis.push(AllDate[i]);
+                            }
+                            //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                            //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                            next(lis.join(''), page < homeGoodsPage); //假设总页数为 10
+                            showGoods();
+                        }, 250);
+                    }
+                });
             }
         });
     }
