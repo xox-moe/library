@@ -154,12 +154,12 @@ layui.use(['layer','element','table','form','laydate'], function(){
         layer.prompt({title: '请询问订单号，填写并确认', formType: 0}, function (pass, index1) {
             if (pass == data)
                 layer.close(index1);
-            layer.prompt({title: '请输入借书人ID，并确认', formType: 0}, function (userId, index2) {
+            layer.prompt({title: '请输入用户名，并确认', formType: 0}, function (userId, index2) {
                 layer.closeAll();
                 $.ajax({
                     url: basePath + 'borrow/borrowBook'
                     , data: {
-                        userId: userId
+                        email: userId
                         , code: pass
                         , bookMessageId: parent.dataForChild.bookMessageId
                     }
