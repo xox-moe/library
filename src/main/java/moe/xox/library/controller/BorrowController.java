@@ -31,8 +31,8 @@ public class BorrowController extends BaseController {
      * @return
      */
     @RequestMapping("borrowBook")
-    public ReturnBean borrowBook(Long userId, Long bookId,String code) {
-        int flag = borrowService.borrowBook(userId, bookId,code);
+    public ReturnBean borrowBook(String email, Long bookId,String code) {
+        int flag = borrowService.borrowBook(email, bookId,code);
         switch (flag) {
             case -1:
                 return getFailure("预约与取出的书的类别不符");

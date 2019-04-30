@@ -15,7 +15,7 @@ import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User,Integer> {
 
-    User findByEmail(String email);
+    public User findByEmail(String email);
 
 //    User findByStudentId(long id);
 
