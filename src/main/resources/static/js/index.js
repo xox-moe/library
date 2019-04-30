@@ -503,6 +503,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                     //预读本地文件示例，不支持ie8
                     var loading=layer.load();
                     obj.preview(function(index, img, result){
+                        $("input[name='avatar']").val(img.name);
                         $('#myImg').find("img").attr('src', result); //图片链接（base64）
                         MOD.Util.photoCompress(img, {
                             quality: 0.5,
