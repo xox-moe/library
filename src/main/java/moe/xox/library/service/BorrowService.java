@@ -1,11 +1,10 @@
 package moe.xox.library.service;
 
-import moe.xox.library.dao.BookRepository;
-import moe.xox.library.dao.BorrowInfoRepository;
-import moe.xox.library.dao.OrderRepository;
+import moe.xox.library.dao.*;
 import moe.xox.library.dao.entity.Book;
 import moe.xox.library.dao.entity.BorrowInfo;
 import moe.xox.library.dao.entity.Order;
+import moe.xox.library.dao.entity.User;
 import moe.xox.library.project.BookStatusEnum;
 import moe.xox.library.utils.ShiroUtils;
 import org.slf4j.Logger;
@@ -34,12 +33,18 @@ public class BorrowService {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
 
     @Transactional
-    public int borrowBook(long userId, long bookId, String code) {
+    public int borrowBook(String email, long bookId, String code) {
 
+        //根据学号查询教师
+        User user = userRepository.findByEmail(email);
         //借出图书
+        Long userId = user.getUserId();
         Order order = orderRepository.findOrderByUserIdAndCodeAndStatusIsTrue(userId,code);
         Book book = bookRepository.findByBookId(bookId);
 
@@ -57,7 +62,7 @@ public class BorrowService {
         book.setBookStatusId(BookStatusEnum.OUT.id);
 
 
-        BorrowInfo borrowInfo = new BorrowInfo(null, userId, bookId,false, LocalDateTime.now(), book.getQuality(), null, null);
+        BorrowInfo borrowInfo = new BorrowInfo(null, userId, bookId,false, LocalDateTime.now(), book.getQuality(),false, null, null);
 
 
         bookRepository.save(book);

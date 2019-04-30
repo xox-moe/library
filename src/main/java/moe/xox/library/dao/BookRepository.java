@@ -18,10 +18,10 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     Book findByBookId(Long id);
 
 
-    @Query(nativeQuery = true,value = "select book_id                     as bookId,\n" +
-            "       quality                     as qualityId,\n" +
+    @Query(nativeQuery = true,value = "select book.book_id                as bookId,\n" +
+            "       quality                     as quality,\n" +
             "       bookMsg.book_message_id     as bookMessageId,\n" +
-            "       name                        as bookMessageName,\n" +
+            "       name                        as name,\n" +
             "       author                      as author,\n" +
             "       publisher                   as publisher,\n" +
             "       introduction                as introduction,\n" +
@@ -32,7 +32,9 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "       book_status.book_status_id  as bookStatusId,\n" +
             "       book_status_name            as statusName,\n" +
             "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
-            "       IFNULL(bookNum.totalNum, 0) as totalNum\n" +
+            "       IFNULL(bookNum.totalNum, 0) as totalNum,\n" +
+            "       borrowUser.user_id          as userId,\n" +
+            "       borrowUser.real_name        as userName\n" +
             "from book\n" +
             "         left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id\n" +
             "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
@@ -49,8 +51,12 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "                      and (book_status_id = 4 or book_status_id = 1)\n" +
             "                    group by book_message_id) bookNum\n" +
             "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
-            "where book.status = true " +
-            "  and bookMsg.status = true ",
+            "         left join(select real_name, book_id, borrow_info.user_id\n" +
+            "                   from borrow_info\n" +
+            "                            left join user on user.user_id = borrow_info.user_id\n" +
+            "                   where if_return = false) borrowUser on book.book_id = borrowUser.book_id\n" +
+            "where book.status = true\n" +
+            "  and bookMsg.status is true",
             countQuery = "select count(*)  " +
                     "from book  left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id  " +
                     "where book.status = true and bookMsg.status = true")
