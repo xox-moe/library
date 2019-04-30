@@ -26,6 +26,7 @@ public interface UserRoleRepository  extends JpaRepository<UserRole,Long> {
             "       kind_name as kindName,\n" +
             "       author as author,\n" +
             "       publisher as publisher,\n" +
+            "       history.create_time   as historyTime,\n" +
             "       introduction as intorduciton,\n" +
             "       ISBN\n" +
             "from history left join book_message on history.book_message_id = book_message.book_message_id\n" +
