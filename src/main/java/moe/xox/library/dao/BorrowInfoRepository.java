@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Integer> {
+public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Long> {
 
 
     BorrowInfo findAllByUserIdAndBookIdAndIfReturnIsFalse(long userId, long bookId);
@@ -21,6 +21,7 @@ public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Integer>
             "       if_return as ifReturn,\n" +
             "       out_time as outTime,\n" +
             "       out_quality as outQuality,\n" +
+            "       if_Xu as ifXu,\n" +
             "       back_time as backTime,\n" +
             "       back_quality as backQuality,\n" +
             "       book.book_id as bookId,\n" +
