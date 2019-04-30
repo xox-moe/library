@@ -34,6 +34,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "from `order`\n" +
             "         left join `book_message` on `order`.book_message_id = book_message.book_message_id\n" +
             "         left join book_kind on book_kind.kind_id = book_message.kind_id\n" +
-            "where user_id = :userId order by ifTakeAway, orderTime desc ")
+            "where user_id = :userId and `order`.status is true  order by ifTakeAway, orderTime desc ")
     List<JSONObject> listOrderByUserId(@Param("userId") Long userId);
 }
