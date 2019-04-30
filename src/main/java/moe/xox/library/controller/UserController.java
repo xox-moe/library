@@ -161,7 +161,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(path = "changeImg", method = RequestMethod.POST)
     @Transactional
-    public ReturnBean changeImg(@RequestParam("img") MultipartFile file) {
+    public ReturnBean changeImg(@RequestParam MultipartFile file) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
