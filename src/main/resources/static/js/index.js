@@ -191,7 +191,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code == 0) {
                     $.each(res.data, function (i, item) {
                         $("#bookBorrow").last().append(
-                            '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId + '">' +
+                            '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">预约日期:</span>' +
                             '</div>' +
@@ -209,7 +209,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<p>订单号:'+item.code+'</p>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn" id="borrow-' + item.bookMessageId + '">取消预约</button>' +
+                            '<button class="layui-btn layui-bg-orange" id="borrow-' + item.bookMessageId + '">取消预约</button>' +
                             '</div>' +
                             '</div>'
                         );
@@ -230,6 +230,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             return false
                         })
                     });
+
                     $.ajax({
                         url: basePath + 'borrow/listMyBorrow'
                         , type: 'get'
@@ -243,7 +244,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                     $("#bookBorrow").last().append(
                                         '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
                                         '<div style="flex-grow: 1;width: 5em;">' +
-                                        '<span style="font-size: 1em;">应还日期</span>' +
+                                        '<span style="font-size: 1em;">应还日期:'+"还莫得"+'</span>' +
                                         '</div>' +
                                         '<div style="flex-grow: 1.2;width: 5em;">' +
                                         '<img style="width: 100%" src="img/商品.jpg">' +
@@ -253,7 +254,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         '<p>作者:' + item.author + '</p>' +
                                         '<p>类别:' + item.kindName + '</p>' +
                                         '<p>出版社:' + item.publisher + '</p>' +
-                                        '<p>' + "借阅日期" +item.outTime+ '</p>' +
+                                        '<p>' + "借阅日期:" +item.outTime+ '</p>' +
                                         '</div>' +
                                         '<div style="flex-grow: 2;width: 10em;">' +
                                         '<p id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</p>' +
@@ -269,7 +270,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
                                     }
                                 });
-                                if (flag === 0)
                                     showGoods();
                             }
                         }
@@ -277,7 +277,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 }
             }
         });
-
     }
     //我的收藏
     function collectionPane(){
