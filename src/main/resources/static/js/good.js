@@ -11,7 +11,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
     layui.code({
         about: false
     }); //引用code方法
-
+    console.log(dataForChild);
     $.ajax({
         url: basePath + 'tushuxinxiguanli/getBookMessageById'
         , data: {
@@ -29,9 +29,8 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
         }
     });
     $("#borrow").on('click',function () {
-
         $.ajax({
-            url:basePath+''
+            url:basePath+'order/orderBook'
             ,data:{
                 bookMessageId: parent.dataForChild
             }
@@ -47,9 +46,9 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
     });
     $("#deleteBorrow").on('click',function () {
         $.ajax({
-            url:basePath+''
+            url:basePath+'order/cancelOrder'
             ,data:{
-                bookMessageId: parent.dataForChild
+                orderId: parent.dataForChild.orderId
             }
             ,success:function (res) {
                 if (res.code == 0) {
@@ -85,7 +84,7 @@ $("#collection").on('click',function () {
         $.ajax({
             url:basePath+'yonghuguanli/deleteCollectionById'
             ,data:{
-                collectionId: parent.dataForChild
+                collectionId: parent.dataForChild.collectionId
             }
             ,success:function (res) {
                 if (res.code == 0) {
