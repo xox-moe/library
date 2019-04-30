@@ -19,10 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -49,7 +46,7 @@ public class BookController extends BaseController {
     /**
      * 分页!
      * 返回Book表中的图书信息
-     *
+     * <p>
      * method = RequestMethod.GET
      *
      * @return json
@@ -65,16 +62,22 @@ public class BookController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listAllBookInfo(Integer page, Integer limit) {
+    public ReturnBean listAllBookInfo(Integer page, Integer limit,
+                                      @RequestParam(name = "bookId", required = false, defaultValue = "") String bookId,
+                                      @RequestParam(name = "bookMessageName", required = false, defaultValue = "") String bookMessageName,
+                                      @RequestParam(name = "author", required = false, defaultValue = "") String author,
+                                      @RequestParam(name = "qualityId", required = false, defaultValue = "") String qualityId,
+                                      @RequestParam(name = "publisher", required = false, defaultValue = "") String publisher,
+                                      @RequestParam(name = "bookStatusId", required = false, defaultValue = "") String bookStatusId) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable);
+        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable,bookId,bookMessageName,author,qualityId,publisher,bookStatusId);
         List<JSONObject> bookList = bookPage.getContent();
         for (JSONObject object : bookList) {
-            Integer qualityId = (Integer) object.get("qualityId");
-            if (qualityId == null) {
+            Integer qualId = (Integer) object.get("qualityId");
+            if (qualId == null) {
                 object.put("qualityName", "无数据");
             } else {
-                object.put("qualityName", BookQualityEnum.getNameById(qualityId.longValue()));
+                object.put("qualityName", BookQualityEnum.getNameById(qualId.longValue()));
             }
         }
         return getSuccess("success", bookList, bookPage.getTotalElements());
@@ -109,7 +112,7 @@ public class BookController extends BaseController {
 
     @RequestMapping(path = "addBooks", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnBean addBooks(Long bookMessageId, Long bookStatusId, Long qualityId,int count) {
+    public ReturnBean addBooks(Long bookMessageId, Long bookStatusId, Long qualityId, int count) {
         for (int i = 0; i < count; i++) {
             addBook(bookMessageId, bookStatusId, qualityId);
         }
@@ -180,9 +183,9 @@ public class BookController extends BaseController {
         for (BorrowInfo borrowInfo : borrowInfos) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("于").append(borrowInfo.getOutTime()).append("被").append(borrowInfo.getUserId()).append("借出");
-            if(borrowInfo.getIfReturn()){
+            if (borrowInfo.getIfReturn()) {
                 stringBuilder.append("于").append(borrowInfo.getBackTime()).append("归还");
-            }else {
+            } else {
                 stringBuilder.append("未归还");
             }
             result.add(stringBuilder.toString());

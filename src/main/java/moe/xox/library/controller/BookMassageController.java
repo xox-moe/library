@@ -57,7 +57,7 @@ public class BookMassageController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ReturnBean listBookMsgManageInfo(int page, int limit,
-                                            @RequestParam(name = "id", defaultValue = "", required = false) String id,
+                                            @RequestParam(name = "bookMessageId", defaultValue = "", required = false) String id,
                                             @RequestParam(name = "name", defaultValue = "", required = false) String name,
                                             @RequestParam(name = "author", defaultValue = "", required = false) String author,
                                             @RequestParam(name = "kindId", defaultValue = "", required = false) String kindId,
