@@ -88,9 +88,11 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                         // {title:'类别',field:'kindName',align:'center',edit: 'text'},
                         {title:'出版社',field:'publisher',align:'center'},
                         {title:'品质',field:'qualityName',align:'center'},
-                        {title:'借阅人',field:'',align:'center',templet:function (d) {
-                                if(d.bookStatusId!=1){
+                        {title:'借阅人',field:'userName',align:'center',templet:function (d) {
+                                if(d.userName==null){
                                     return "暂无";
+                                }else {
+                                    return d.userName;
                                 }
                             }},
                         {title:'状态',field:'bookStatusId',align:'center',templet:function (d) {
