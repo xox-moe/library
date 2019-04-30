@@ -133,9 +133,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 homeGoodsPage = res.count / homeGoodsLimit;
                 $.each(res.data,function (i,item) {
                     console.log(item.bookMessageId);
-                    if (i === 10) {
-                        return false;
-                    }
                     AllDate.push(
                         '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
