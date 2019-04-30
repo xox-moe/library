@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("borrow")
@@ -97,6 +98,9 @@ public class BorrowController extends BaseController {
                 ZoneId zone = ZoneId.systemDefault();
                 LocalDateTime outTime =  LocalDateTime.ofInstant(instant, zone);
                 LocalDateTime needReturnTime = outTime.plusMonths(6);
+                if( (boolean) object.get("ifXu"))
+                    needReturnTime = needReturnTime.plusMonths(3);
+//                LocalDateTime needReturnTime = outTime.plusMonths(6);
                 object.put("needReturnTime", needReturnTime);
                 object.put("ifOutOfTime", false);
                 if (needReturnTime.isBefore(LocalDateTime.now()))
@@ -105,6 +109,23 @@ public class BorrowController extends BaseController {
         }
 
         return getSuccess("OK", myBorrow.getContent(), myBorrow.getTotalElements());
+    }
+
+    @RequestMapping("xuBorrow")
+    public ReturnBean xuBorrow(long borrowId){
+        Long userId = ShiroUtils.getUserId();
+        Optional<BorrowInfo> borrowInfo = borrowInfoRepository.findById(borrowId);
+        if(borrowInfo.isPresent()){
+            if(!borrowInfo.get().getUserId().equals(userId)){
+                return getFailure("请对自己的借书记录进行续期");
+            }
+            if(borrowInfo.get().getIfXu())
+                return getFailure("您已经续过了，请不要再续了");
+            borrowInfo.get().setIfXu(true);
+            borrowInfoRepository.save(borrowInfo.get());
+            return getSuccess("续借成功");
+        }
+        return getFailure("查无此借书记录");
     }
 
 
