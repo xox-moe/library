@@ -62,7 +62,7 @@ public class BorrowService {
         book.setBookStatusId(BookStatusEnum.OUT.id);
 
 
-        BorrowInfo borrowInfo = new BorrowInfo(null, userId, bookId,false, LocalDateTime.now(), book.getQuality(), null, null);
+        BorrowInfo borrowInfo = new BorrowInfo(null, userId, bookId,false, LocalDateTime.now(), book.getQuality(),false, null, null);
 
 
         bookRepository.save(book);

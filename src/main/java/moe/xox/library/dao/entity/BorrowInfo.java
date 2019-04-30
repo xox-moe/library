@@ -21,8 +21,9 @@ public class BorrowInfo {
   private Boolean ifReturn;
   private LocalDateTime outTime;
   private Long outQuality;
+  private Boolean ifXu;
   private LocalDateTime backTime;
-  @Column(name = "bakcQuality")
+//  @Column(name = "bakcQuality")
   private Long backQuality;
 
 }

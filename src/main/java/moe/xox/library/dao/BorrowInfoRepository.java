@@ -22,7 +22,7 @@ public interface BorrowInfoRepository extends JpaRepository<BorrowInfo, Integer>
             "       out_time as outTime,\n" +
             "       out_quality as outQuality,\n" +
             "       back_time as backTime,\n" +
-            "       bakc_quality as backQuality,\n" +
+            "       back_quality as backQuality,\n" +
             "       book.book_id as bookId,\n" +
             "       book_message.book_message_id as  bookMessageId,\n" +
             "       name as bookName,\n" +

@@ -6,6 +6,8 @@ import moe.xox.library.dao.BorrowInfoRepository;
 import moe.xox.library.dao.entity.BorrowInfo;
 import moe.xox.library.service.BorrowService;
 import moe.xox.library.utils.ShiroUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,9 +15,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 @RestController
 @RequestMapping("borrow")
 public class BorrowController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(BorrowController.class);
 
     @Autowired
     BorrowService borrowService;
@@ -25,7 +33,7 @@ public class BorrowController extends BaseController {
 
     /**
      *
-     * @param userId  用户ID
+     * @param  email 用户的邮箱
      * @param bookId 借出书的类别ID
      * @param code 预约代码
      * @return
@@ -79,6 +87,23 @@ public class BorrowController extends BaseController {
     public ReturnBean listMyBorrow(int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> myBorrow = borrowInfoRepository.findBorrowInfoByUserId(ShiroUtils.getUserId(), pageable);
+
+        for (JSONObject object : myBorrow.getContent()) {
+            boolean ifReturn = (boolean) object.get("ifReturn");
+            if (!ifReturn){
+                Timestamp timestamp = (Timestamp) object.get("outTime");
+                logger.info(String.valueOf(timestamp));
+                Instant instant = Instant.ofEpochMilli(timestamp.getTime());
+                ZoneId zone = ZoneId.systemDefault();
+                LocalDateTime outTime =  LocalDateTime.ofInstant(instant, zone);
+                LocalDateTime needReturnTime = outTime.plusMonths(6);
+                object.put("needReturnTime", needReturnTime);
+                object.put("ifOutOfTime", false);
+                if (needReturnTime.isBefore(LocalDateTime.now()))
+                    object.put("ifOutOfTime", true);
+            }
+        }
+
         return getSuccess("OK", myBorrow.getContent(), myBorrow.getTotalElements());
     }
 

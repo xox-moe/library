@@ -2,6 +2,7 @@ package moe.xox.library.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import moe.xox.library.controller.vo.AddBooksVo;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.BookRepository;
@@ -103,6 +104,15 @@ public class BookController extends BaseController {
 //        book.setStatus(true);
 //        book.setBookStatusId(BookStatusEnum.NORMAL.id);
         bookRepository.save(book);
+        return getSuccess();
+    }
+
+    @RequestMapping(path = "addBooks", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnBean addBooks(Long bookMessageId, Long bookStatusId, Long qualityId,int count) {
+        for (int i = 0; i < count; i++) {
+            addBook(bookMessageId, bookStatusId, qualityId);
+        }
         return getSuccess();
     }
 
