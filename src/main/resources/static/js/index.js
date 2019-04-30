@@ -1,10 +1,11 @@
 //JavaScript代码区域
 var dataForChild;
 
-layui.use(['layer','element','table','form','code','layedit','carousel','laydate'], function() {
+layui.use(['layer','element','table','form','code','layedit','carousel','laydate','upload'], function() {
     var $ = layui.jquery;
     var element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
         , layer = layui.layer
+        , upload=layui.upload
         , laydate = layui.laydate;
     var table = layui.table;
     form = layui.form;
@@ -60,6 +61,13 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             form.render();
         }
     });
+    $.ajax({
+        url:basePath+'yonghuguanli/getCurrentUserInfo'
+        ,type:"get"
+        ,success:function (res) {
+            $("#headImg").attr("src", res.data.img);
+        }
+    })
     //打开详情页
     function showGoods(){
         $('.goods').on('click',function (data) {
@@ -369,6 +377,54 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             recomendGoods();
         }
         if (layuiId == 5) {//个人信息
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#uploadMyImg'
+                ,url: basePath+'yonghuguanli/changeImg'
+                ,accept: 'images'
+                ,acceptMime: 'image/*'
+                // ,multiple: true
+                // ,auto: false
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    var loading=layer.load();
+                    obj.preview(function(index, img, result){
+                        $('#myImg').find("img").attr('src', result); //图片链接（base64）
+                        MOD.Util.photoCompress(img, {
+                            quality: 0.5,
+                        }, function(base64Codes) {
+                            var bl = MOD.Util.convertBase64UrlToBlob(base64Codes);
+                            obj.resetFile(index, bl, img.name);
+                            console.log(obj.resetFile);
+                        });
+                    });
+                }
+                ,done: function(res){
+                    layer.closeAll("loading");
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                }
+            });
+            $("#showImg").click(function (data) {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: ['500px','500px'],
+                    skin: 'layui-layer-nobg', //没有背景色
+                    shadeClose: true,
+                    content: $("#myImg")
+                    ,success: function(layero, index) {
+                        $("#myImg").removeClass("layui-hide");
+                        $("#myImg").find("img").css("width", "500px").css("height", "500px");
+                    }
+                    ,end:function () {
+                        $("#myImg").find("img").css("width", "118px").css("height", "118px");
+                    }
+                });
+            });
             $.ajax({
                 url: basePath + 'data/listAllRole'
                 , type: 'get'
@@ -391,6 +447,11 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                 $("input[name='sex'][title='女']").removeAttr("checked");
                                 form.render()
                             }
+                            if (rul.data.img != null) {
+                                $("#myImg").find("img").attr("src", rul.data.img);
+                            }
+                            console.log(rul.data.img);
+
                             form.render();
                         }
                     })
@@ -408,7 +469,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             history();
         }
         if(layuiId==16){
-
+            actionType = 'fastBorrow';
+            layer.open({
+                type: 2,
+                title:"借出图书",
+                area: ['400px', '550px'],
+                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                content:basePath+'bookDetail'
+            });
         }
     });
 

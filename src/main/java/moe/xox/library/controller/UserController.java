@@ -161,7 +161,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(path = "changeImg", method = RequestMethod.POST)
     @Transactional
-    public ReturnBean changeImg(@RequestParam("img") MultipartFile file) {
+    public ReturnBean changeImg(@RequestParam MultipartFile file) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute("user");
         String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
@@ -199,7 +199,7 @@ public class UserController extends BaseController {
         JSONObject object = (JSONObject) JSON.toJSON(user);
 //        if (user.getImgName() != null && !user.getImgName().equals(""))
         try {
-            object.put("img", ImageUtil.imageToString("F:\\library\\image\\" + user.getImgName()));
+            object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH +"\\"+ user.getImgName()));
         } catch (Exception ex) {
             logger.info(ex.getMessage());
         }

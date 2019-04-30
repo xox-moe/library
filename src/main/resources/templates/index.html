@@ -204,7 +204,7 @@
         <ul class="layui-nav layui-layout-right" lay-filter="demo">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">RUA</a>
+                    <img id="headImg" src="http://t.cn/RCzsdCq" class="layui-nav-img">RUA</a>
                 <dl class="layui-nav-child">
                     <dd id="nav-39">
                         <a href="javascript:;">基本资料</a>
@@ -503,14 +503,13 @@
                                             </div>
                                             <div class="layui-input-inline layui-btn-container" style="width: auto;">
                                                 <button type="button" class="layui-btn layui-btn-primary"
-                                                        id="LAY_avatarUpload">
+                                                        id="uploadMyImg">
                                                     <i class="layui-icon"></i>上传图片
                                                 </button>
                                                 <input class="layui-upload-file" type="file" accept="undefined"
                                                        name="file">
-                                                <button class="layui-btn layui-btn-primary"
-                                                        layadmin-event="avartatPreview">查看图片
-                                                </button>
+                                                <button class="layui-btn layui-btn-primary" type="button" id="showImg">查看图片</button>
+                                                <div  id="myImg"><img style="width:118px;height:118px;"  src="./img/person.jpg"></div>
                                             </div>
                                         </div>
                                         <div class="layui-form-item layui-form-text">

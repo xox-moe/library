@@ -1,6 +1,6 @@
 //JavaScript代码区域
 var dataForChild;
-
+var ChildForParent;
 layui.use(['layer','element','table','form','code','layedit'], function() {
 
     var $ = layui.jquery;
@@ -27,6 +27,41 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#totalNum").text(res.data.totalNum);
             }
         }
+    });
+    $("#borrow").on('click',function () {
+
+        $.ajax({
+            url:basePath+''
+            ,data:{
+                bookMessageId: parent.dataForChild
+            }
+            ,success:function (res) {
+                if (res.code == 0) {
+                    layer.msg('预约成功你的预约号码为:' + res.data);
+                    $("#borrow").addClass("layui-hide");
+                    $("#deleteBorrow").removeClass("layui-hide");
+                    // location.reload();
+                }
+            }
+        })
+    });
+    $("#deleteBorrow").on('click',function () {
+        $.ajax({
+            url:basePath+''
+            ,data:{
+                bookMessageId: parent.dataForChild
+            }
+            ,success:function (res) {
+                if (res.code == 0) {
+                    layer.tips('取消预约', '.borrow', {
+                        tips: [2, '#78BA32']
+                    });
+                    $("#deleteBorrow").addClass("layui-hide");
+                    $("#borrow").removeClass("layui-hide");
+                    // location.reload();
+                }
+            }
+        })
     });
 $("#collection").on('click',function () {
  $.ajax({

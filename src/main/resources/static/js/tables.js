@@ -446,35 +446,17 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
             function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data //获得当前行数据
                     ,layEvent = obj.event; //获得 lay-event 对应的值
-                if(layEvent==='borrow'){
-                    actionType = 'borrow';
-                    layer.prompt({title: '请询问订单号，填写并确认', formType: 1}, function(pass, index){
-                        if(pass==data)
-                            layer.close(index);
-                        layer.prompt({title: '请输入借书人ID，并确认', formType: 1}, function(userId, index){
-                            layer.close(index);
-                            $.ajax({
-                                url:basePath+'borrow/borrowBook'
-                                ,data:{
-                                    userId:userId
-                                    ,code:pass
-                                    ,bookMessageId: parent.dataForChild
-                                }
-                                ,success:function (res) {
-                                    if (res.code == 0) {
-                                        layer.msg(text+"借出"+data.bookMessageName+"<br>"+"消息:"+res.msg);
-                                    }
-                                }
-                                ,error:function (res) {
-                                    layer.msg(res.msg);
-                                }
-                            });
-                        });
+                if(layEvent=='borrow'){
+                    actionType='borrow';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '550px'],
+                        skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
                     });
-                    $.ajax({
-
-                    });
-                } else if (layEvent === 'detail') {
+                } else if (layEvent == 'detail') {
                     actionType='detail';
                     dataForChild=data;
                     layer.open({
@@ -484,7 +466,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                         skin: 'layui-layer-rim layui-layer-molv', //加上边框
                         content:basePath+'bookDetail'
                     });
-                } else if (layEvent === 'del') {
+                } else if (layEvent == 'del') {
                     layer.confirm('真的删除行么',
                         function (index) {
                             var idList=[];
@@ -511,7 +493,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                             });
                             //向服务端发送删除指令
                         });
-                } else if (layEvent === 'edit') {
+                } else if (layEvent == 'edit') {
                     actionType='edit';
                     dataForChild=data;
                     layer.open({
