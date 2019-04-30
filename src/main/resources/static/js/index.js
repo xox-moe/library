@@ -121,7 +121,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         var homeGoodsCount=0;
         var homeGoodsPage=0;
         var homeGoodsLimit=5;
-        var AllDate = [];
+        var homeGoodsAllData = [];
         $.ajax({
             url:basePath+'tushuxinxiguanli/listBookMsgHomePage'
             ,type:'get'
@@ -133,7 +133,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 homeGoodsPage = res.count / homeGoodsLimit;
                 $.each(res.data,function (i,item) {
                     console.log(item.bookMessageId);
-                    AllDate.push(
+                    homeGoodsAllData.push(
                         '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
                         '<a href="javascript:;">' +
@@ -164,7 +164,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                     // );
                 });
                 //图书详情页
-
                 flow.load({
                     elem: '#showGoods' //流加载容器
                     ,scrollElem: '#showGoods' //滚动条所在元素，一般不用填，此处只是演示需要。
@@ -174,7 +173,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             var lis = [];
                             console.log(page);
                             for(var i = (page-1)*homeGoodsLimit; i < (page)*homeGoodsLimit; i++){
-                                lis.push(AllDate[i]);
+                                lis.push(homeGoodsAllData[i]);
                             }
                             //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
                             //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
@@ -370,35 +369,76 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     }
     //浏览历史
     function history(){
+        var historyCount=0;
+        var historyPage=0;
+        var historyLimit=5;
+        var historyAllData = [];
         $.ajax({
             url: basePath + 'yonghuguanli/listUserHistory'
             , type: 'get'
             , success: function (res) {
                 $("#history").empty();
                 if (res.code == '0') {
+                    historyCount = res.count;
+                    historyPage = historyCount / historyLimit;
                     $.each(res.data, function (i, item) {
-                        $("#history").last().append(
-                            '<li style="display: flex;" class="goods" name="history-'+item.bookMessageId+'">'+
-                            '<div style="flex-grow: 1;width: 5em;">'+
-                            '<span style="font-size: 1em;">浏览日期</span>'+
-                            '</div>'+
-                            '<div style="flex-grow: 1.2;width: 5em;">'+
-                            '<img style="width: 100%" src="img/商品.jpg">'+
-                            '</div>'+
-                            '<div style="flex-grow: 2.5;width: 15em;">'+
+                        historyAllData.push('<li style="display: flex;" class="goods" name="history-' + item.bookMessageId + '">' +
+                            '<div style="flex-grow: 1;width: 5em;">' +
+                            '<span style="font-size: 1em;">浏览日期</span>' +
+                            '</div>' +
+                            '<div style="flex-grow: 1.2;width: 5em;">' +
+                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '</div>' +
+                            '<div style="flex-grow: 2.5;width: 15em;">' +
                             '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
-                            '</div>'+
-                            '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
-                            '<p>简介:' + item.intorduciton+ '</p>'+
-                            '</div>'+
-                            '</li>'
-                        );
+                            '</div>' +
+                            '<div style="flex-grow: 3.5;width: 20em;height: 6em;">' +
+                            '<p>简介:' + item.intorduciton + '</p>' +
+                            '</div>' +
+                            '</li>');
+                        // $("#history").last().append(
+                        //     '<li style="display: flex;" class="goods" name="history-'+item.bookMessageId+'">'+
+                        //     '<div style="flex-grow: 1;width: 5em;">'+
+                        //     '<span style="font-size: 1em;">浏览日期</span>'+
+                        //     '</div>'+
+                        //     '<div style="flex-grow: 1.2;width: 5em;">'+
+                        //     '<img style="width: 100%" src="img/商品.jpg">'+
+                        //     '</div>'+
+                        //     '<div style="flex-grow: 2.5;width: 15em;">'+
+                        //     '<p>书名:' + item.name + '</p>' +
+                        //     '<p>作者:' + item.author + '</p>' +
+                        //     '<p>类别:' + item.kindName + '</p>' +
+                        //     '<p>出版社:' + item.publisher + '</p>' +
+                        //     '</div>'+
+                        //     '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
+                        //     '<p>简介:' + item.intorduciton+ '</p>'+
+                        //     '</div>'+
+                        //     '</li>'
+                        // );
                     });
-                    showGoods();
+                    // showGoods();
                 }
+                flow.load({
+                    elem: '#history' //流加载容器
+                    // ,scrollElem: '#history' //滚动条所在元素，一般不用填，此处只是演示需要。
+                    ,done: function(page, next){ //执行下一页的回调
+                        //数据插入
+                        setTimeout(function(){
+                            var lis = [];
+                            console.log(page);
+                            for(var i = (page-1)*historyLimit; i < (page)*historyLimit; i++){
+                                lis.push(historyAllData[i]);
+                            }
+                            //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                            //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                            next(lis.join(''), page < historyPage); //假设总页数为 10
+                            showGoods();
+                        }, 250);
+                    }
+                });
             }
         });
     }
