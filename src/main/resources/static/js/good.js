@@ -24,7 +24,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#name").text(res.data.name);
                 $("#author").text(res.data.author);
                 $("#publisher").text(res.data.publisher);
-                $("#totalNum").text(res.data.totalNum);
+                $("#totalNum").text(res.data.couldOutNum-res.data.orderNum);
                 childData = res.data;
                 if (childData.ifOrder == true) {
                     $("#deleteBorrow").removeClass("layui-hide");

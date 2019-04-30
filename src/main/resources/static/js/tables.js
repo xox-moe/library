@@ -62,7 +62,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                          {title:'出版社',field:'publisher',align:'center',edit: 'text'},
                          {title:'描述',field:'introduction',align:'center',edit: 'text',width:300},
                          {title:'可借出/总数',field:'Num',align:'center',templet:function (d) {
-                                 return d.bookNum+"/"+d.totalNum;
+                                 return (d.couldOutNum-d.orderNum)+"/"+d.totalNum;
                              }},
                          // {title:'数量',field:'',align:'center',totalRowText:'合计:'},
                          {title:'操作',align:'center',toolbar: '#barDemo'}
