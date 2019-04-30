@@ -80,6 +80,8 @@ public class BookMassageController extends BaseController {
         Collection collection = collectionRepository.findCollectionByUserIdAndBookMessageId(userId, bookMessageId.longValue());
         if (collection == null) {
             object.put("ifCollection", false);
+            object.put("collectionId","");
+
         }else {
             object.put("ifCollection", true);
             object.put("collectionId", collection.getCollectionId());
@@ -89,6 +91,8 @@ public class BookMassageController extends BaseController {
 
         if (order == null) {
             object.put("ifOrder", false);
+            object.put("orderId","");
+
         }else {
             object.put("ifOrder", true);
             object.put("orderId", order.getOrderId());
