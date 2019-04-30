@@ -48,8 +48,6 @@ public class BookMassageController extends BaseController {
      * @return json
      */
     @RequestMapping(value = "showBookMsgManagerTable", method = RequestMethod.GET)
-    @ResponseBody
-
     public ReturnBean showBookMsgManagerTable(int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<BookMessage> bookMessagePage = bookMsgRepository.findAll(pageable);
@@ -58,10 +56,14 @@ public class BookMassageController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public ReturnBean listBookMsgManageInfo(int page, int limit) {
+    public ReturnBean listBookMsgManageInfo(int page, int limit,
+                                            @RequestParam(name = "id", defaultValue = "", required = false) String id,
+                                            @RequestParam(name = "name", defaultValue = "", required = false) String name,
+                                            @RequestParam(name = "author", defaultValue = "", required = false) String author,
+                                            @RequestParam(name = "kindId", defaultValue = "", required = false) String kindId,
+                                            @RequestParam(name = "publisher", defaultValue = "", required = false) String publisher) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable);
+        Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable,id,name,author,kindId,publisher);
         List<JSONObject> bookMessageList = bookMessagePage.getContent();
         return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
     }
@@ -72,7 +74,6 @@ public class BookMassageController extends BaseController {
         JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId.longValue());
         Long userId = ShiroUtils.getUserId();
         History history = new History(null,userId, bookMessageId.longValue(), LocalDateTime.now());
-
 
         /**
          * 查询当前用户是否有收藏这本书 如果有收藏 将收藏的ID返回给前端
@@ -97,6 +98,8 @@ public class BookMassageController extends BaseController {
             object.put("ifOrder", true);
             object.put("orderId", order.getOrderId());
         }
+
+
 
         historyRepository.save(history);
         return getSuccess("OK", object, 1);

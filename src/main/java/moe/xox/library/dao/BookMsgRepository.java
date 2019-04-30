@@ -14,19 +14,21 @@ import java.util.List;
 public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
 
 
-    @Query(nativeQuery = true,value = "select bookMsg.book_message_id     as bookMessageId,\n" +
-            "       name                        as name,\n" +
-            "       bookMsg.kind_id             as kindId,\n" +
-            "       author                      as author,\n" +
-            "       publisher                   as publisher,\n" +
-            "       introduction                as introduction,\n" +
-            "       bookMsg.status              as status,\n" +
-            "       creator_id                  as creatorId,\n" +
-            "       create_time                 as createTime,\n" +
-            "       ISBN                        as ISBN,\n" +
-            "       kind_name                   as kindName,\n" +
-            "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
-            "       IFNULL(bookNum.totalNum, 0) as totalNum\n" +
+    @Query(nativeQuery = true, value = "select bookMsg.book_message_id      as bookMessageId,\n" +
+            "       name                         as name,\n" +
+            "       bookMsg.kind_id              as kindId,\n" +
+            "       author                       as author,\n" +
+            "       publisher                    as publisher,\n" +
+            "       introduction                 as introduction,\n" +
+            "       bookMsg.status               as status,\n" +
+            "       bookMsg.creator_id           as creatorId,\n" +
+            "       bookMsg.create_time          as createTime,\n" +
+            "       ISBN                         as ISBN,\n" +
+            "       kind_name                    as kindName,\n" +
+            "       IFNULL(freeNum.freeNum, 0)   as couldOutNum,\n" +
+            "       IFNULL(bookNum.totalNum, 0)  as totalNum,\n" +
+            "       ifnull(orderNum.orderNum, 0) as orderNum,\n" +
+            "  IFNULL(freeNum.freeNum, 0) - ifnull(orderNum.orderNum, 0) as couldOrderNum  " +
             "from book_message bookMsg\n" +
             "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
             "         left join (select book_message_id, IFNULL(count(*), 0) as freeNum\n" +
@@ -41,24 +43,30 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "                      and (book_status_id = 4 or book_status_id = 1)\n" +
             "                    group by book_message_id) bookNum\n" +
             "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
-            "where bookMsg.status = true\n" +
-            "  and bookMsg.book_message_id = :bookMessageId ;")
+            "         left join (select book_message_id, IFNULL(count(*), 0) orderNum\n" +
+            "                    from `order`\n" +
+            "                    where status is true\n" +
+            "                      and if_take_away = false\n" +
+            "                    group by book_message_id) orderNum on bookMsg.book_message_id = `orderNum`.book_message_id\n" +
+            "where bookMsg.status = true " +
+            " and bookMsg.book_message_id = :bookMessageId ;")
     JSONObject getBookMessageByBookMessageId(@Param("bookMessageId") Long bookMessageId);
 
 
-    @Query(nativeQuery = true, value = "select bookMsg.book_message_id     as bookMessageId,\n" +
-            "       name                        as name,\n" +
-            "       bookMsg.kind_id             as kindId,\n" +
-            "       author                      as author,\n" +
-            "       publisher                   as publisher,\n" +
-            "       introduction                as introduction,\n" +
-            "       bookMsg.status              as status,\n" +
-            "       creator_id                  as creatorId,\n" +
-            "       create_time                 as createTime,\n" +
-            "       ISBN                        as ISBN,\n" +
-            "       kind_name                   as kindName,\n" +
-            "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
-            "       IFNULL(bookNum.totalNum, 0) as totalNum\n" +
+    @Query(nativeQuery = true, value = "select bookMsg.book_message_id      as bookMessageId,\n" +
+            "       name                         as name,\n" +
+            "       bookMsg.kind_id              as kindId,\n" +
+            "       author                       as author,\n" +
+            "       publisher                    as publisher,\n" +
+            "       introduction                 as introduction,\n" +
+            "       bookMsg.status               as status,\n" +
+            "       bookMsg.creator_id           as creatorId,\n" +
+            "       bookMsg.create_time          as createTime,\n" +
+            "       ISBN                         as ISBN,\n" +
+            "       kind_name                    as kindName,\n" +
+            "       IFNULL(freeNum.freeNum, 0)   as couldOutNum,\n" +
+            "       IFNULL(bookNum.totalNum, 0)  as totalNum,\n" +
+            "       ifnull(orderNum.orderNum, 0) as orderNum\n" +
             "from book_message bookMsg\n" +
             "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
             "         left join (select book_message_id, IFNULL(count(*), 0) as freeNum\n" +
@@ -73,9 +81,29 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "                      and (book_status_id = 4 or book_status_id = 1)\n" +
             "                    group by book_message_id) bookNum\n" +
             "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
-            "where bookMsg.status = true ",
-            countQuery = "select count(*) from book_message where book_message.status = true ;")
-    Page<JSONObject> listBookMsgManageInfo(Pageable pageable);
+            "         left join (select book_message_id, IFNULL(count(*), 0) orderNum\n" +
+            "                    from `order`\n" +
+            "                    where status is true\n" +
+            "                      and if_take_away = false\n" +
+            "                    group by book_message_id) orderNum on bookMsg.book_message_id = `orderNum`.book_message_id\n" +
+            "where bookMsg.status = true  " +
+            "  and bookMsg.book_message_id like concat('%', :id, '%')\n" +
+            "  and `name` like concat('%', :bookName, '%')\n" +
+            "  and `author` like  concat('%', :author, '%')  " +
+            "  and bookMsg.kind_id like concat('%', :kindId, '%')\n" +
+            "  and publisher like concat('%', :publisher, '%') ",
+            countQuery = "select count(*) from book_message where book_message.status = true " +
+                    "  and bookMsg.book_message_id like concat('%', :id, '%')\n" +
+                    "  and `name` like concat('%', :bookName, '%')\n" +
+                    "  and `author` like  concat('%', :author, '%')  " +
+                    "  and bookMsg.kind_id like concat('%', :kindId, '%')\n" +
+                    "  and publisher like concat('%', :publisher, '%') ")
+    Page<JSONObject> listBookMsgManageInfo(Pageable pageable,
+                                           @Param("id") String id,
+                                           @Param("bookName") String bookName,
+                                           @Param("author") String author,
+                                           @Param("kindId") String kindId,
+                                           @Param("publisher") String publisher);
 
     @Query(nativeQuery = true, value = "\n" +
             "select topTen.book_message_id as bookMessageId,\n" +
@@ -107,7 +135,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "                            on book_message.book_message_id = bookNum.book_message_id")
     List<JSONObject> listTopTenBook();
 
-    @Query(nativeQuery = true,value = "select\n" +
+    @Query(nativeQuery = true, value = "select\n" +
             "       collectionNum,\n" +
             "       book_message.book_message_id as bookMessageId,\n" +
             "       name as name,\n" +
@@ -144,7 +172,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "where status = true\n" +
             "order by rand()\n" +
             "limit :limit ;")
-    List<JSONObject> listBookMsgRandom(@Param("limit")int limit);
+    List<JSONObject> listBookMsgRandom(@Param("limit") int limit);
 
     @Query(nativeQuery = true, value = "select book_message_id as bookMessageId,\n" +
             "       name as bookMassageName,\n" +

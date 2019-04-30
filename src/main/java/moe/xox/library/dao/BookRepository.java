@@ -21,7 +21,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     @Query(nativeQuery = true,value = "select book.book_id                as bookId,\n" +
             "       quality                     as quality,\n" +
             "       bookMsg.book_message_id     as bookMessageId,\n" +
-            "       name                        as name,\n" +
+            "       name                        as bookMessageName,\n" +
             "       author                      as author,\n" +
             "       publisher                   as publisher,\n" +
             "       introduction                as introduction,\n" +
@@ -78,7 +78,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
             "where book.status = true and bookMsg.status = true\n" +
             "group by bookMsg.book_message_id, name, bookMsg.kind_id, author, publisher, introduction, ISBN, kind_name,bookNum\n" +
-            "order by  book.create_time limit 10\n")
+            "order by  book.create_time desc limit 10\n")
     List<JSONObject> listNewBook();
 
     @Query(nativeQuery = true,value = "select borrow_id    as borrowId,\n" +

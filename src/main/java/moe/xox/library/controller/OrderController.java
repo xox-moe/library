@@ -37,6 +37,9 @@ public class OrderController extends BaseController {
 
         if(oldOrder != null)
             return getFailure("您已经预约过该书啦,请不要重复预约");
+        int couldOrderNum = orderRepository.findCouldOrderNum(bookMessageId);
+        if(couldOrderNum <=0)
+            return getFailure("已经没有库存了，请过段时间再来看看吧");
 
         Order order = new Order(null, bookMessageId, userId, LocalDateTime.now(), code, false,null,true);
         Order orders  = orderRepository.save(order);

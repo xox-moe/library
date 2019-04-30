@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       max-lifetime: 60000
-      maximum-pool-size: 2
+      maximum-pool-size: 15
   thymeleaf:
     mode: HTML5
     encoding: utf-8

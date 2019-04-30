@@ -262,4 +262,22 @@ public class UserController extends BaseController {
     }
 
 
+
+    @RequestMapping(path = "updateUserInfoBySelf", method = RequestMethod.POST)
+    @Transactional
+    public ReturnBean updateUserInfoBySelf(String email, String nickName, String realName,String birthday,
+                                           Long grade, String department, String major, Long sex) {
+        birthday += " 00:00:00";
+        Long userId = ShiroUtils.getUserId();
+        User oldUser = userRepository.findByUserId(userId);
+        User user = new User(userId, email, nickName, oldUser.getImgName(), oldUser.getPassword(),
+                LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate(),
+                realName, grade, department, major, sex);
+        userRepository.save(user);
+        return getSuccess("success");
+    }
+
+
+
+
 }
