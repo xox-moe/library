@@ -67,6 +67,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         ,type:"get"
         ,success:function (res) {
             $("#headImg").attr("src", res.data.img);
+            $("#username").last().append(res.data.nickName)
         }
     })
     //打开详情页
@@ -281,7 +282,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                     $("#bookBorrow").last().append(
                                         '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
                                         '<div style="flex-grow: 1;width: 5em;">' +
-                                        '<span style="font-size: 1em;">应还日期:'+"还莫得"+'</span>' +
+                                        '<span style="font-size: 1em;">应还日期:'+item.needReturnTime+'</span>' +
                                         '</div>' +
                                         '<div style="flex-grow: 1.2;width: 5em;">' +
                                         '<img style="width: 100%" src="img/商品.jpg">' +
@@ -301,11 +302,33 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         '</div>' +
                                         '</li>'
                                     );
+                                    if (item.ifXu == true) {
+                                        $("#delay-" + item.borrowId).text("不可以贪心哦").addClass("layui-btn-disabled").attr("disabled", "disabled");
+                                    }
                                     if (item.ifReturn == false) {
                                         $("#returnTiem" + item.borrowId).addClass("layui-hide");
                                     }else{
                                         $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
                                     }
+                                    $("#delay-"+item.borrowId).on('click',function (event){
+                                        console.log("OK");
+                                        $.ajax({
+                                            url:basePath+'borrow/xuBorrow'
+                                            ,data:{
+                                                borrowId: item.borrowId
+                                            },
+                                            success:function (res) {
+                                                if (res.code == 0) {
+                                                    $("#delay-" + item.borrowId).text("不可以贪心哦").addClass("layui-btn-disabled").attr("disabled", "disabled");
+                                                    location.reload();
+                                                }else{
+                                                    layer.msg(res.msg);
+                                                }
+                                            }
+                                        });
+                                        event.stopPropagation();
+                                        return false
+                                    })
                                 });
                                     showGoods();
                             }
@@ -480,6 +503,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                     //预读本地文件示例，不支持ie8
                     var loading=layer.load();
                     obj.preview(function(index, img, result){
+                        $("input[name='avatar']").val(img.name);
                         $('#myImg').find("img").attr('src', result); //图片链接（base64）
                         MOD.Util.photoCompress(img, {
                             quality: 0.5,
