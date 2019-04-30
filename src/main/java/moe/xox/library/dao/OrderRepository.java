@@ -11,7 +11,9 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
 
-    Order findOrderByBookMessageIdAndUserIdAndStatusIsTrue(Long bookId,Long userId);
+    @Query(nativeQuery = true,value = "select *\n" +
+            "from `order` where book_message_id = :bookMessageId and user_id = :userId and if_take_away is false and status is true;")
+    Order findOrderByBookMessageIdAndUserIdAndStatusIsTrue(@Param("bookMessageId") Long bookMessageId,@Param("userId") Long userId);
 
 
     Order findOrderByOrderId(Long orderId);

@@ -4,10 +4,14 @@ package moe.xox.library.controller;
 import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BookMsgRepository;
+import moe.xox.library.dao.CollectionRepository;
 import moe.xox.library.dao.HistoryRepository;
+import moe.xox.library.dao.OrderRepository;
 import moe.xox.library.dao.entity.BookMessage;
 //import moe.xox.library.utils.ImageUtil;
+import moe.xox.library.dao.entity.Collection;
 import moe.xox.library.dao.entity.History;
+import moe.xox.library.dao.entity.Order;
 import moe.xox.library.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +33,13 @@ public class BookMassageController extends BaseController {
     @Autowired
     HistoryRepository historyRepository;
 
+    @Autowired
+    CollectionRepository collectionRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+
     /**
      * 分页!
      * 返回BookMsg表中的图书信息
@@ -38,6 +49,7 @@ public class BookMassageController extends BaseController {
      */
     @RequestMapping(value = "showBookMsgManagerTable", method = RequestMethod.GET)
     @ResponseBody
+
     public ReturnBean showBookMsgManagerTable(int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<BookMessage> bookMessagePage = bookMsgRepository.findAll(pageable);
@@ -58,7 +70,30 @@ public class BookMassageController extends BaseController {
     @RequestMapping(value = "getBookMessageById", method = RequestMethod.GET)
     public ReturnBean getBookMessageById(Integer bookMessageId) {
         JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId.longValue());
-        History history = new History(null, ShiroUtils.getUserId(), bookMessageId.longValue(), LocalDateTime.now());
+        Long userId = ShiroUtils.getUserId();
+        History history = new History(null,userId, bookMessageId.longValue(), LocalDateTime.now());
+
+
+        /**
+         * 查询当前用户是否有收藏这本书 如果有收藏 将收藏的ID返回给前端
+         */
+        Collection collection = collectionRepository.findCollectionByUserIdAndBookMessageId(userId, bookMessageId.longValue());
+        if (collection == null) {
+            object.put("ifCollection", false);
+        }else {
+            object.put("ifCollection", true);
+            object.put("collectionId", collection.getCollectionId());
+        }
+
+        Order order = orderRepository.findOrderByBookMessageIdAndUserIdAndStatusIsTrue(bookMessageId.longValue(),userId);
+
+        if (order == null) {
+            object.put("ifOrder", false);
+        }else {
+            object.put("ifOrder", true);
+            object.put("orderId", order.getOrderId());
+        }
+
         historyRepository.save(history);
         return getSuccess("OK", object, 1);
     }
