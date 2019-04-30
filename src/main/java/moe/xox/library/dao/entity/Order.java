@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
 
   @Id
@@ -20,6 +20,7 @@ public class Order {
   private Long bookMessageId;
   private Long userId;
   private LocalDateTime orderTime;
+  @Column(name = "`code`")
   private String code;
   private boolean ifTakeAway;
   private LocalDateTime takeAwayTime;

@@ -199,7 +199,7 @@ public class UserController extends BaseController {
         JSONObject object = (JSONObject) JSON.toJSON(user);
 //        if (user.getImgName() != null && !user.getImgName().equals(""))
         try {
-            object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH +"\\"+ user.getImgName()));
+            object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + user.getImgName()));
         } catch (Exception ex) {
             logger.info(ex.getMessage());
         }
@@ -242,8 +242,8 @@ public class UserController extends BaseController {
         if (oldCollection != null)
             return getSuccess("您已收藏过该书啦");
         Collection collection = new Collection(null, user.getUserId(), bookMessageId, LocalDateTime.now());
-        collectionRepository.save(collection);
-        return getSuccess("收藏成功");
+        Collection collections = collectionRepository.save(collection);
+        return getSuccess("收藏成功", collections, 1);
     }
 
     /**

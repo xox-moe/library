@@ -39,9 +39,9 @@ public class OrderController extends BaseController {
             return getFailure("您已经预约过该书啦,请不要重复预约");
 
         Order order = new Order(null, bookMessageId, userId, LocalDateTime.now(), code, false,null,true);
-        orderRepository.save(order);
+        Order orders  = orderRepository.save(order);
 
-        return getSuccess("预约成功");
+        return getSuccess("预约成功", orders, 1);
     }
 
     @RequestMapping("cancelOrder")
