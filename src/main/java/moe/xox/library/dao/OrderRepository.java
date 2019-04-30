@@ -20,7 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findOrderByUserIdAndCodeAndStatusIsTrue(long userId, String code);
 
-    @Query(nativeQuery = true,value = "select order_id,\n" +
+    @Query(nativeQuery = true,value = "select order_id as orderId ,\n" +
             "       `order`.book_message_id as bookMessageId,\n" +
             "       user_id as userId,\n" +
             "       order_time as orderTime,\n" +
