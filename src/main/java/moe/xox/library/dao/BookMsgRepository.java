@@ -20,6 +20,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       author                       as author,\n" +
             "       publisher                    as publisher,\n" +
             "       introduction                 as introduction,\n" +
+            "       img_name                     as imgName,\n" +
             "       bookMsg.status               as status,\n" +
             "       bookMsg.creator_id           as creatorId,\n" +
             "       bookMsg.create_time          as createTime,\n" +
@@ -112,6 +113,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       kind_id as kindId,\n" +
             "       author,\n" +
             "       publisher,\n" +
+            "       img_name as imgName,\n" +
             "       introduction,\n" +
             "       status,\n" +
             "       creator_id as creatorId,\n" +
@@ -140,6 +142,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       book_message.book_message_id as bookMessageId,\n" +
             "       name as name,\n" +
             "       kind_id as kindId,\n" +
+            "       img_name as imgName,\n" +
             "       author as author,\n" +
             "       publisher as publisher,\n" +
             "       introduction as intorudction,\n" +
@@ -165,6 +168,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       kind_id as kindId,\n" +
             "       author,\n" +
             "       publisher,\n" +
+            "       img_name as imgName,\n" +
             "       introduction,\n" +
             "       status,\n" +
             "       ISBN\n" +
@@ -178,6 +182,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       name as bookMassageName,\n" +
             "       author,\n" +
             "       publisher,\n" +
+            "       img_name as imgName,\n" +
             "       introduction\n" +
             "from book_message\n" +
             "where (name like concat('%', :unionSearch, '%') or publisher like concat('%', :unionSearch, '%') or\n" +
@@ -187,4 +192,6 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
 
     @Query(nativeQuery = true, value = "select author , publisher ,book_message_id as bookMessageId from  book_message where book_message_id = :bookMessageId ")
     JSONObject getAuthorAndPublisherByBookMsgId(@Param("bookMessageId") Long bookMessageId);
+
+    BookMessage findBookMessageByBookMessageId(Long bookMessageId);
 }

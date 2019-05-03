@@ -87,6 +87,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "       name as name,\n" +
             "       bookMsg.kind_id as kindId,\n" +
             "       author as author,\n" +
+            "       img_name as imgName,\n" +
             "       publisher as publisher,\n" +
             "       introduction introduction,\n" +
             "       ISBN as ISBN,\n" +
@@ -101,16 +102,28 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "order by  book.create_time desc limit 10\n")
     List<JSONObject> listNewBook();
 
-    @Query(nativeQuery = true, value = "select borrow_id    as borrowId,\n" +
-            "       user_id      as userId,\n" +
-            "       book_id      as bookId,\n" +
-            "       if_return    as ifReturn,\n" +
-            "       out_time     as outTime,\n" +
-            "       out_quality  as outQuality,\n" +
-            "       back_time    as backTime,\n" +
-            "       bakc_quality as backQuanlity\n" +
+    @Query(nativeQuery = true, value = "select borrow_id           as borrowId,\n" +
+            "       borrow_info.user_id as userId,\n" +
+            "       book_id             as bookId,\n" +
+            "       if_return           as ifReturn,\n" +
+            "       out_time            as outTime,\n" +
+            "       out_quality         as outQuality,\n" +
+            "       if_xu               as ifXu,\n" +
+            "       back_time           as backTime,\n" +
+            "       back_quality        as backQuality,\n" +
+            "       email,\n" +
+            "       img_name,\n" +
+            "       nick_name,\n" +
+            "       password,\n" +
+            "       birthday,\n" +
+            "       real_name           as realName,\n" +
+            "       grade,\n" +
+            "       department,\n" +
+            "       major,\n" +
+            "       sex\n" +
             "from borrow_info\n" +
-            "where book_id = :bookId \n" +
+            "         left join user on user.user_id = borrow_info.user_id\n" +
+            "where book_id = :bookId\n" +
             "order by out_time desc")
-    List<BorrowInfo> listBookHistory(Long bookId);
+    List<JSONObject> listBookHistory(Long bookId);
 }

@@ -19,6 +19,7 @@ public class BookMessage {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long bookMessageId;
   private String name;
+  private String imgName;
   private Long kindId;
   private String author;
   private String publisher;

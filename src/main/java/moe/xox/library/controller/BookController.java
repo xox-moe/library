@@ -12,8 +12,12 @@ import moe.xox.library.dao.entity.BorrowInfo;
 import moe.xox.library.dao.entity.User;
 import moe.xox.library.project.BookQualityEnum;
 import moe.xox.library.project.BookStatusEnum;
+import moe.xox.library.project.FILE_PATH;
+import moe.xox.library.utils.ImageUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("churukuguanli")
 public class BookController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(BookController.class);
     @Autowired
     BookRepository bookRepository;
 
@@ -40,6 +45,13 @@ public class BookController extends BaseController {
     @ResponseBody
     public ReturnBean listNewBook() {
         List<JSONObject> jsonObjects = bookRepository.listNewBook();
+        for (JSONObject object : jsonObjects) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("success", jsonObjects, jsonObjects.size());
     }
 
@@ -96,8 +108,8 @@ public class BookController extends BaseController {
      * private Long bookStatusId;
      * private Long quality;
      */
-    @RequestMapping(path = "addBook", method = RequestMethod.POST)
-    @ResponseBody
+//    @RequestMapping(path = "addBook", method = RequestMethod.POST)
+//    @ResponseBody
     public ReturnBean addBook(Long bookMessageId, Long bookStatusId, Long qualityId) {
         Book book = new Book(null, bookMessageId, bookStatusId, qualityId, null, LocalDateTime.now(), true);
 //        book.setBookMessageId(null);
@@ -110,7 +122,7 @@ public class BookController extends BaseController {
         return getSuccess();
     }
 
-    @RequestMapping(path = "addBooks", method = RequestMethod.POST)
+    @RequestMapping(path = "addBook", method = RequestMethod.POST)
     @ResponseBody
     public ReturnBean addBooks(Long bookMessageId, Long bookStatusId, Long qualityId, int count) {
         for (int i = 0; i < count; i++) {
@@ -172,19 +184,21 @@ public class BookController extends BaseController {
 
 
     @RequestMapping("listBookHistory")
+    @ResponseBody
     public ReturnBean listBookHistory(Long bookId) {
 
-        List<BorrowInfo> borrowInfos = bookRepository.listBookHistory(bookId);
+        List<JSONObject> borrowInfos = bookRepository.listBookHistory(bookId);
 
 
         List<String> result = new ArrayList<>();
 
 
-        for (BorrowInfo borrowInfo : borrowInfos) {
+        for (JSONObject borrowInfo : borrowInfos) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("于").append(borrowInfo.getOutTime()).append("被").append(borrowInfo.getUserId()).append("借出");
-            if (borrowInfo.getIfReturn()) {
-                stringBuilder.append("于").append(borrowInfo.getBackTime()).append("归还");
+            stringBuilder.append("于").append(borrowInfo.get("outTime")).append("被 id:").append(borrowInfo.get("userId"))
+                    .append("姓名:").append(borrowInfo.get("realName")).append("借出");
+            if ( (boolean) borrowInfo.get("ifReturn")) {
+                stringBuilder.append("于").append(borrowInfo.get("backTime")).append("归还");
             } else {
                 stringBuilder.append("未归还");
             }

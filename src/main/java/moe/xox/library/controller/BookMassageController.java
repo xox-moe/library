@@ -7,18 +7,21 @@ import moe.xox.library.dao.BookMsgRepository;
 import moe.xox.library.dao.CollectionRepository;
 import moe.xox.library.dao.HistoryRepository;
 import moe.xox.library.dao.OrderRepository;
-import moe.xox.library.dao.entity.BookMessage;
+import moe.xox.library.dao.entity.*;
 //import moe.xox.library.utils.ImageUtil;
-import moe.xox.library.dao.entity.Collection;
-import moe.xox.library.dao.entity.History;
-import moe.xox.library.dao.entity.Order;
+import moe.xox.library.project.FILE_PATH;
+import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.ShiroUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("tushuxinxiguanli")
 public class BookMassageController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(BookMassageController.class);
     @Autowired
     BookMsgRepository bookMsgRepository;
 
@@ -69,6 +73,15 @@ public class BookMassageController extends BaseController {
     }
 
 
+    @RequestMapping(value = "setBookMsgImg", method = RequestMethod.POST)
+    public ReturnBean setBookMsgImg(@RequestParam MultipartFile file,Long bookMessageId){
+        BookMessage bookMessage = bookMsgRepository.findBookMessageByBookMessageId(bookMessageId);
+        String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
+        bookMessage.setImgName(fileName);
+        bookMsgRepository.save(bookMessage);
+        return getSuccess("OK", fileName, 1);
+    }
+
     @RequestMapping(value = "getBookMessageById", method = RequestMethod.GET)
     public ReturnBean getBookMessageById(Integer bookMessageId) {
         JSONObject object = bookMsgRepository.getBookMessageByBookMessageId(bookMessageId.longValue());
@@ -99,9 +112,14 @@ public class BookMassageController extends BaseController {
             object.put("orderId", order.getOrderId());
         }
 
-
-
         historyRepository.save(history);
+
+        try {
+            object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+        } catch (Exception ex) {
+            logger.info(ex.getMessage());
+        }
+
         return getSuccess("OK", object, 1);
     }
 
@@ -115,7 +133,9 @@ public class BookMassageController extends BaseController {
     @RequestMapping(path = "addBookMsg", method = RequestMethod.POST)
     @ResponseBody
     public ReturnBean addBookMsg(BookMessage bookMessage) {
-//        bookMessage.setBookMessageId(null);\
+//        bookMessage.setBookMessageId(null);
+        if (bookMessage.getImgName()==null)
+            bookMessage.setImgName("");
         bookMessage.setStatus(true);
         bookMsgRepository.save(bookMessage);
         return getSuccess();
@@ -160,10 +180,12 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public ReturnBean deleteBookMsg(Long bookMessageId, String name, Long kindId, String author, String publisher, String introduction, String ISBN) {
         Long userId = ShiroUtils.getUserId();
-        BookMessage bookMessage = new BookMessage(bookMessageId, name, kindId, author, publisher, introduction, true, userId, LocalDateTime.now(), ISBN);
+        BookMessage oldBookMessage = bookMsgRepository.findBookMessageByBookMessageId(bookMessageId);
+        BookMessage bookMessage = new BookMessage(bookMessageId, name, oldBookMessage.getImgName(), kindId, author, publisher, introduction, true, userId, LocalDateTime.now(), ISBN);
         bookMsgRepository.save(bookMessage);
         return getSuccess();
     }
+
 
 
     /**
@@ -173,6 +195,13 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public ReturnBean listTopTenBook() {
         List<JSONObject> list = bookMsgRepository.listTopTenBook();
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
@@ -181,6 +210,13 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public ReturnBean listTopTenCollectionBook() {
         List<JSONObject> list = bookMsgRepository.listTopTenCollectionBook();
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
@@ -210,6 +246,13 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public ReturnBean listBookMsgRandom(int limit) {
         List<JSONObject> list = bookMsgRepository.listBookMsgRandom(limit);
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
@@ -220,6 +263,13 @@ public class BookMassageController extends BaseController {
     @ResponseBody
     public ReturnBean listBookMsgHomePage(String unionSearch) {
         List<JSONObject> list = bookMsgRepository.listBookMsgHomePage(unionSearch);
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
