@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,6 +19,6 @@ public class Advice {
   private Long adviceId;
   private Long userId;
   private String message;
-  private java.sql.Timestamp createTime;
+  private LocalDateTime createTime;
 
 }
