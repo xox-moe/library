@@ -100,7 +100,8 @@
 	background-color: rgb(202, 197, 197);
 	margin: 25px;
 }
-.goods img {
+
+#nav-content-1 #nav-content-2.goods img {
 	width: 245px;
 	height: 245px;
 
@@ -137,4 +138,158 @@
 		opacity: 1;
 		transition: all 0.8s ease;
 	}
+}
+
+
+
+/*以下是泽欣增加的样式*/
+/*头部*/
+
+.layui-layout-admin .layui-header {
+	background-color: #fff;
+}
+
+/*左上角字体*/
+
+.layui-layout-admin .layui-logo {
+	color: black;
+}
+
+/*上/左边导航栏默认情况下字体颜色*/
+
+.layui-nav .layui-nav-item a {
+	color: black;
+}
+
+/*上/左导航字体被选中时颜色*/
+
+.layui-nav .layui-nav-item a:hover,
+.layui-nav .layui-this a {
+	color: #226597;
+}
+
+/*上导航栏子树被选中背景色*/
+
+.layui-nav .layui-nav-child dd.layui-this a,
+.layui-nav-child dd.layui-this {
+	background-color: #048998;
+}
+
+/*字体下面的标识块颜色*/
+
+.layui-nav .layui-this:after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed:after {
+	background-color: #048998;
+}
+
+.layui-nav-tree .layui-nav-bar {
+	background-color: #048998;
+}
+
+/*左导航颜色 被分成了两部分= =*/
+
+.layui-bg-black {
+	background-color: #f9fafc !important;
+}
+
+.layui-nav {
+	background-color: #f9fafc;
+}
+
+/*左被选中时颜色*/
+
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover {
+	background-color: #ececec;
+}
+
+/*左鼠标滑动时颜色*/
+
+.layui-nav-tree .layui-nav-item a:hover {
+	background-color: #ececec;
+}
+
+/*有子树的标签点击后显色*/
+
+.layui-nav-itemed > a,
+.layui-nav-tree .layui-nav-title a,
+.layui-nav-tree .layui-nav-title a:hover {
+	color: grey !important;
+}
+
+/*子树的背景色*/
+
+.layui-nav-itemed > .layui-nav-child {
+	background-color: #f6f5f5 !important;
+}
+
+/*那个指示有子树的小三角形*/
+
+.layui-nav .layui-nav-more {
+	border-color: #000 transparent transparent;
+	border-top-color: rgba(0, 0, 0, 1);
+}
+
+.layui-nav .layui-nav-mored,
+.layui-nav-itemed > a .layui-nav-more {
+	border-color: transparent transparent #000;
+}
+
+/*子树被选中后字体颜色*/
+
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover {
+	color: #226597;
+}
+
+/*内容部分tab的左边色块*/
+
+.layui-elem-quote {
+	border-left: 5px solid #f05a28;
+	background-color: #f9f9f9;
+}
+
+/*搜索的书籍展示 背景色*/
+
+.goods {
+	background-color: #f4f4f4;
+	margin: 1.5em;
+}
+
+/*借阅收藏背景*/
+
+#nav-content-6 .grid-demo {
+	background-color: #f4f4f4;
+}
+
+#nav-content-7 .grid-demo {
+	background-color: #f4f4f4;
+}
+
+/*图书推荐部分*/
+
+#nav-content-4 .grid-demo-bg1 {
+	background-color: #f4f4f4;
+}
+/*借阅/收藏部分ul*/
+.bookul{
+	width: 90%;
+	margin: 5% 5% 0 5%;
+	border-left: 2px solid gainsboro;
+}
+.bookul li div{
+	margin-left:2%;
+	display: inline-block;
+	margin-bottom: 2%;
+}
+.bookul li div p{
+	line-height: 2em;
+	font-size: 1em;
 }
