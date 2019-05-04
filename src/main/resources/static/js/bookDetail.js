@@ -193,13 +193,13 @@ layui.use(['layer','element','table','form','laydate'], function(){
                 $.ajax({
                     url: basePath + 'borrow/borrowBook'
                     , data: {
-                        email: userId
+                          email: userId
                         , code: pass
-                        , bookMessageId: parent.dataForChild.bookMessageId
+                        , bookId: $("input[name='bookId']").val()
                     }
                     , success: function (res) {
                         if (res.code == 0) {
-                            layer.alert(text + "借出" + data.bookMessageName + "<br>" + "消息:" + res.msg);
+                            layer.alert(res.msg);
                         }
                     }
                     , error: function (res) {
