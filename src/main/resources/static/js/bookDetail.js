@@ -106,6 +106,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("input").attr("readonly", "readonly");
         $("form textarea").attr("readonly","readonly");
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("form select[name='qualityId']").attr("readonly", false).attr("disabled", false);
         $("input[name='bookId']").prop("readonly",false)
         $("input[name='bookId']").blur(function (data) {
             $.ajax({
@@ -128,6 +129,10 @@ layui.use(['layer','element','table','form','laydate'], function(){
                             }
                         });
                         MOD.Form.fillForm($('#bookDetail'),res.data);
+                        if (res.data.bookStatusId == 1) {
+                            $("#return").removeClass("layui-hide");
+                            $("#borrow").addClass("layui-hide");
+                        }
                         form.render();
                     }else {
                         layer.alert(res.msg);
@@ -221,7 +226,28 @@ layui.use(['layer','element','table','form','laydate'], function(){
             });
         }
     });
-
+    $("#return").click(function (data) {
+        $.ajax({
+            url:basePath+'borrow/backBook'
+            ,data:{
+                bookId: $("input[name='bookId']").val()
+                ,qualityId:$("input[name='qualityId']").val()
+            }
+            , success: function (res) {
+                if (res.code === 0) {
+                    layer.alert("操作成功！", function () {
+                        var myWindow = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(myWindow); //再执行关闭
+                    });
+                }
+                else layer.alert(""+res.msg, {icon: 5});
+            },
+            error:function(jqXHR)
+            {
+                // console.log('请求错误,错误的原因为:'+jqXHR.status)
+            }
+        })
+    })
     //关闭按钮
     $('button[type=close]').click(function(){
         var mywindow = parent.layer.getFrameIndex(window.name);

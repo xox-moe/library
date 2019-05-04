@@ -72,7 +72,7 @@
         <div id="bookNum" class="layui-form-item layui-hide">
             <label class="layui-form-label ">数量</label>
             <div class="layui-input-inline middle">
-                <input type="text" name="count" class="layui-input"  lay-verify="number|moreThanOne"/>
+                <input type="text" name="count" class="layui-input"  lay-verify="moreThanOne"/>
             </div>
         </div>
         <!--<div class="layui-form-item">-->
@@ -92,6 +92,7 @@
         <div class="layui-form-item forLastButton" >
             <button class="layui-btn small" lay-submit="" lay-filter="save" id="save">保存</button>
             <button class="layui-btn small layui-hide" type="button" id="borrow">借出</button>
+            <button class="layui-btn small layui-hide" type="button" id="return">归还</button>
             <button class="layui-btn layui-btn-primary small" type="close">取消</button>
         </div>
     </form>
