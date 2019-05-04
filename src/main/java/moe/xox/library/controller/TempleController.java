@@ -58,5 +58,9 @@ public class TempleController {
     public String noticeDetail(){
         return "noticeDetail";
     }
+    @RequestMapping("borrow")
+    public String borrow(){
+        return "borrow";
+    }
 
 }

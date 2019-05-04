@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="layui/css/layui.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <script type="text/javascript" src="js/jquery.js" ></script>
+</head>
+<body>
+<div style="width:350px;text-align:center;margin:30px;">
+    <form action="" id="borrowDetail" class="layui-form layui-form-pane">
+        <div class="layui-form-item" id="IDinput">
+            <label class="layui-form-label ">ID</label>
+            <div class="layui-input-inline middle">
+                <input type="text" name="bookId" class="layui-input"  readonly />
+            </div>
+        </div>
+        <div id="email" class="layui-form-item ">
+            <label class="layui-form-label ">用户名</label>
+            <div class="layui-input-inline middle">
+                <input type="text" name="email" class="layui-input"  lay-verify="required|email"/>
+            </div>
+        </div>
+        <div id="code" class="layui-form-item ">
+            <label class="layui-form-label ">借书码</label>
+            <div class="layui-input-inline middle">
+                <input type="text" name="code" class="layui-input" maxlength="10"  lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item forLastButton" >
+            <button class="layui-btn small" lay-submit="" lay-filter="save" id="save">借出</button>
+        </div>
+    </form>
+</div>
+<script src="layui/layui.js"></script>
+<script src="js/modleJquery.js"></script>
+<script src="js/borrow.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var basePath = /*[[@{/}]]*/;
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -8,7 +8,6 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,table = layui.table
         ,form = layui.form
         ,laydate=layui.laydate;
-
     //填写select
     $.ajax({
         url: basePath + "tushuxinxiguanli/listAllBookMsgIdAndName"
@@ -185,29 +184,42 @@ layui.use(['layer','element','table','form','laydate'], function(){
     });
 
     $("#borrow").click(function (data) {
-        layer.prompt({title: '请询问订单号，填写并确认', formType: 0}, function (pass, index1) {
-            if (pass == data)
-                layer.close(index1);
-            layer.prompt({title: '请输入用户名，并确认', formType: 0}, function (userId, index2) {
-                layer.closeAll();
-                $.ajax({
-                    url: basePath + 'borrow/borrowBook'
-                    , data: {
-                          email: userId
-                        , code: pass
-                        , bookId: $("input[name='bookId']").val()
-                    }
-                    , success: function (res) {
-                        if (res.code == 0) {
-                            layer.alert(res.msg);
-                        }
-                    }
-                    , error: function (res) {
-                        layer.alert(res.msg);
-                    }
-                });
+        // layer.prompt({title: '请询问订单号，填写并确认', formType: 0}, function (pass, index1) {
+        //     if (pass == data)
+        //         layer.close(index1);
+        //     layer.prompt({title: '请输入用户名，并确认', formType: 0}, function (userId, index2) {
+        //         layer.closeAll();
+        //         $.ajax({
+        //             url: basePath + 'borrow/borrowBook'
+        //             , data: {
+        //                   email: userId
+        //                 , code: pass
+        //                 , bookId: $("input[name='bookId']").val()
+        //             }
+        //             , success: function (res) {
+        //                 layer.alert(res.msg);
+        //             }
+        //             , error: function (res) {
+        //                 layer.alert(res.msg);
+        //             }
+        //         });
+        //     });
+        // });
+        var bookId = $("input[name='bookId']").val();
+        if (bookId == "" || bookId == null) {
+            layer.alert("请先输入ID",{icon: 5})
+        }else {
+            dataForChild = {
+                bookId: bookId
+            };
+            layer.open({
+                type: 2,
+                title:"借出图书",
+                area: ['400px', '350px'],
+                skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                content:basePath+'borrow'
             });
-        });
+        }
     });
 
     //关闭按钮
