@@ -11,8 +11,10 @@ import moe.xox.library.dao.entity.Collection;
 import moe.xox.library.dao.entity.User;
 import moe.xox.library.dao.entity.UserRole;
 import moe.xox.library.project.FILE_PATH;
+import moe.xox.library.service.UserService;
 import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.ShiroUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -36,6 +39,10 @@ import java.util.List;
 public class UserController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    UserService userService;
+
 
     @Autowired
     UserRepository userRepository;
@@ -65,7 +72,7 @@ public class UserController extends BaseController {
                                   @RequestParam(value = "roleId", required = false, defaultValue = "") String roleId) {
 
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> userPage = userRepository.listAllUser(userId, realName, nickName, email, grade, department, major, roleId,pageable);
+        Page<JSONObject> userPage = userRepository.listAllUser(userId, realName, nickName, email, grade, department, major, roleId, pageable);
         List<JSONObject> userList = userPage.getContent();
         for (JSONObject object : userList) {
             String birrthday = object.get("birthday") == null ? "空" : (object.get("birthday").toString().substring(0, 10));
@@ -205,7 +212,9 @@ public class UserController extends BaseController {
     public ReturnBean getCurrentUserInfo() throws IOException {
         Long userId = ShiroUtils.getUserId();
         User user = userRepository.findByUserId(userId);
+        Set<String> roles = userService.listRoleNamesByEmail(user.getEmail());
         JSONObject object = (JSONObject) JSON.toJSON(user);
+        object.put("roleName", StringUtils.join(roles, ","));
 //        if (user.getImgName() != null && !user.getImgName().equals(""))
         try {
             object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + user.getImgName()));
