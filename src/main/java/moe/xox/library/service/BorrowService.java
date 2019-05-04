@@ -61,6 +61,7 @@ public class BorrowService {
         }
 
         order.setIfTakeAway(true);
+        order.setStatus(false);
         book.setBookStatusId(BookStatusEnum.OUT.id);
 
 

@@ -226,9 +226,9 @@ public class BookController extends BaseController {
         object.put("author", bookMessage.getAuthor());
         object.put("bookMessageId", bookMessage.getBookMessageId());
         object.put("publisher", bookMessage.getPublisher());
-        object.put("quality", book.getQuality());
-        object.put("status", book.getBookStatusId());
-        object.put("statusName", BookStatusEnum.getNameById(book.getBookStatusId().intValue()));
+        object.put("qualityId", book.getQuality());
+        object.put("bookStatusId", book.getBookStatusId());
+        object.put("bookStatusName", BookStatusEnum.getNameById(book.getBookStatusId().intValue()));
         return getSuccess("OK", object,1);
 
     }
