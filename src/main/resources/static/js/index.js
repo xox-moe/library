@@ -68,12 +68,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         ,success:function (res) {
             $("#headImg").attr("src", res.data.img);
             $("#username").last().append(res.data.nickName)
+
+
         }
     })
     //打开详情页
     function showGoods(){
         console.log("绑定详情页事件");
-        $('.goods').click(function (data) {
+        $(".goods img").click(function (data) {
             console.log(data.currentTarget);
             dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
             console.log(dataForChild);
@@ -86,7 +88,22 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 content:basePath+'good'
             });
             return false
-        });
+        })
+
+        // $('.goods ').click(function (data) {
+        //     console.log(data.currentTarget);
+        //     dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
+        //     console.log(dataForChild);
+        //     layer.open({
+        //         type: 2,
+        //         id:"goodsPage",
+        //         title:"图书详情",
+        //         area: ['1000px', '680px'],
+        //         skin: 'layui-layer-rim', //加上边框
+        //         content:basePath+'good'
+        //     });
+        //     return false
+        // });
     }
     //新进图书
     function newBooks() {
@@ -102,10 +119,10 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         $("#newBook").last().append(
-                            '<div class="goods layui-col-xs2 animated fadeIn"name="newBook-'+item.bookMessageId+'">'+
+                            '<div class="goods layui-col-xs2 animated fadeIn" name="newBook-'+item.bookMessageId+'">'+
                             '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">'+
                             '<a href="javascript:;">'+
-                            '<img style="width: 100%;" src="'+item.img+'">'+
+                            '<img style="width: 100%;" src="'+item.img+'" name="newBook-'+item.bookMessageId+'">'+
                             '</a>'+
                             '<a href="javascript:;">'+
                             '<div class="cmdlist-text" >'+
@@ -144,7 +161,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         '<div class=" goods layui-col-xs2 animated bounceIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
                         '<a href="javascript:;">' +
-                        '<img style="width: 100%;" src="'+item.img+'">' +
+                        '<img style="width: 100%;" src="'+item.img+'" name="showGoods-'+item.bookMessageId+'">' +
                         '</a>' +
                         '<a href="javascript:;">' +
                         '<div class="cmdlist-text">' +
@@ -192,12 +209,12 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         item.img = "img/商品.jpg";
                     }
                     $("#recommend").last().append(
-                        '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" name="recommendId-'+item.bookMessageId+'">' +
+                        '<div class="goods layui-col-sm2 animated zoomIn" name="recommendId-'+item.bookMessageId+'" style="height: 30em;" >' +
                         '<div class="grid-demo grid-demo-bg1">' +
                         '<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">' +
                         '<div class="layui-col-md12">' +
                         '<div class="grid-demo grid-demo-bg1">' +
-                        '<img style="width: 100%;" src="'+item.img+'">' +
+                        '<img style="width: 100%;" src="'+item.img+'" name="recommendId-'+item.bookMessageId+'">' +
                         '</div>' +
                         '</div>' +
                         '<div class="layui-col-md12">' +
@@ -231,7 +248,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<span style="font-size: 1em;">预约日期:</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'">' +
+                            '<img style="width: 100%" src="'+item.img+'" name="BorrowId-' + item.bookMessageId +'">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
                             '<p>书名:' + item.name + '</p>' +
@@ -285,7 +302,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         '<span style="font-size: 1em;">应还日期:'+item.needReturnTime+'</span>' +
                                         '</div>' +
                                         '<div style="flex-grow: 1.2;width: 5em;">' +
-                                        '<img style="width: 100%" src="'+item.img+'">' +
+                                        '<img style="width: 100%" src="'+item.img+'" name="BorrowId-' + item.bookMessageId + '">' +
                                         '</div>' +
                                         '<div style="flex-grow: 3;width: 15em;">' +
                                         '<p>书名:' + item.bookName + '</p>' +
@@ -356,7 +373,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<span style="font-size: 1em;">序号:' + i + '</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'">' +
+                            '<img style="width: 100%" src="'+item.img+'" name="collectionPane-'+item.bookMessageId+'">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
                             '<p>书名:' + item.bookMessageName + '</p>' +
@@ -416,7 +433,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<span style="font-size: 1em;">浏览日期</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'">' +
+                            '<img style="width: 100%" src="'+item.img+'" name="history-' + item.bookMessageId +'">' +
                             '</div>' +
                             '<div style="flex-grow: 2.5;width: 15em;">' +
                             '<p>书名:' + item.name + '</p>' +
