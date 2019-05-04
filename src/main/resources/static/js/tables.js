@@ -447,8 +447,18 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
         table.on('tool(test2)',
             function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                 var data = obj.data //获得当前行数据
-                    ,layEvent = obj.event; //获得 lay-event 对应的值
-                if(layEvent=='borrow'){
+                    ,layEvent = obj.event; //获得 lay-event 对应的值.
+                if(layEvent=='return'){
+                    actionType='return';
+                    dataForChild=data;
+                    layer.open({
+                        type: 2,
+                        title:"图书信息管理详情",
+                        area: ['400px', '550px'],
+                        skin: 'layui-layer-rim layui-layer-molv', //加上边框
+                        content:basePath+'bookDetail'
+                    });
+                } else if(layEvent=='borrow'){
                     actionType='borrow';
                     dataForChild=data;
                     layer.open({

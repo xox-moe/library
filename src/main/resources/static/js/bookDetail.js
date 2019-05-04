@@ -15,7 +15,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'||parent.actionType == 'return'){
                 if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
@@ -42,7 +42,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'||parent.actionType == 'return'){
                 if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
@@ -56,7 +56,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         , success: function (res) {
             // console.log(res.data);
             MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
-            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+            if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'||parent.actionType == 'return'){
                 if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
@@ -72,7 +72,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             bookId: parent.dataForChild.bookId
         }
         , success: function (res) {
-            if (parent.actionType == 'detail' || parent.actionType == 'edit' || parent.actionType == 'borrow') {
+            if (parent.actionType == 'detail' || parent.actionType == 'edit' || parent.actionType == 'borrow'||parent.actionType == 'return') {
                 $("#reviewLog").val(res.data);
                 form.render();
             }
@@ -100,7 +100,14 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("#save").addClass("layui-hide");
         $("#borrow").removeClass("layui-hide");
-    }else if (parent.actionType == 'fastBorrow') {
+    }else if(parent.actionType == 'return'){
+        $("#save").addClass("layui-hide");
+        $("input").attr("readonly", "readonly");
+        $("form textarea").attr("readonly","readonly");
+        $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
+        $("form select[name='qualityId']").attr("readonly", false).attr("disabled", false);
+        $("#return").removeClass("layui-hide");
+    } else if (parent.actionType == 'fastBorrow') {
         $("#save").addClass("layui-hide");
         $("#borrow").removeClass("layui-hide");
         $("input").attr("readonly", "readonly");

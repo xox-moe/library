@@ -711,10 +711,14 @@
                                     <hr class="layui-bg-orange">
                                     <table class="layui-hide" id="table2" lay-filter="test2"></table>
                                     <script type="text/html" id="barDemo2">
-                                        {{# if(true){ }}
+                                        {{# if(d.bookStatusId == 4){ }}
                                         <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="borrow">借出</a>
                                         {{# }else{ }}
-                                        <button class="layui-btn layui-btn-xs layui-btn-disabled" disabled="disabled" lay-event="borrow">借出</button>
+                                        {{# if(d.bookStatusId == 1){ }}
+                                        <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="return">归还</a>
+                                        {{# }else{ }}
+                                        <button class="layui-btn layui-btn-xs layui-btn-disabled" disabled="disabled" >归还</button>
+                                        {{# } }}
                                         {{# } }}
                                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
