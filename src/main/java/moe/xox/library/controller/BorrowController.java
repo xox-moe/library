@@ -51,8 +51,10 @@ public class BorrowController extends BaseController {
                 return getFailure("该预约已经取走书本了");
             case -3:
                 return getFailure("数据显示本书已经借出,请管理员进行后台检查");
+            case -4:
+                return getFailure("邮箱错误,查无邮箱");
             case 0:
-                return getSuccess();
+                return getSuccess("借出成功");
             default:
                 return getFailure("失败 原因未知，请联系管理员");
         }

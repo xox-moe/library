@@ -44,6 +44,8 @@ public class BorrowService {
         //根据学号查询教师
         User user = userRepository.findByEmail(email);
         //借出图书
+        if (user == null)
+            return -4;
         Long userId = user.getUserId();
         Order order = orderRepository.findOrderByUserIdAndCodeAndStatusIsTrue(userId,code);
         Book book = bookRepository.findByBookId(bookId);
