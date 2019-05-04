@@ -199,11 +199,11 @@ layui.use(['layer','element','table','form','laydate'], function(){
                     }
                     , success: function (res) {
                         if (res.code == 0) {
-                            layer.msg(text + "借出" + data.bookMessageName + "<br>" + "消息:" + res.msg);
+                            layer.alert(text + "借出" + data.bookMessageName + "<br>" + "消息:" + res.msg);
                         }
                     }
                     , error: function (res) {
-                        layer.msg(res.msg);
+                        layer.alert(res.msg);
                     }
                 });
             });

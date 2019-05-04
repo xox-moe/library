@@ -8,158 +8,6 @@
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="./css/animate.css">
-    <style>
-        /*头部*/
-
-        .layui-layout-admin .layui-header {
-            background-color: #fff;
-        }
-
-        /*左上角字体*/
-
-        .layui-layout-admin .layui-logo {
-            color: black;
-        }
-
-        /*上/左边导航栏默认情况下字体颜色*/
-
-        .layui-nav .layui-nav-item a {
-            color: black;
-        }
-
-        /*上/左导航字体被选中时颜色*/
-
-        .layui-nav .layui-nav-item a:hover,
-        .layui-nav .layui-this a {
-            color: #226597;
-        }
-
-        /*上导航栏子树被选中背景色*/
-
-        .layui-nav .layui-nav-child dd.layui-this a,
-        .layui-nav-child dd.layui-this {
-            background-color: #048998;
-        }
-
-        /*字体下面的标识块颜色*/
-
-        .layui-nav .layui-this:after,
-        .layui-nav-bar,
-        .layui-nav-tree .layui-nav-itemed:after {
-            background-color: #048998;
-        }
-
-        .layui-nav-tree .layui-nav-bar {
-            background-color: #048998;
-        }
-
-        /*左导航颜色 被分成了两部分= =*/
-
-        .layui-bg-black {
-            background-color: #f9fafc !important;
-        }
-
-        .layui-nav {
-            background-color: #f9fafc;
-        }
-
-        /*左被选中时颜色*/
-
-        .layui-nav-tree .layui-nav-child dd.layui-this,
-        .layui-nav-tree .layui-nav-child dd.layui-this a,
-        .layui-nav-tree .layui-this,
-        .layui-nav-tree .layui-this > a,
-        .layui-nav-tree .layui-this > a:hover {
-            background-color: #ececec;
-        }
-
-        /*左鼠标滑动时颜色*/
-
-        .layui-nav-tree .layui-nav-item a:hover {
-            background-color: #ececec;
-        }
-
-        /*有子树的标签点击后显色*/
-
-        .layui-nav-itemed > a,
-        .layui-nav-tree .layui-nav-title a,
-        .layui-nav-tree .layui-nav-title a:hover {
-            color: grey !important;
-        }
-
-        /*子树的背景色*/
-
-        .layui-nav-itemed > .layui-nav-child {
-            background-color: #f6f5f5 !important;
-        }
-
-        /*那个指示有子树的小三角形*/
-
-        .layui-nav .layui-nav-more {
-            border-color: #000 transparent transparent;
-            border-top-color: rgba(0, 0, 0, 1);
-        }
-
-        .layui-nav .layui-nav-mored,
-        .layui-nav-itemed > a .layui-nav-more {
-            border-color: transparent transparent #000;
-        }
-
-        /*子树被选中后字体颜色*/
-
-        .layui-nav-tree .layui-nav-child dd.layui-this,
-        .layui-nav-tree .layui-nav-child dd.layui-this a,
-        .layui-nav-tree .layui-this,
-        .layui-nav-tree .layui-this > a,
-        .layui-nav-tree .layui-this > a:hover {
-            color: #226597;
-        }
-
-        /*内容部分tab的左边色块*/
-
-        .layui-elem-quote {
-            border-left: 5px solid #f05a28;
-            background-color: #f9f9f9;
-        }
-
-        /*搜索的书籍展示 背景色*/
-
-        .goods {
-            background-color: #f4f4f4;
-            margin: 1.5em;
-        }
-
-        /*借阅收藏背景*/
-
-        #nav-content-6 .grid-demo {
-            background-color: #f4f4f4;
-        }
-
-        #nav-content-7 .grid-demo {
-            background-color: #f4f4f4;
-        }
-
-        /*图书推荐部分*/
-
-        #nav-content-4 .grid-demo-bg1 {
-            background-color: #f4f4f4;
-        }
-        /*借阅/收藏部分ul*/
-        .bookul{
-            width: 90%;
-            margin: 5% 5% 0 5%;
-            border-left: 2px solid gainsboro;
-        }
-        .bookul li div{
-            margin-left:2%;
-            display: inline-block;
-            margin-bottom: 2%;
-        }
-        .bookul li div p{
-            line-height: 2em;
-            font-size: 1em;
-        }
-    </style>
 </head>
 
 <body class="layui-layout-body">
@@ -327,31 +175,30 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">最新图书</div>
                                 <div class="layui-card-body" pad15="">
-                                    <form class="layui-form layui-inline"
-                                          style="display:flex;flex-wrap: nowrap; margin: 40px 20% 0 20%; "
-                                          lay-filter="select1">
-                                        <div class="layui-form-item" style="width: 100%;">
-                                            <div style="width: 78%;display: inline-block; float: left;">
-                                                <select name="year" id="page2_sel" lay-verify="">
-                                                    <option value="1">2018-2019</option>
-                                                    <option value="2">2017-2018</option>
-                                                    <option value="3">2016-2017</option>
-                                                </select>
-                                            </div>
-                                            <div style="width:20%;display: inline-block;">
-                                                <div class="layui-form-item">
-                                                    <button class="layui-btn layui-btn-fluid" data-type="reload"
-                                                            id="page2_search">搜索
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <!--<form class="layui-form layui-inline"-->
+                                          <!--style="display:flex;flex-wrap: nowrap; margin: 40px 20% 0 20%; "-->
+                                          <!--lay-filter="select1">-->
+                                        <!--<div class="layui-form-item" style="width: 100%;">-->
+                                            <!--<div style="width: 78%;display: inline-block; float: left;">-->
+                                                <!--<select name="year" id="page2_sel" lay-verify="">-->
+                                                    <!--<option value="1">2018-2019</option>-->
+                                                    <!--<option value="2">2017-2018</option>-->
+                                                    <!--<option value="3">2016-2017</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<div style="width:20%;display: inline-block;">-->
+                                                <!--<div class="layui-form-item">-->
+                                                    <!--<button class="layui-btn layui-btn-fluid" data-type="reload"-->
+                                                            <!--id="page2_search">搜索-->
+                                                    <!--</button>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</form>-->
                                     <!--商品展示-->
                                     <div class="layui-fluid layadmin-cmdlist-fluid">
                                         <div class="layui-row layui-col-space30" id="newBook">
                                             <!--商品-->
-
                                             <!--<div class="goods layui-col-xs2 animated fadeIn">-->
                                                 <!--<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">-->
                                                     <!--<a href="javascript:;">-->
@@ -365,7 +212,6 @@
                                                     <!--</a>-->
                                                 <!--</div>-->
                                             <!--</div>-->
-
                                         </div>
                                     </div>
                                 </div>
@@ -389,10 +235,11 @@
                                                 <span style="color:red;">最畅销</span>
                                                 <table class="layui-table" lay-data="{url:'tushuxinxiguanli/listTopTenBook',  id:'test'}" lay-skin="line" lay-filter="rank">
                                                     <thead>
-                                                    <tr>
+                                                    <tr >
                                                         <th lay-data="{type:'numbers',width:80,align:'center'}">排名</th>
+                                                        <th lay-data="{field:'bookMessageId',width:35,align:'center'}">ID</th>
                                                         <th lay-data="{field:'name',width:300,align:'center'}">书名</th>
-                                                        <th lay-data="{field:'author',width:306,align:'center'}">作者</th>
+                                                        <th lay-data="{field:'author',width:275,align:'center'}">作者</th>
                                                     </tr>
                                                     </thead>
                                                 </table>
@@ -405,8 +252,9 @@
                                                     <thead>
                                                     <tr>
                                                         <th lay-data="{type:'numbers',width:80,align:'center'}">排名</th>
+                                                        <th lay-data="{field:'bookMessageId',width:35,align:'center'}">ID</th>
                                                         <th lay-data="{field:'name',width:300,align:'center'}">书名</th>
-                                                        <th lay-data="{field:'author',width:306,align:'center'}">作者</th>
+                                                        <th lay-data="{field:'author',width:275,align:'center'}">作者</th>
                                                     </tr>
                                                     </thead>
                                                 </table>
@@ -605,7 +453,6 @@
                                 <div class="layui-card-header">我的收藏</div>
                                 <div class="layui-card-body" pad15="">
                                     <div style="width: 100%;white-space:nowrap;overflow: hidden; text-overflow: ellipsis;">
-
                                         <ul class="bookul " id="bookul">
                                             <!--<li style="display: flex;">-->
                                                 <!--<div style="flex-grow: 1;width: 5em;">-->
@@ -764,8 +611,8 @@
                                                 <div class="layui-input-inline middle">
                                                     <select name="" lay-search="bookNum" >
                                                         <option value="">请选择</option>
-                                                        <option value="">有</option>
-                                                        <option value="">无</option>
+                                                        <option value="1">有</option>
+                                                        <option value="0">无</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -838,10 +685,13 @@
                                             </div>
                                             <div class="layui-inline">
                                                 <label class="layui-form-label">借阅人</label>
-                                                <div class="layui-input-inline middle">
-                                                    <select name="" lay-search="" >
-                                                        <option value="">请选择</option>
-                                                    </select>
+                                                <!--<div class="layui-input-inline middle">-->
+                                                    <!--<select name="" lay-search="" >-->
+                                                        <!--<option value="">请选择</option>-->
+                                                    <!--</select>-->
+                                                <!--</div>-->
+                                                <div class="layui-input-block middle">
+                                                    <input type="text" name="" autocomplete="off" class="layui-input"/>
                                                 </div>
                                             </div>
                                             <div class="layui-inline">
