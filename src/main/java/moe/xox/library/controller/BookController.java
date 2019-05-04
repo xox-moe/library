@@ -201,9 +201,9 @@ public class BookController extends BaseController {
             stringBuilder.append("于").append(borrowInfo.get("outTime")).append("被 id:").append(borrowInfo.get("userId"))
                     .append("姓名:").append(borrowInfo.get("realName")).append("借出");
             if ((boolean) borrowInfo.get("ifReturn")) {
-                stringBuilder.append("于").append(borrowInfo.get("backTime")).append("归还");
+                stringBuilder.append(",于").append(borrowInfo.get("backTime")).append("归还");
             } else {
-                stringBuilder.append("未归还");
+                stringBuilder.append(",未归还");
             }
 //            result.add(stringBuilder.toString());
 
