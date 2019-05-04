@@ -125,5 +125,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "         left join user on user.user_id = borrow_info.user_id\n" +
             "where book_id = :bookId\n" +
             "order by out_time desc")
-    List<JSONObject> listBookHistory(Long bookId);
+    List<JSONObject> listBookHistory(@Param("bookId") Long bookId);
 }

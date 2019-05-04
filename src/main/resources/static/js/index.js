@@ -98,11 +98,14 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 if (res.code == 0) {
                     $("#newBook").empty();
                     $.each(res.data,function (i, item) {
+                        if (item.img == null) {
+                            item.img = "img/商品.jpg";
+                        }
                         $("#newBook").last().append(
                             '<div class="goods layui-col-xs2 animated fadeIn"name="newBook-'+item.bookMessageId+'">'+
                             '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">'+
                             '<a href="javascript:;">'+
-                            '<img style="width: 100%;" src="img/商品.jpg">'+
+                            '<img style="width: 100%;" src="'+item.img+'">'+
                             '</a>'+
                             '<a href="javascript:;">'+
                             '<div class="cmdlist-text" >'+
@@ -133,12 +136,15 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 homeGoodsCount=res.count;
                 homeGoodsPage = res.count / homeGoodsLimit;
                 $.each(res.data,function (i,item) {
+                    if (item.img == null) {
+                        item.img = "img/商品.jpg";
+                    }
                     console.log(item.bookMessageId);
                     homeGoodsAllData.push(
-                        '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
+                        '<div class=" goods layui-col-xs2 animated bounceIn" name="showGoods-'+item.bookMessageId+'">' +
                         '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
                         '<a href="javascript:;">' +
-                        '<img style="width: 100%;" src="img/商品.jpg">' +
+                        '<img style="width: 100%;" src="'+item.img+'">' +
                         '</a>' +
                         '<a href="javascript:;">' +
                         '<div class="cmdlist-text">' +
@@ -148,21 +154,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         '</a>' +
                         '</div>' +
                         '</div>');
-                    // $("#showGoods").last().append(
-                    //     '<div class=" goods layui-col-xs2 animated fadeIn" name="showGoods-'+item.bookMessageId+'">' +
-                    //     '<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">' +
-                    //     '<a href="javascript:;">' +
-                    //     '<img style="width: 100%;" src="img/商品.jpg">' +
-                    //     '</a>' +
-                    //     '<a href="javascript:;">' +
-                    //     '<div class="cmdlist-text">' +
-                    //     '<p class="info">书名:' + item.bookMassageName + '</p>' +
-                    //     '<p class="info" style="color: grey">作者:' + item.author + '</p>' +
-                    //     '</div>' +
-                    //     '</a>' +
-                    //     '</div>' +
-                    //     '</div>'
-                    // );
                 });
                 //图书详情页
                 flow.load({
@@ -197,13 +188,16 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             ,success:function (res) {
                 $("#recommend").empty();
                 $.each(res.data, function (i, item) {
+                    if (item.img == null) {
+                        item.img = "img/商品.jpg";
+                    }
                     $("#recommend").last().append(
                         '<div class="goods layui-col-sm2 animated zoomIn" style="height: 30em;" name="recommendId-'+item.bookMessageId+'">' +
                         '<div class="grid-demo grid-demo-bg1">' +
                         '<div class="layui-row grid-demo" style="height: 28em; background-color: #a9c6de;overflow: hidden; text-overflow: ellipsis;">' +
                         '<div class="layui-col-md12">' +
                         '<div class="grid-demo grid-demo-bg1">' +
-                        '<img style="width: 100%;" src="img/商品.jpg">' +
+                        '<img style="width: 100%;" src="'+item.img+'">' +
                         '</div>' +
                         '</div>' +
                         '<div class="layui-col-md12">' +
@@ -228,13 +222,16 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             , success: function (res) {
                 if (res.code == 0) {
                     $.each(res.data, function (i, item) {
+                        if (item.img == null) {
+                            item.img = "img/商品.jpg";
+                        }
                         $("#bookBorrow").last().append(
                             '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">预约日期:</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '<img style="width: 100%" src="'+item.img+'">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
                             '<p>书名:' + item.name + '</p>' +
@@ -279,13 +276,16 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         , success: function (res) {
                             if (res.code == 0) {
                                 $.each(res.data, function (i, item) {
+                                    if (item.img == null) {
+                                        item.img = "img/商品.jpg";
+                                    }
                                     $("#bookBorrow").last().append(
                                         '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
                                         '<div style="flex-grow: 1;width: 5em;">' +
                                         '<span style="font-size: 1em;">应还日期:'+item.needReturnTime+'</span>' +
                                         '</div>' +
                                         '<div style="flex-grow: 1.2;width: 5em;">' +
-                                        '<img style="width: 100%" src="img/商品.jpg">' +
+                                        '<img style="width: 100%" src="'+item.img+'">' +
                                         '</div>' +
                                         '<div style="flex-grow: 3;width: 15em;">' +
                                         '<p>书名:' + item.bookName + '</p>' +
@@ -347,20 +347,23 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 $("#bookul").empty();
                 if (res.code === 0) {
                     $.each(res.data, function (i, item) {
+                        if (item.img == null) {
+                            item.img = "img/商品.jpg";
+                        }
                         $("#bookul").last().append(
-                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.collectionId + '" name="collectionPane'+item.bookMessageId+'">' +
+                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.collectionId + '" name="collectionPane-'+item.bookMessageId+'">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">序号:' + i + '</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '<img style="width: 100%" src="'+item.img+'">' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 15em;">' +
                             '<p>书名:' + item.bookMessageName + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
-                            '<p><span>' + "num" + '</span></p>' +
+                            '<p><span>库存数量:' + item.bookNum + '</span></p>' +
                             '</div>' +
                             '<div style="flex-grow: 3;width: 10em;">' +
                             '<button class="layui-btn layui-bg-red" id="collection-' + item.collectionId + '">取消收藏</button>' +
@@ -405,12 +408,15 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                     historyCount = res.count;
                     historyPage = historyCount / historyLimit;
                     $.each(res.data, function (i, item) {
+                        if (item.img == null) {
+                            item.img = "img/商品.jpg";
+                        }
                         historyAllData.push('<li style="display: flex;" class="goods" name="history-' + item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;width: 5em;">' +
                             '<span style="font-size: 1em;">浏览日期</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="img/商品.jpg">' +
+                            '<img style="width: 100%" src="'+item.img+'">' +
                             '</div>' +
                             '<div style="flex-grow: 2.5;width: 15em;">' +
                             '<p>书名:' + item.name + '</p>' +
@@ -422,27 +428,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             '<p>简介:' + item.intorduciton + '</p>' +
                             '</div>' +
                             '</li>');
-                        // $("#history").last().append(
-                        //     '<li style="display: flex;" class="goods" name="history-'+item.bookMessageId+'">'+
-                        //     '<div style="flex-grow: 1;width: 5em;">'+
-                        //     '<span style="font-size: 1em;">浏览日期</span>'+
-                        //     '</div>'+
-                        //     '<div style="flex-grow: 1.2;width: 5em;">'+
-                        //     '<img style="width: 100%" src="img/商品.jpg">'+
-                        //     '</div>'+
-                        //     '<div style="flex-grow: 2.5;width: 15em;">'+
-                        //     '<p>书名:' + item.name + '</p>' +
-                        //     '<p>作者:' + item.author + '</p>' +
-                        //     '<p>类别:' + item.kindName + '</p>' +
-                        //     '<p>出版社:' + item.publisher + '</p>' +
-                        //     '</div>'+
-                        //     '<div style="flex-grow: 3.5;width: 20em;height: 6em;">'+
-                        //     '<p>简介:' + item.intorduciton+ '</p>'+
-                        //     '</div>'+
-                        //     '</li>'
-                        // );
                     });
-                    // showGoods();
                 }
                 flow.load({
                     elem: '#history' //流加载容器

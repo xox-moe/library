@@ -62,6 +62,19 @@ layui.use(['layer','element','table','form','laydate'], function(){
             form.render()
         }
     });
+    $.ajax({
+        url: basePath + 'churukuguanli/listBookHistory'
+        , type: 'get'
+        ,data:{
+            bookId: parent.dataForChild.bookId
+        }
+        , success: function (res) {
+            if (parent.actionType == 'detail' || parent.actionType == 'edit' || parent.actionType == 'borrow') {
+                $("#reviewLog").val(res.data);
+                form.render();
+            }
+        }
+    });
     console.log(parent.actionType);
     if(parent.actionType=='detail'){
         $("form input").attr("readonly","readonly");

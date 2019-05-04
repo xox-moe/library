@@ -82,7 +82,7 @@ public class BookController extends BaseController {
                                       @RequestParam(name = "publisher", required = false, defaultValue = "") String publisher,
                                       @RequestParam(name = "bookStatusId", required = false, defaultValue = "") String bookStatusId) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable,bookId,bookMessageName,author,qualityId,publisher,bookStatusId);
+        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable, bookId, bookMessageName, author, qualityId, publisher, bookStatusId);
         List<JSONObject> bookList = bookPage.getContent();
         for (JSONObject object : bookList) {
             Integer qualId = (Integer) object.get("qualityId");
@@ -190,23 +190,24 @@ public class BookController extends BaseController {
         List<JSONObject> borrowInfos = bookRepository.listBookHistory(bookId);
 
 
-        List<String> result = new ArrayList<>();
+//        List<String> result = new ArrayList<>();
 
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (JSONObject borrowInfo : borrowInfos) {
-            StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("于").append(borrowInfo.get("outTime")).append("被 id:").append(borrowInfo.get("userId"))
                     .append("姓名:").append(borrowInfo.get("realName")).append("借出");
-            if ( (boolean) borrowInfo.get("ifReturn")) {
+            if ((boolean) borrowInfo.get("ifReturn")) {
                 stringBuilder.append("于").append(borrowInfo.get("backTime")).append("归还");
             } else {
                 stringBuilder.append("未归还");
             }
-            result.add(stringBuilder.toString());
+//            result.add(stringBuilder.toString());
 
+            stringBuilder.append("\n");
         }
 
-        return getSuccess("OK", result, result.size());
+        return getSuccess("OK", stringBuilder.toString(), 1);
 
     }
 

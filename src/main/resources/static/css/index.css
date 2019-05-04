@@ -100,7 +100,11 @@
 	background-color: rgb(202, 197, 197);
 	margin: 25px;
 }
+.goods img {
+	width: 245px;
+	height: 245px;
 
+}
 .layui-card {
 	min-height: 765px;
 	-webkit-animation: animatename 0.5s;

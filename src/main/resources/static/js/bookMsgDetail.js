@@ -37,7 +37,11 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
     }
     var uploadInst = upload.render({
         elem: '#test1'
-        ,url: '/upload/'
+        ,url: basePath+'tushuxinxiguanli/setBookMsgImg'
+        ,data:{
+            bookMessageId: parent.dataForChild.bookMessageId
+        }
+
         ,before: function(obj){
             //预读本地文件示例，不支持ie8
             obj.preview(function(index, file, result){

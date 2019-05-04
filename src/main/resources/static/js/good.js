@@ -25,6 +25,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
                 $("#author").text(res.data.author);
                 $("#publisher").text(res.data.publisher);
                 $("#totalNum").text(res.data.couldOutNum-res.data.orderNum);
+                $("#goodsImg").attr("src", res.data.img);
                 childData = res.data;
                 if (childData.ifOrder == true) {
                     $("#deleteBorrow").removeClass("layui-hide");
@@ -54,6 +55,7 @@ layui.use(['layer','element','table','form','code','layedit'], function() {
             }
         })
     });
+
     $("#deleteBorrow").on('click',function () {
         $.ajax({
             url:basePath+'order/cancelOrder'
