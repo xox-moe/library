@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.AdviceRepository;
 import moe.xox.library.dao.entity.Advice;
+import moe.xox.library.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.print.DocFlavor;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -48,6 +50,9 @@ public class AdviceController extends BaseController {
     @RequestMapping(path = "addAdvice",method = RequestMethod.POST)
     @ResponseBody
     public  ReturnBean addAdvice(Advice advice){
+        Long userId = ShiroUtils.getUserId();
+        advice.setUserId(userId);
+        advice.setCreateTime(LocalDateTime.now());
         adviceRepository.save(advice);
         return getSuccess();
     }
