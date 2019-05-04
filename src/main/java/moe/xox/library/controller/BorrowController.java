@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.BorrowInfoRepository;
 import moe.xox.library.dao.entity.BorrowInfo;
+import moe.xox.library.project.FILE_PATH;
 import moe.xox.library.service.BorrowService;
+import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
@@ -33,15 +36,14 @@ public class BorrowController extends BaseController {
     BorrowInfoRepository borrowInfoRepository;
 
     /**
-     *
-     * @param  email 用户的邮箱
+     * @param email  用户的邮箱
      * @param bookId 借出书的类别ID
-     * @param code 预约代码
+     * @param code   预约代码
      * @return
      */
     @RequestMapping("borrowBook")
-    public ReturnBean borrowBook(String email, Long bookId,String code) {
-        int flag = borrowService.borrowBook(email, bookId,code);
+    public ReturnBean borrowBook(@RequestParam("email") String email, @RequestParam("bookId") Long bookId, @RequestParam("code") String code) {
+        int flag = borrowService.borrowBook(email, bookId, code);
         switch (flag) {
             case -1:
                 return getFailure("预约与取出的书的类别不符");
@@ -90,15 +92,20 @@ public class BorrowController extends BaseController {
         Page<JSONObject> myBorrow = borrowInfoRepository.findBorrowInfoByUserId(ShiroUtils.getUserId(), pageable);
 
         for (JSONObject object : myBorrow.getContent()) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
             boolean ifReturn = (boolean) object.get("ifReturn");
-            if (!ifReturn){
+            if (!ifReturn) {
                 Timestamp timestamp = (Timestamp) object.get("outTime");
                 logger.info(String.valueOf(timestamp));
                 Instant instant = Instant.ofEpochMilli(timestamp.getTime());
                 ZoneId zone = ZoneId.systemDefault();
-                LocalDateTime outTime =  LocalDateTime.ofInstant(instant, zone);
+                LocalDateTime outTime = LocalDateTime.ofInstant(instant, zone);
                 LocalDateTime needReturnTime = outTime.plusMonths(6);
-                if( (boolean) object.get("ifXu"))
+                if ((boolean) object.get("ifXu"))
                     needReturnTime = needReturnTime.plusMonths(3);
 //                LocalDateTime needReturnTime = outTime.plusMonths(6);
                 object.put("needReturnTime", needReturnTime);
@@ -112,14 +119,14 @@ public class BorrowController extends BaseController {
     }
 
     @RequestMapping("xuBorrow")
-    public ReturnBean xuBorrow(long borrowId){
+    public ReturnBean xuBorrow(long borrowId) {
         Long userId = ShiroUtils.getUserId();
         Optional<BorrowInfo> borrowInfo = borrowInfoRepository.findById(borrowId);
-        if(borrowInfo.isPresent()){
-            if(!borrowInfo.get().getUserId().equals(userId)){
+        if (borrowInfo.isPresent()) {
+            if (!borrowInfo.get().getUserId().equals(userId)) {
                 return getFailure("请对自己的借书记录进行续期");
             }
-            if(borrowInfo.get().getIfXu())
+            if (borrowInfo.get().getIfXu())
                 return getFailure("您已经续过了，请不要再续了");
             borrowInfo.get().setIfXu(true);
             borrowInfoRepository.save(borrowInfo.get());
@@ -127,8 +134,6 @@ public class BorrowController extends BaseController {
         }
         return getFailure("查无此借书记录");
     }
-
-
 
 
 }

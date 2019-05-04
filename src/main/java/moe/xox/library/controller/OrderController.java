@@ -5,7 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.OrderRepository;
 import moe.xox.library.dao.entity.Order;
+import moe.xox.library.project.FILE_PATH;
+import moe.xox.library.utils.ImageUtil;
 import moe.xox.library.utils.ShiroUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +26,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("order")
 public class OrderController extends BaseController {
+    Logger logger = LoggerFactory.getLogger(OrderController.class);
 
 
     @Autowired
@@ -62,6 +67,13 @@ public class OrderController extends BaseController {
     @RequestMapping("listMyOrder")
     public ReturnBean listMyOrder() {
         List<JSONObject> list = orderRepository.listOrderByUserId(ShiroUtils.getUserId());
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 

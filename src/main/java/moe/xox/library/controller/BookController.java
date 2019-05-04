@@ -218,6 +218,8 @@ public class BookController extends BaseController {
     @RequestMapping("getBookInfoById")
     public ReturnBean getBookInfoById(Long bookId){
         Book book = bookRepository.findByBookId(bookId);
+        if(book == null)
+            return getFailure("数据库查无此书");
         BookMessage bookMessage = bookMsgRepository.findBookMessageByBookMessageId(book.getBookMessageId());
         JSONObject object = new JSONObject();
         object.put("name", bookMessage.getName());
@@ -227,7 +229,7 @@ public class BookController extends BaseController {
         object.put("quality", book.getQuality());
         object.put("status", book.getBookStatusId());
         object.put("statusName", BookStatusEnum.getNameById(book.getBookStatusId().intValue()));
-        return getFailure("OK", object);
+        return getSuccess("OK", object,1);
 
     }
 

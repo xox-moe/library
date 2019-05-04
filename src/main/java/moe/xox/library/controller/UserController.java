@@ -54,9 +54,18 @@ public class UserController extends BaseController {
      * @return json
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ReturnBean listAllUser(Integer page, Integer limit) {
+    public ReturnBean listAllUser(Integer page, Integer limit,
+                                  @RequestParam(value = "userId", required = false, defaultValue = "") String userId,
+                                  @RequestParam(value = "realName", required = false, defaultValue = "") String realName,
+                                  @RequestParam(value = "nickName", required = false, defaultValue = "") String nickName,
+                                  @RequestParam(value = "email", required = false, defaultValue = "") String email,
+                                  @RequestParam(value = "grade", required = false, defaultValue = "") String grade,
+                                  @RequestParam(value = "department", required = false, defaultValue = "") String department,
+                                  @RequestParam(value = "major", required = false, defaultValue = "") String major,
+                                  @RequestParam(value = "roleId", required = false, defaultValue = "") String roleId) {
+
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> userPage = userRepository.listAllUser(pageable);
+        Page<JSONObject> userPage = userRepository.listAllUser(userId, realName, nickName, email, grade, department, major, roleId,pageable);
         List<JSONObject> userList = userPage.getContent();
         for (JSONObject object : userList) {
             String birrthday = object.get("birthday") == null ? "空" : (object.get("birthday").toString().substring(0, 10));
@@ -217,6 +226,13 @@ public class UserController extends BaseController {
 //        List<JSONObject> list = userRepository.listUserCollection(user.getUserId());
 //        System.out.println(ShiroUtils.getUserId());
         List<JSONObject> list = userRepository.listUserCollection(ShiroUtils.getUserId());
+        for (JSONObject object : list) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
@@ -227,7 +243,17 @@ public class UserController extends BaseController {
     @RequestMapping("listUserHistory")
     public ReturnBean listUserHistory() {
 //        Pageable pageable = PageRequest.of(page - 1, limit);
-        List<JSONObject> list = userRoleRepository.listUserHistory();
+        Long userId = ShiroUtils.getUserId();
+        List<JSONObject> list = userRoleRepository.listUserHistory(userId);
+        for (JSONObject object : list) {
+            try {
+                if (object.containsKey("imgName") && !object.get("imgName").equals(""))
+                    logger.info("展示的的图片名为:" + (String) object.get("imgName"));
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("OK", list, list.size());
     }
 
@@ -262,10 +288,9 @@ public class UserController extends BaseController {
     }
 
 
-
     @RequestMapping(path = "updateUserInfoBySelf", method = RequestMethod.POST)
     @Transactional
-    public ReturnBean updateUserInfoBySelf(String email, String nickName, String realName,String birthday,
+    public ReturnBean updateUserInfoBySelf(String email, String nickName, String realName, String birthday,
                                            Long grade, String department, String major, Long sex) {
         birthday += " 00:00:00";
         Long userId = ShiroUtils.getUserId();
@@ -276,8 +301,6 @@ public class UserController extends BaseController {
         userRepository.save(user);
         return getSuccess("success");
     }
-
-
 
 
 }

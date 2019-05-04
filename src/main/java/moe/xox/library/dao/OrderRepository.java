@@ -25,6 +25,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "       `order`.book_message_id as bookMessageId,\n" +
             "       user_id as userId,\n" +
             "       order_time as orderTime,\n" +
+            "       book_message.img_name as imgName,\n" +
             "       code as code,\n" +
             "       if_take_away ifTakeAway,\n" +
             "       name as name,\n" +

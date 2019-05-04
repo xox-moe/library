@@ -11,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.print.DocFlavor;
 import java.time.LocalDateTime;
@@ -31,13 +28,17 @@ public class AdviceController extends BaseController {
      * 分页!
      * 返回Advice表中信息
      * method = RequestMethod.GET
+     *
      * @return json
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ReturnBean listAllAdvice(Integer page,Integer limit){
+    public ReturnBean listAllAdvice(Integer page, Integer limit,
+                                    @RequestParam(value = "adviceId", required = false, defaultValue = "") String adviceId,
+                                    @RequestParam(value = "userId", required = false, defaultValue = "") String userId,
+                                    @RequestParam(value = "realName", required = false, defaultValue = "") String realName) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> advicePage = adviceRepository.findAllAdvice(pageable);
+        Page<JSONObject> advicePage = adviceRepository.findAllAdvice(adviceId,userId,realName,pageable);
         List<JSONObject> advice = advicePage.getContent();
         return getSuccess("success", advice, advicePage.getTotalElements());
     }
@@ -45,11 +46,12 @@ public class AdviceController extends BaseController {
     /**
      * 向Advice表中新增一条信息
      * 反馈一条消息
+     *
      * @return msg
      */
-    @RequestMapping(path = "addAdvice",method = RequestMethod.POST)
+    @RequestMapping(path = "addAdvice", method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean addAdvice(Advice advice){
+    public ReturnBean addAdvice(Advice advice) {
         Long userId = ShiroUtils.getUserId();
         advice.setUserId(userId);
         advice.setCreateTime(LocalDateTime.now());
@@ -59,13 +61,14 @@ public class AdviceController extends BaseController {
 
     /**
      * 从Advice表中删除几条信息
+     *
      * @return
      */
-    @RequestMapping(path = "deleteAdvice",method = RequestMethod.POST)
+    @RequestMapping(path = "deleteAdvice", method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean deleteAdvice(@RequestBody JSONObject object){
+    public ReturnBean deleteAdvice(@RequestBody JSONObject object) {
 
-        if(object == null || !object.containsKey("list"))
+        if (object == null || !object.containsKey("list"))
             return getFailure("请选择正确的信息");
         List<Integer> list = (List<Integer>) object.get("list");
         for (Integer integer : list) {
@@ -90,12 +93,13 @@ public class AdviceController extends BaseController {
 
     /**
      * 出
+     *
      * @param
      * @return
      */
-    @RequestMapping(path = "handleAdvice",method = RequestMethod.POST)
+    @RequestMapping(path = "handleAdvice", method = RequestMethod.POST)
     @ResponseBody
-    public  ReturnBean handleAdvice(Long adviceId){
+    public ReturnBean handleAdvice(Long adviceId) {
         Advice advice = adviceRepository.findAdviceByAdviceId(adviceId);
 //        advice.setAdviceId();
         adviceRepository.save(advice);
