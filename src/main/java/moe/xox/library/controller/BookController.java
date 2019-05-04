@@ -38,6 +38,9 @@ public class BookController extends BaseController {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    BookMsgRepository bookMsgRepository;
+
     /**
      *
      */
@@ -208,6 +211,23 @@ public class BookController extends BaseController {
         }
 
         return getSuccess("OK", stringBuilder.toString(), 1);
+
+    }
+
+
+    @RequestMapping("getBookInfoById")
+    public ReturnBean getBookInfoById(Long bookId){
+        Book book = bookRepository.findByBookId(bookId);
+        BookMessage bookMessage = bookMsgRepository.findBookMessageByBookMessageId(book.getBookMessageId());
+        JSONObject object = new JSONObject();
+        object.put("name", bookMessage.getName());
+        object.put("author", bookMessage.getAuthor());
+        object.put("bookMessageId", bookMessage.getBookMessageId());
+        object.put("publisher", bookMessage.getPublisher());
+        object.put("quality", book.getQuality());
+        object.put("status", book.getBookStatusId());
+        object.put("statusName", BookStatusEnum.getNameById(book.getBookStatusId().intValue()));
+        return getFailure("OK", object);
 
     }
 
