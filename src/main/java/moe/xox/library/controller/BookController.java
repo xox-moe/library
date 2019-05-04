@@ -178,6 +178,7 @@ public class BookController extends BaseController {
     @ResponseBody
     public ReturnBean deleteBook(Long bookId, Long bookStatusId, Long qualityId) {
 //        book.setStatus(true);
+        logger.info("bookId:  " + bookId + "   bookStatusId:  " + bookStatusId + "  qualityId:  " + qualityId);
         Book book = bookRepository.findByBookId(bookId);
         book.setBookStatusId(bookStatusId);
         book.setQuality(qualityId);
