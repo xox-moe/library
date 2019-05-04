@@ -101,7 +101,12 @@
 	margin: 25px;
 }
 
-#nav-content-1 #nav-content-2.goods img {
+#nav-content-1 .goods img {
+	width: 245px;
+	height: 245px;
+
+}
+#nav-content-2 .goods img {
 	width: 245px;
 	height: 245px;
 

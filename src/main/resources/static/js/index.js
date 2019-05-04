@@ -1,6 +1,5 @@
 //JavaScript代码区域
 var dataForChild;
-
 layui.use(['layer','element','table','form','code','layedit','carousel','laydate','upload','flow'], function() {
     var $ = layui.jquery;
     var element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -493,8 +492,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         if (layuiId == 4) {//图书推荐
             recomendGoods();
         }
-        if (layuiId == 5) {//个人信息
-            //普通图片上传
+        if (layuiId == 5) {//个人信息//普通图片上传
             var uploadInst = upload.render({
                 elem: '#uploadMyImg'
                 ,url: basePath+'yonghuguanli/changeImg'
@@ -586,7 +584,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         if (layuiId == 8) {//浏览历史
             history();
         }
-        if(layuiId==16){
+        if (layuiId==16) {
             actionType = 'fastBorrow';
             layer.open({
                 type: 2,
@@ -615,8 +613,6 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             })
         }
     });
-
-
     //修改个人信息
     element.on('button(setmyinfo)', function(elem){
 
