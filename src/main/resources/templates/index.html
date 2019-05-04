@@ -250,7 +250,7 @@
                             <a href="javascript:;">我的收藏</a>
                         </dd>
                         <dd id="nav-8">
-                            <a href="javascript:;">浏览历史</a>
+                            <a href="javascript: ;">浏览历史</a>
                         </dd>
                     </dl>
                 </li>
@@ -680,15 +680,18 @@
                         <div class="layui-col-md12">
                             <div class="layui-card">
                                 <div class="layui-card-header">意见反馈</div>
-                                <div class="layui-card-body" pad15="">
+                                <div class="layui-card-body" >
                                     <div style="width: 800px;">
-                                        <form class="layui-form">
-                                            <div class="layui-form-item">
-														<textarea name="demo" id="demo" class="layui-hide">
-                                        </textarea>
+                                        <form action="" class="layui-form layui-form-pane">
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">意见反馈</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="advice" id="adviceArear" class="layui-textarea" rows="10" style="resize:none;" ></textarea>
+                                                </div>
                                             </div>
-                                            <button class="layui-btn">提交</button>
-                                            <a class="layui-btn" id="getChoose">获取选中内容</a>
+                                            <div class="layui-form-item forLastButton" >
+                                                <button id="submitAdvice" type="button" class="layui-btn">提交</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

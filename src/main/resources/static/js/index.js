@@ -16,15 +16,15 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     }); //引用code方法
     //意见反馈框
     var layedit = layui.layedit;
-    var index = layedit.build('demo', {
-        //hideTool: ['image']
-        uploadImage: {
-            // url: 'json/upload/demoLayEdit.json',
-            // type: 'get'
-        }
-        //,tool: []
-        //,height: 100
-    });
+    // var index = layedit.build('adviceArear', {
+    //     //hideTool: ['image']
+    //     uploadImage: {
+    //         // url: 'json/upload/demoLayEdit.json',
+    //         // type: 'get'
+    //     }
+    //     //,tool: []
+    //     //,height: 100
+    // });
 
     //填写select
     $.ajax({
@@ -578,6 +578,24 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                 content:basePath+'bookDetail'
             });
+        }
+        if (layuiId == 9) {
+            $("#submitAdvice").click(function (data) {
+                $.ajax({
+                    url: basePath + 'fankuiguanli/addAdvice'
+                    , type: 'post'
+                    ,data:{
+                        message: $("#adviceArear").val()
+                    }
+                    ,success:function (res) {
+                        if (res.code == 0) {
+                            layer.msg("提交成功")
+                        }else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                })
+            })
         }
     });
 

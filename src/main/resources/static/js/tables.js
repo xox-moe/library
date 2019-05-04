@@ -15,18 +15,18 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
         }); //引用code方法
         //意见反馈框
         var layedit = layui.layedit;
-        var index = layedit.build('demo', {
-            //hideTool: ['image']
-            uploadImage: {
-                // url: 'json/upload/demoLayEdit.json',
-                // type: 'get'
-            }
-            //,tool: []
-            //,height: 100
-        });
-        getChoose.onclick = function () {
-            alert(layedit.getSelection(index));
-        };
+        // var index = layedit.build('demo', {
+        //     //hideTool: ['image']
+        //     uploadImage: {
+        //         // url: 'json/upload/demoLayEdit.json',
+        //         // type: 'get'
+        //     }
+        //     //,tool: []
+        //     //,height: 100
+        // });
+        // getChoose.onclick = function () {
+        //     alert(layedit.getSelection(index));
+        // };
         var noticeTime = {
             beginTime: ""
             , endTime: ""

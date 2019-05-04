@@ -17,6 +17,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookName"), res.data, "bookMessageId", "bookMassageName");
             if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+                if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
@@ -43,6 +44,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
             // console.log(res.data);
             MOD.Form.fillSelect($("#bookStatusId"), res.data, "bookStatusId", "bookStatusName");
             if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+                if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
@@ -56,12 +58,14 @@ layui.use(['layer','element','table','form','laydate'], function(){
             // console.log(res.data);
             MOD.Form.fillSelect($("#qualityId"), res.data, "qualityId", "qualityName");
             if(parent.actionType=='detail'||parent.actionType=='edit'||parent.actionType == 'borrow'){
+                if (parent.dataForChild != null)
                 MOD.Form.fillForm($('#bookDetail'),parent.dataForChild);
                 form.render();
             }
             form.render()
         }
     });
+    if (parent.dataForChild != null)
     $.ajax({
         url: basePath + 'churukuguanli/listBookHistory'
         , type: 'get'
@@ -106,11 +110,28 @@ layui.use(['layer','element','table','form','laydate'], function(){
         $("input[name='bookId']").prop("readonly",false)
         $("input[name='bookId']").blur(function (data) {
             $.ajax({
-                url:basePath+''
+                url:basePath+'churukuguanli/getBookInfoById'
                 ,type:'get'
+                ,data:{
+                    bookId: $("input[name='bookId']").val()
+                }
                 ,success:function (res) {
                     if (res.code == 0) {
+                        $.ajax({
+                            url: basePath + 'churukuguanli/listBookHistory'
+                            , type: 'get'
+                            ,data:{
+                                bookId: $("input[name='bookId']").val()
+                            }
+                            , success: function (res) {
+                                $("#reviewLog").val(res.data);
+                                form.render();
+                            }
+                        });
                         MOD.Form.fillForm($('#bookDetail'),res.data);
+                        form.render();
+                    }else {
+                        layer.alert(res.msg);
                     }
                 }
             })
