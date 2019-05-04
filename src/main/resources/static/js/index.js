@@ -244,7 +244,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         $("#bookBorrow").last().append(
                             '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
                             '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">预约日期:</span>' +
+                            '<span style="font-size: 1em;">预约日期:'+item.orderTime+'</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1.2;width: 5em;">' +
                             '<img style="width: 100%" src="'+item.img+'" name="BorrowId-' + item.bookMessageId +'">' +

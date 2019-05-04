@@ -104,11 +104,18 @@
 #nav-content-1 .goods img {
 	width: 245px;
 	height: 245px;
-
 }
 #nav-content-2 .goods img {
 	width: 245px;
 	height: 245px;
+}
+#nav-content-4 .goods img {
+    width: 186px;
+    height: 175px;
+}
+#nav-content-6 .goods img {
+    width: 200px;
+    height: 185px;
 
 }
 .layui-card {
