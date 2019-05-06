@@ -94,10 +94,10 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "  and bookMsg.kind_id like concat('%', :kindId, '%')\n" +
             "  and publisher like concat('%', :publisher, '%') ",
             countQuery = "select count(*) from book_message where book_message.status = true " +
-                    "  and bookMsg.book_message_id like concat('%', :id, '%')\n" +
+                    "  and book_message.book_message_id like concat('%', :id, '%')\n" +
                     "  and `name` like concat('%', :bookName, '%')\n" +
                     "  and `author` like  concat('%', :author, '%')  " +
-                    "  and bookMsg.kind_id like concat('%', :kindId, '%')\n" +
+                    "  and book_message.kind_id like concat('%', :kindId, '%')\n" +
                     "  and publisher like concat('%', :publisher, '%') ")
     Page<JSONObject> listBookMsgManageInfo(Pageable pageable,
                                            @Param("id") String id,
