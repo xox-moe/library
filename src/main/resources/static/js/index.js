@@ -62,15 +62,19 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         }
     });
     $.ajax({
-        url:basePath+'yonghuguanli/getCurrentUserInfo'
-        ,type:"get"
-        ,success:function (res) {
+        url: basePath + 'yonghuguanli/getCurrentUserInfo'
+        , type: "get"
+        , success: function (res) {
             $("#headImg").attr("src", res.data.img);
             $("#username").last().append(res.data.nickName)
-
-
+            if (res.roleId == 2) {//普通用户
+                $("#otherSystem").addClass("layui-hide");
+            }else if (res.roleId == 3) {//游客
+                $("#otherSystem").addClass("layui-hide");
+                $("#currentUserSystem").attr("disabled","disabled");
+            }
         }
-    })
+    });
     //打开详情页
     function showGoods(){
         console.log("绑定详情页事件");

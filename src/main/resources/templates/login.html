@@ -49,10 +49,10 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo">Login</button>
+                    <button class="layui-btn" type="submit" id="login" lay-submit lay-filter="formDemo">登陆</button>
+                    <button class="layui-btn layui-bg-black" type="button" id="jump">跳过</button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
@@ -60,6 +60,7 @@
 <script src="layui/layui.js"></script>
 <script src="js/good.js"></script>
 <script src="layer/layer.js"></script>
+<script src="js/jquery.js"></script>
 </body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
@@ -67,16 +68,33 @@
     /*]]>*/
 </script>
 <script>
-    $.ajax({
-        url:basePath+'login'
-        ,type:'post'
-        ,data:{
-            userName: $("input[name='userName']").val()
-            ,password:$("input[name='password']").val()
-        }
-        ,success:function (res) {
-            console.log("ok");
-        }
-    })
+    $("#login").click(function () {
+        $.ajax({
+            url: basePath + 'login'
+            , type: 'post'
+            , data: {
+                userName: $("input[name='userName']").val()
+                , password: $("input[name='password']").val()
+            }
+            , success: function (res) {
+                console.log("ok");
+            }
+        });
+    });
+
+   $("#jump").click(function () {
+       console.log("ok")
+       $.ajax({
+           url: basePath + 'login'
+           , type: 'post'
+           , data: {
+                 userName:"Tourist"
+               , password:"Tourist"
+           }
+           , success: function (res) {
+               console.log("游客登陆");
+           }
+       });
+   })
 </script>
 </html>

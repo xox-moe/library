@@ -25,7 +25,7 @@
             <li class="layui-nav-item  nav-myset" id="nav-22">
                 <a href="javascript:;">用户</a>
             </li>
-            <li class="layui-nav-item">
+            <li class="layui-nav-item" id="otherSystem">
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">
                     <dd id="nav-11" class="tablePage" data-type="table1">
@@ -85,7 +85,7 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="currentUserSystem">
                     <a href="javascript:;">个人管理</a>
                     <dl class="layui-nav-child">
                         <dd id="nav-5">
@@ -125,11 +125,6 @@
                                           lay-filter="select1">
                                         <div class="layui-form-item" style="width: 100%;">
                                             <div style="width: 78%;display: inline-block; float: left;">
-                                                <!--<select name="year" id="index_sel" lay-verify="">
-                                                    <option value="1">数学</option>
-                                                    <option value="2">物理</option>
-                                                    <option value="3">英语</option>
-                                                </select>-->
                                                 <input type="text" name="index_search" lay-verify="" class="layui-input">
                                             </div>
                                             <div style="width:20%;display: inline-block;">
@@ -145,19 +140,6 @@
                                     <div class="layui-fluid layadmin-cmdlist-fluid">
                                         <div class="layui-row layui-col-space30" id="showGoods">
                                             <!--商品-->
-                                            <!--<div class=" goods layui-col-xs2 animated fadeIn">-->
-                                                <!--<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">-->
-                                                    <!--<a href="javascript:;">-->
-                                                        <!--<img style="width: 100%;" src="img/商品.jpg">-->
-                                                    <!--</a>-->
-                                                    <!--<a href="javascript:;">-->
-                                                        <!--<div class="cmdlist-text">-->
-                                                            <!--<p class="info">书名</p>-->
-                                                            <!--<p class="info" style="color: grey">作者</p>-->
-                                                        <!--</div>-->
-                                                    <!--</a>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -175,43 +157,10 @@
                             <div class="layui-card">
                                 <div class="layui-card-header">最新图书</div>
                                 <div class="layui-card-body" pad15="">
-                                    <!--<form class="layui-form layui-inline"-->
-                                          <!--style="display:flex;flex-wrap: nowrap; margin: 40px 20% 0 20%; "-->
-                                          <!--lay-filter="select1">-->
-                                        <!--<div class="layui-form-item" style="width: 100%;">-->
-                                            <!--<div style="width: 78%;display: inline-block; float: left;">-->
-                                                <!--<select name="year" id="page2_sel" lay-verify="">-->
-                                                    <!--<option value="1">2018-2019</option>-->
-                                                    <!--<option value="2">2017-2018</option>-->
-                                                    <!--<option value="3">2016-2017</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div style="width:20%;display: inline-block;">-->
-                                                <!--<div class="layui-form-item">-->
-                                                    <!--<button class="layui-btn layui-btn-fluid" data-type="reload"-->
-                                                            <!--id="page2_search">搜索-->
-                                                    <!--</button>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</form>-->
                                     <!--商品展示-->
                                     <div class="layui-fluid layadmin-cmdlist-fluid">
                                         <div class="layui-row layui-col-space30" id="newBook">
                                             <!--商品-->
-                                            <!--<div class="goods layui-col-xs2 animated fadeIn">-->
-                                                <!--<div class="cmdlist-container" style="overflow: hidden; text-overflow: ellipsis;">-->
-                                                    <!--<a href="javascript:;">-->
-                                                        <!--<img style="width: 100%;" src="img/商品.jpg">-->
-                                                    <!--</a>-->
-                                                    <!--<a href="javascript:;">-->
-                                                        <!--<div class="cmdlist-text" >-->
-                                                            <!--<p class="info">书名</p>-->
-                                                            <!--<p class="info" style="color: grey">作者</p>-->
-                                                        <!--</div>-->
-                                                    <!--</a>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
