@@ -69,6 +69,13 @@ public class BookMassageController extends BaseController {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable,id,name,author,kindId,publisher);
         List<JSONObject> bookMessageList = bookMessagePage.getContent();
+        for (JSONObject object : bookMessageList) {
+            try {
+                object.put("img", ImageUtil.imageToString(FILE_PATH.IMG_PATH + "\\" + object.get("imgName")));
+            } catch (Exception ex) {
+                logger.info(ex.getMessage());
+            }
+        }
         return getSuccess("success", bookMessageList, bookMessagePage.getTotalElements());
     }
 

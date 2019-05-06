@@ -213,7 +213,9 @@ public class UserController extends BaseController {
         Long userId = ShiroUtils.getUserId();
         User user = userRepository.findByUserId(userId);
         Set<String> roles = userService.listRoleNamesByEmail(user.getEmail());
+        Set<String> roleIds = userService.listRoleIdNamesByEmail(user.getEmail());
         JSONObject object = (JSONObject) JSON.toJSON(user);
+        object.put("roleId",  StringUtils.join(roleIds, ","));
         object.put("roleName", StringUtils.join(roles, ","));
 //        if (user.getImgName() != null && !user.getImgName().equals(""))
         try {

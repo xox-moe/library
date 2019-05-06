@@ -81,11 +81,12 @@ public class BookController extends BaseController {
                                       @RequestParam(name = "bookId", required = false, defaultValue = "") String bookId,
                                       @RequestParam(name = "bookMessageName", required = false, defaultValue = "") String bookMessageName,
                                       @RequestParam(name = "author", required = false, defaultValue = "") String author,
+                                      @RequestParam(name = "userName", required = false, defaultValue = "") String userName,
                                       @RequestParam(name = "qualityId", required = false, defaultValue = "") String qualityId,
                                       @RequestParam(name = "publisher", required = false, defaultValue = "") String publisher,
                                       @RequestParam(name = "bookStatusId", required = false, defaultValue = "") String bookStatusId) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable, bookId, bookMessageName, author, qualityId, publisher, bookStatusId);
+        Page<JSONObject> bookPage = bookRepository.listAllBookInfo(pageable, bookId, bookMessageName, author, qualityId, publisher, bookStatusId,userName);
         List<JSONObject> bookList = bookPage.getContent();
         for (JSONObject object : bookList) {
             Integer qualId = (Integer) object.get("qualityId");

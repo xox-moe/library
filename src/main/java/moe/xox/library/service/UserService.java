@@ -34,4 +34,8 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
+    public Set<String> listRoleIdNamesByEmail(String email) {
+        return userRepository.listRoleIdNamesByEmail(email);
+
+    }
 }

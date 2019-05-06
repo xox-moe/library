@@ -35,7 +35,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
             "       IFNULL(bookNum.totalNum, 0) as totalNum,\n" +
             "       borrowUser.user_id          as userId,\n" +
-            "       borrowUser.real_name        as userName\n" +
+            "       IFNULL(borrowUser.real_name,'')        as userName\n" +
             "from book\n" +
             "         left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id\n" +
             "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
@@ -62,25 +62,62 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "  and bookMsg.name  like concat('%', :bookMessageName, '%') " +
             "  and author  like concat('%', :author, '%')" +
             "  and publisher  like concat('%', :publisher, '%') and quality  like concat('%', :qualityId, '%')" +
-            "  and book.book_status_id  like concat('%', :bookStatusId, '%')",
+            "  and book.book_status_id  like concat('%', :bookStatusId, '%') " +
+            "  and IFNULL(borrowUser.real_name,'')  like   concat('%', :userName, '%')  ",
             countQuery = "select count(*)  " +
-                    "from book " +
+                    "from ( "+
+                    "select book.book_id                as bookId,\n" +
+                    "       quality                     as qualityId,\n" +
+                    "       bookMsg.book_message_id     as bookMessageId,\n" +
+                    "       name                        as bookMessageName,\n" +
+                    "       author                      as author,\n" +
+                    "       publisher                   as publisher,\n" +
+                    "       introduction                as introduction,\n" +
+                    "       ISBN                        as ISBN,\n" +
+                    "       book_kind.kind_id           as kindId,\n" +
+                    "       kind_name                   as kindName,\n" +
+                    "       book_kind.status            as status,\n" +
+                    "       book_status.book_status_id  as bookStatusId,\n" +
+                    "       book_status_name            as statusName,\n" +
+                    "       IFNULL(freeNum.freeNum, 0)  as bookNum,\n" +
+                    "       IFNULL(bookNum.totalNum, 0) as totalNum,\n" +
+                    "       borrowUser.user_id          as userId,\n" +
+                    "       IFNULL(borrowUser.real_name,'')        as userName\n" +
+                    "from book\n" +
                     "         left join book_message bookMsg on book.book_message_id = bookMsg.book_message_id\n" +
                     "         left join book_kind on book_kind.kind_id = bookMsg.kind_id\n" +
-                    "         left join book_status on book.book_status_id = book_status.book_status_id\n  " +
+                    "         left join book_status on book.book_status_id = book_status.book_status_id\n" +
+                    "         left join (select book_message_id, IFNULL(count(*), 0) as freeNum\n" +
+                    "                    from book\n" +
+                    "                    where book_status_id = 4\n" +
+                    "                      and status = true\n" +
+                    "                    group by book_message_id) freeNum\n" +
+                    "                   on bookMsg.book_message_id = freeNum.book_message_id\n" +
+                    "         left join (select book_message_id, IFNULL(count(*), 0) as totalNum\n" +
+                    "                    from book\n" +
+                    "                    where status = true\n" +
+                    "                      and (book_status_id = 4 or book_status_id = 1)\n" +
+                    "                    group by book_message_id) bookNum\n" +
+                    "                   on bookMsg.book_message_id = bookNum.book_message_id\n" +
+                    "         left join(select real_name, book_id, borrow_info.user_id\n" +
+                    "                   from borrow_info\n" +
+                    "                            left join user on user.user_id = borrow_info.user_id\n" +
+                    "                   where if_return = false) borrowUser on book.book_id = borrowUser.book_id\n" +
                     "where book.status = true\n" +
                     "  and bookMsg.status is true" +
                     "  and book.book_id like concat('%', :bookId, '%') " +
                     "  and bookMsg.name  like concat('%', :bookMessageName, '%') " +
                     "  and author  like concat('%', :author, '%')" +
                     "  and publisher  like concat('%', :publisher, '%') and quality  like concat('%', :qualityId, '%')" +
-                    "  and book.book_status_id  like concat('%', :bookStatusId, '%')")
+                    "  and book.book_status_id  like concat('%', :bookStatusId, '%') " +
+                    "  and IFNULL(borrowUser.real_name,'')  like   concat('%', :userName, '%') ) total  ")
     Page<JSONObject> listAllBookInfo(Pageable pageable, @Param("bookId") String bookId,
                                      @Param("bookMessageName") String bookMessageName,
                                      @Param("author") String author,
                                      @Param("qualityId") String qualityId,
                                      @Param("publisher") String publisher,
-                                     @Param("bookStatusId") String bookStatusId);
+                                     @Param("bookStatusId") String bookStatusId,
+                                     @Param("userName") String userName);
 
     @Query(nativeQuery = true, value = "select\n" +
             "       bookMsg.book_message_id as bookMessageId,\n" +

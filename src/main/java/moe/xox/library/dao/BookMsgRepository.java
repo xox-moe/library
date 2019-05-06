@@ -62,6 +62,7 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "       introduction                 as introduction,\n" +
             "       bookMsg.status               as status,\n" +
             "       bookMsg.creator_id           as creatorId,\n" +
+            "       bookMsg.img_name             as imgName,\n" +
             "       bookMsg.create_time          as createTime,\n" +
             "       ISBN                         as ISBN,\n" +
             "       kind_name                    as kindName,\n" +

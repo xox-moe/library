@@ -86,6 +86,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                                  @Param("department") String department,
                                  @Param("major") String major,
                                  @Param("roleId") String roleId, Pageable pageable);
+    @Query(nativeQuery = true, value = "select distinct user_role.role_id  " +
+            "from user  " +
+            "         left join user_role on user.user_id = user_role.user_id  " +
+            "         left join role on role.role_id = user_role.role_id  " +
+            "where email = :email ")
+    Set<String> listRoleIdNamesByEmail(String email);
 
 //    @Update(value = "update  user_role  set  role_id =  :roleId , status = 1  where user_id = :userId ")
 //    void updateUserRole(Long userId, Long roleId);
