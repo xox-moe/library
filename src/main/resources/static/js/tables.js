@@ -526,6 +526,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                     ,bookMessageName: $("#bookForm [name='bookMessageName']").val()
                     ,author: $("#bookForm [name='author']").val()
                     ,qualityId: $("#bookForm [name='qualityId']").val()
+                    ,userName: $("#bookForm [name='userName']").val()
                     ,publisher: $("#bookForm [name='publisher']").val()
                     ,bookStatusId:$("#bookForm [name='bookStatusId']").val()
                     ,code: $("#bookForm [name='code']").val()
