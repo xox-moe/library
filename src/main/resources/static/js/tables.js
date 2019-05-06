@@ -155,7 +155,7 @@ layui.use(['layer', 'element', 'table', 'form', 'code', 'layedit','laydate'],
                         {title:'年级',field:'grade',align:'center',edit: 'text'},
                         {title:'学院',field:'department',align:'center',edit: 'text'},
                         {title:'专业',field:'major',align:'center',edit: 'text'},
-                        {title:'操作',align:'center',toolbar: '#barDemo4'}
+                        {title:'操作',align:'center',toolbar: '#barDemo4',width:200}
                     ]]
                     ,data:[{}]//假数据放这
                 });
