@@ -20,6 +20,7 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
             if(parent.actionType=='detail'||parent.actionType=='edit'){
                 // $("#kindId").val(parent.dataForChild.kindId);
                 MOD.Form.fillForm($('#bookMsgDetail'),parent.dataForChild);
+                $('#demo1').attr('src', parent.dataForChild.img);
                 form.render();
             }
         }
