@@ -93,6 +93,7 @@ layui.use(['layer','element','table','form','laydate'], function(){
         // console.log(parent.dataForChild);
         $("#bookName").attr("readonly", "readonly").attr("disabled", "disabled");
         $("input[name='publisher']").attr("readonly", "readonly");
+        $("input[name='bookId']").attr("readonly", "readonly");
         $("input[name='author']").attr("readonly", "readonly");
     }else if (parent.actionType == 'borrow') {
         $("form input").attr("readonly","readonly");
