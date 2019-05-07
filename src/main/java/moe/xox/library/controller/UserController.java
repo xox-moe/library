@@ -175,6 +175,18 @@ public class UserController extends BaseController {
         return getSuccess("success");
     }
 
+    @RequestMapping(path = "updateCurrentUser", method = RequestMethod.POST)
+    @Transactional
+    public ReturnBean updateCurrentUser(String email, String nickName, String password, String birthday, String realName, Long grade, String department, String major, Long sex) {
+        User oldUser = userRepository.findByUserId(ShiroUtils.getUserId());
+        oldUser.setEmail(email);
+        oldUser.setRealName(realName);
+        oldUser.setNickName(nickName);
+        oldUser.setSex(sex);
+        userRepository.save(oldUser);
+        return getSuccess("success");
+    }
+
     @RequestMapping(path = "changeImg", method = RequestMethod.POST)
     @Transactional
     public ReturnBean changeImg(@RequestParam MultipartFile file) {

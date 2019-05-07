@@ -315,7 +315,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         '<p>' + "借阅日期:" +item.outTime+ '</p>' +
                                         '</div>' +
                                         '<div style="flex-grow: 2;width: 10em;">' +
-                                        '<p id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</p>' +
+                                        '<div id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</div>' +
                                         '</div>' +
                                         '<div style="flex-grow: 1;width: 5em;">' +
                                         '<button class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
@@ -326,7 +326,8 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         $("#delay-" + item.borrowId).text("不可以贪心哦").addClass("layui-btn-disabled").attr("disabled", "disabled");
                                     }
                                     if (item.ifReturn == false) {
-                                        $("#returnTiem" + item.borrowId).addClass("layui-hide");
+                                        console.log("ifReturn=false");
+                                        $("#returnTime-" + item.borrowId).addClass("layui-hide");
                                     }else{
                                         $("#delay-" + item.borrowId).addClass("layui-btn-disabled").attr("disabled", "disabled");
                                     }
@@ -592,7 +593,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             actionType = 'fastBorrow';
             layer.open({
                 type: 2,
-                title:"借出图书",
+                title:"借出与归还",
                 area: ['400px', '550px'],
                 skin: 'layui-layer-rim layui-layer-molv', //加上边框
                 content:basePath+'bookDetail'
@@ -642,15 +643,12 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
     });
     form.on('submit(saveMyInfo)',function (data) {
         $.ajax({
-            url:basePath+'yonghuguanli/updateUser'
+            url:basePath+'yonghuguanli/updateCurrentUser'
             , type: 'post'
             ,data:data.field
             , success: function (res) {
                 if (res.code === 0) {
-                    layer.alert("操作成功！", function () {
-                        var myWindow = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(myWindow); //再执行关闭
-                    });
+                    layer.alert("操作成功！");
                 }
                 else layer.alert(""+res.msg, {icon: 5});
             },

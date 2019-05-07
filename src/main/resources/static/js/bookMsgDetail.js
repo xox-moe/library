@@ -32,17 +32,19 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("button").addClass("layui-hide");
     }else if(parent.actionType=='add'){
+        $("#test1").addClass("layui-hide");
+        $("#demo1").addClass("layui-hide");
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         console.log(parent.dataForChild);
     }
-    var uploadInst = upload.render({
+    if(parent.actionType!='add')
+    upload.render({
         elem: '#test1'
         ,url: basePath+'tushuxinxiguanli/setBookMsgImg'
         ,data:{
             bookMessageId: parent.dataForChild.bookMessageId
         }
-
         ,before: function(obj){
             //预读本地文件示例，不支持ie8
             obj.preview(function(index, file, result){

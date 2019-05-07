@@ -71,6 +71,11 @@ layui.use(['layer','element','table','form','laydate'], function(){
         ,type: 'date'
         ,max: MOD.Now.nowDate()
     });
+    laydate.render({
+        elem: "#grade"
+        ,type: 'year'
+        , max: MOD.Now.nowDate().split("-")[0]
+    });
 
     //关闭按钮
     $('button[type=close]').click(function(){
