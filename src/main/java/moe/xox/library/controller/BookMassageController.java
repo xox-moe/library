@@ -65,9 +65,10 @@ public class BookMassageController extends BaseController {
                                             @RequestParam(name = "name", defaultValue = "", required = false) String name,
                                             @RequestParam(name = "author", defaultValue = "", required = false) String author,
                                             @RequestParam(name = "kindId", defaultValue = "", required = false) String kindId,
-                                            @RequestParam(name = "publisher", defaultValue = "", required = false) String publisher) {
+                                            @RequestParam(name = "publisher", defaultValue = "", required = false) String publisher,
+                                            @RequestParam(name = "bookNum", defaultValue = "-1", required = false) Integer bookNum) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable,id,name,author,kindId,publisher);
+        Page<JSONObject> bookMessagePage = bookMsgRepository.listBookMsgManageInfo(pageable,id,name,author,kindId,publisher,bookNum);
         List<JSONObject> bookMessageList = bookMessagePage.getContent();
         for (JSONObject object : bookMessageList) {
             try {

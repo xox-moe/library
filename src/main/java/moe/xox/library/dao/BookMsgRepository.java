@@ -93,19 +93,21 @@ public interface BookMsgRepository extends JpaRepository<BookMessage, Long> {
             "  and `name` like concat('%', :bookName, '%')\n" +
             "  and `author` like  concat('%', :author, '%')  " +
             "  and bookMsg.kind_id like concat('%', :kindId, '%')\n" +
-            "  and publisher like concat('%', :publisher, '%') ",
+            "  and publisher like concat('%', :publisher, '%') " +
+            " and if(:bookNum!=0,if(:bookNum=-1,IFNULL(freeNum.freeNum, 0)>=0,IFNULL(freeNum.freeNum, 0)>=1),IFNULL(freeNum.freeNum, 0)=0)  ",
             countQuery = "select count(*) from book_message where book_message.status = true " +
                     "  and book_message.book_message_id like concat('%', :id, '%')\n" +
                     "  and `name` like concat('%', :bookName, '%')\n" +
                     "  and `author` like  concat('%', :author, '%')  " +
                     "  and book_message.kind_id like concat('%', :kindId, '%')\n" +
-                    "  and publisher like concat('%', :publisher, '%') ")
+                    "  and publisher like concat('%', :publisher, '%')")
     Page<JSONObject> listBookMsgManageInfo(Pageable pageable,
                                            @Param("id") String id,
                                            @Param("bookName") String bookName,
                                            @Param("author") String author,
                                            @Param("kindId") String kindId,
-                                           @Param("publisher") String publisher);
+                                           @Param("publisher") String publisher,
+                                           @Param("bookNum") Integer bookNum);
 
     @Query(nativeQuery = true, value = "\n" +
             "select topTen.book_message_id as bookMessageId,\n" +
