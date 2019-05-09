@@ -91,7 +91,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "         left join user_role on user.user_id = user_role.user_id  " +
             "         left join role on role.role_id = user_role.role_id  " +
             "where email = :email ")
-    Set<String> listRoleIdNamesByEmail(String email);
+    Set<String> listRoleIdNamesByEmail(@Param("email")String email);
 
 //    @Update(value = "update  user_role  set  role_id =  :roleId , status = 1  where user_id = :userId ")
 //    void updateUserRole(Long userId, Long roleId);
