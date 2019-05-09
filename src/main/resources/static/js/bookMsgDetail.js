@@ -32,18 +32,24 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
         $("form select").attr("readonly", "readonly").attr("disabled", "disabled");
         $("button").addClass("layui-hide");
     }else if(parent.actionType=='add'){
-        $("#test1").addClass("layui-hide");
-        $("#demo1").addClass("layui-hide");
+        // $("#test1").addClass("layui-hide");
+        // $("#demo1").addClass("layui-hide");
         $("#IDinput").addClass("layui-hide");
     }else if(parent.actionType=='edit'){
         console.log(parent.dataForChild);
     }
-    if(parent.actionType!='add')
+    if(parent.actionType!='add'){
+        var myurl = 'tushuxinxiguanli / setBookMsgImg';
+        var myBID=parent.dataForChild.bookMessageId
+    }else {
+        var myurl = 'setImg';
+        var myBID=""
+    }
     upload.render({
         elem: '#test1'
-        ,url: basePath+'tushuxinxiguanli/setBookMsgImg'
+        ,url: basePath+myurl
         ,data:{
-            bookMessageId: parent.dataForChild.bookMessageId
+            bookMessageId: myBID
         }
         ,before: function(obj){
             //预读本地文件示例，不支持ie8
@@ -57,6 +63,7 @@ layui.use(['layer','element','table','form','laydate','upload'], function(){
                 return layer.msg('上传失败');
             }
             //上传成功
+            $("input[name='imgName']").val(res.data);
         }
         ,error: function(){
             //演示失败状态，并实现重传

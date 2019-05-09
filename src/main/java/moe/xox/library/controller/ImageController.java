@@ -63,7 +63,7 @@ public class ImageController extends BaseController {
     }
 
     @RequestMapping("setImg")
-    public ReturnBean setImg(@RequestParam("img") MultipartFile file) throws IOException {
+    public ReturnBean setImg(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = ImageUtil.saveFile(file, FILE_PATH.IMG_PATH);
         return getSuccess("OK",fileName,1);
     }
