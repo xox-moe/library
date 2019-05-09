@@ -65,6 +65,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         url: basePath + 'yonghuguanli/getCurrentUserInfo'
         , type: "get"
         , success: function (res) {
+            if(res.data.img!=null)
             $("#headImg").attr("src", res.data.img);
             $("#username").last().append(res.data.nickName)
             if (res.roleId == 2) {//普通用户
