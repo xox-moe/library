@@ -38,10 +38,10 @@ public class LoginController extends BaseController{
             subject.login(new UsernamePasswordToken(userName,password));
         }catch (UnknownAccountException ex){
             logger.info("登录失败 无此账号");
-            modelAndView.addObject("userName", "userName");
-            modelAndView.addObject("password", "password");
+//            modelAndView.addObject("userName", "userName");
+//            modelAndView.addObject("password", "password");
             modelAndView.addObject("msg", "账号或密码错误");
-            modelAndView.setViewName("redirect:/toLogin");
+            modelAndView.setViewName("redirect:/login");
 //            return getFailure("登录失败 无此账号");
 //            return "login";
             return modelAndView;

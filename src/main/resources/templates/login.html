@@ -74,9 +74,10 @@
     for (i = 0; j = paraString[i]; i++) {
         paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
     }
-    paraObj.msg= decodeURIComponent(paraObj.msg);
-    console.log(paraObj.msg);
-  $("#msg").html(paraObj.msg);
+    if(paraObj.msg!=undefined&&paraObj.msg!=null){
+        paraObj.msg= decodeURIComponent(paraObj.msg);
+        $("#msg").html(paraObj.msg);
+    }
     $("#login").click(function () {
         $.ajax({
             url: basePath + 'login'
