@@ -40,17 +40,20 @@ public class LoginController extends BaseController{
             logger.info("登录失败 无此账号");
             modelAndView.addObject("userName", "userName");
             modelAndView.addObject("password", "password");
+            modelAndView.addObject("msg", "账号或密码错误");
             modelAndView.setViewName("redirect:/toLogin");
 //            return getFailure("登录失败 无此账号");
 //            return "login";
             return modelAndView;
         } catch (LockedAccountException loex){
             logger.info("登录失败，此账号已被锁定");
+            modelAndView.addObject("msg", "登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
         User user = userService.findUserByEmail(userName);
         if(user == null){
             logger.error(" 没有找到该用户");
+            modelAndView.addObject("msg", "账号或密码错误");
         }
 
 
