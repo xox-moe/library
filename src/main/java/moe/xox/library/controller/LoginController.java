@@ -49,8 +49,10 @@ public class LoginController extends BaseController{
         }
         logger.info("登陆成功");
         User user = userService.findUserByEmail(userName);
-        if(user == null)
+        if(user == null){
             logger.error(" 没有找到该用户");
+        }
+
 
 //        user.get
         subject.getSession().setTimeout(-1000L);

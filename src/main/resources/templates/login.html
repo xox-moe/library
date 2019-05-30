@@ -32,9 +32,9 @@
 <div STYLE="width: 100%;">
     <div class="grid-demo" style="margin: 1em 30% 0 30%;width: 40%;">
         <div style="margin: 1em auto;font-size: 1em;">登录开始新的旅程吧</div>
-        <form class="layui-form" action="" method="post" >
+        <form class="layui-form" action="" method="post"    >
 <!--        <form class="layui-form" action="" method="post" th:action="@{/login}" th:object="${User}">-->
-
+        <h3 id="msg" style="color:red;"></h3>
             <div class="layui-form-item">
                 <div class="layui-input-inline">
                     <input type="text" name="userName" required lay-verify="required" placeholder="账号" autocomplete="off" class="layui-input">
@@ -68,6 +68,15 @@
     /*]]>*/
 </script>
 <script>
+    var url = location.href;
+    var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+    var paraObj = { };
+    for (i = 0; j = paraString[i]; i++) {
+        paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+    }
+    paraObj.msg= decodeURIComponent(paraObj.msg);
+    console.log(paraObj.msg);
+  $("#msg").html(paraObj.msg);
     $("#login").click(function () {
         $.ajax({
             url: basePath + 'login'
