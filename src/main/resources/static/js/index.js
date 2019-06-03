@@ -247,25 +247,26 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         $("#bookBorrow").last().append(
-                            '<div style="display: flex;" class="goods" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">预约日期:'+item.orderTime+'</span>' +
+                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
+                            '<div style="flex-grow: 1;">' +
+                            '<span style="font-size: 1em;line-height:6em;">预约:'+item.orderTime+'</span>' +
+                            '<br />'+
+                            '<p>订单号:'+item.code+'</p>' +
                             '</div>' +
-                            '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'" name="BorrowId-' + item.bookMessageId +'">' +
+                            '<div style="flex-grow: 1.2;">' +
+                            '<img style="width: 12em;" src="'+item.img+'" name="BorrowId-' + item.bookMessageId +'">' +
                             '</div>' +
-                            '<div style="flex-grow: 3;width: 15em;">' +
+                            '<div style="flex-grow: 2;line-height:3em;">' +
                             '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
-                            '<p>' + "一个暂时没有的借阅日期" + '</p>' +
                             '</div>' +
-                            '<div style="flex-grow: 2;width: 10em;">' +
-                            '<p>订单号:'+item.code+'</p>' +
+                            '<div style="flex-grow: 3;">' +
+                            '<p>' + "存放简介" + '</p>' +
                             '</div>' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<button class="layui-btn layui-bg-orange" id="borrow-' + item.bookMessageId + '">取消预约</button>' +
+                            '<div style="flex-grow: 1;line-height: 12em;width:10em;">' +
+                            '<button style="position: relative; left: 4em;" class="layui-btn layui-bg-orange" id="borrow-' + item.bookMessageId + '">取消预约</button>' +
                             '</div>' +
                             '</div>'
                         );
@@ -301,27 +302,30 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         item.img = "img/商品.jpg";
                                     }
                                     $("#bookBorrow").last().append(
-                                        '<li style="display: flex;" class="goods"name="BorrowId-' + item.bookMessageId + '">' +
-                                        '<div style="flex-grow: 1;width: 5em;">' +
-                                        '<span style="font-size: 1em;">应还日期:'+item.needReturnTime+'</span>' +
+                                        '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId + '">' +
+                                        '<div style="flex-grow: 1;">' +
+                                        '<span style="font-size: 1em;line-height: 6em;">待还:'+item.needReturnTime+'</span>' +
+                                        '<br />'+
+                                        '<p>' + "借阅:" +item.outTime+ '</p>' +
+                                        '<br />'+
+                                        '<p id="returnTime-'+item.borrowId+'">归还:'+item.backTime+'</p>' +
                                         '</div>' +
-                                        '<div style="flex-grow: 1.2;width: 5em;">' +
-                                        '<img style="width: 100%" src="'+item.img+'" name="BorrowId-' + item.bookMessageId + '">' +
+                                        '<div style="flex-grow: 1.2;">' +
+                                        '<img style="width: 12em;" src="'+item.img+'" name="BorrowId-' + item.bookMessageId + '">' +
                                         '</div>' +
-                                        '<div style="flex-grow: 3;width: 15em;">' +
+                                        '<div style="flex-grow: 2;line-height: 3em;">' +
                                         '<p>书名:' + item.bookName + '</p>' +
                                         '<p>作者:' + item.author + '</p>' +
                                         '<p>类别:' + item.kindName + '</p>' +
                                         '<p>出版社:' + item.publisher + '</p>' +
-                                        '<p>' + "借阅日期:" +item.outTime+ '</p>' +
                                         '</div>' +
-                                        '<div style="flex-grow: 2;width: 10em;">' +
-                                        '<div id="returnTime-'+item.borrowId+'">归还日期'+item.backTime+'</div>' +
+                                        '<div style="flex-grow: 3;">' +
+                                        '<p>' + "存放简介" + '</p>' +
                                         '</div>' +
-                                        '<div style="flex-grow: 1;width: 5em;">' +
-                                        '<button class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
+                                        '<div style="flex-grow: 1;line-height: 12em;width:10em;">' +
+                                        '<button style="position: relative; left: 4em;" class="layui-btn" id="delay-' + item.borrowId + '">延期</button>' +
                                         '</div>' +
-                                        '</li>'
+                                        '</div>'
                                     );
                                     if (item.ifXu == true) {
                                         $("#delay-" + item.borrowId).text("不可以贪心哦").addClass("layui-btn-disabled").attr("disabled", "disabled");
@@ -373,24 +377,25 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         $("#bookul").last().append(
-                            '<li class="goods" style="display: flex; color: "id="collectionPane-'+ item.collectionId + '" name="collectionPane-'+item.bookMessageId+'">' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">序号:' + i + '</span>' +
+                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "id="collectionPane-'+ item.collectionId + '" name="collectionPane-'+item.bookMessageId+'">' +
+                            '<div style="flex-grow: 1;">' +
+                            '<span style="font-size: 1em;line-height: 6em;">序号:' + (i+1) + '</span>' +
+                            '<br>'+
+                            '<p><span>库存数量:' + item.bookNum + '</span></p>' +
                             '</div>' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'" name="collectionPane-'+item.bookMessageId+'">' +
+                            '<div style="flex-grow: 1;">' +
+                            '<img style="width: 12em;" src="'+item.img+'" name="collectionPane-'+item.bookMessageId+'">' +
                             '</div>' +
-                            '<div style="flex-grow: 3;width: 15em;">' +
+                            '<div style="flex-grow: 2;line-height:3em;">' +
                             '<p>书名:' + item.bookMessageName + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
-                            '<p><span>库存数量:' + item.bookNum + '</span></p>' +
                             '</div>' +
-                            '<div style="flex-grow: 3;width: 10em;">' +
-                            '<button class="layui-btn layui-bg-red" id="collection-' + item.collectionId + '">取消收藏</button>' +
+                            '<div style="flex-grow: 1;line-height: 12em;">' +
+                            '<button style="position: relative; left: 4em;" class="layui-btn layui-bg-red" id="collection-' + item.collectionId + '">取消收藏</button>' +
                             '</div>' +
-                            '</li>'
+                            '</div>'
                         );
                         $("#collection-"+item.collectionId).on('click',function (event){
                             console.log("OK");
@@ -433,23 +438,24 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         if (item.img == null) {
                             item.img = "img/商品.jpg";
                         }
-                        historyAllData.push('<li style="display: flex;" class="goods" name="history-' + item.bookMessageId + '">' +
-                            '<div style="flex-grow: 1;width: 5em;">' +
-                            '<span style="font-size: 1em;">浏览日期</span>' +
+                        historyAllData.push(
+                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "name="history-' + item.bookMessageId + '">' +
+                            '<div style="flex-grow: 1;">' +
+                            '<span style="font-size: 1em;line-height: 6em;">浏览日期</span>' +
                             '</div>' +
-                            '<div style="flex-grow: 1.2;width: 5em;">' +
-                            '<img style="width: 100%" src="'+item.img+'" name="history-' + item.bookMessageId +'">' +
+                            '<div style="flex-grow: 1;">' +
+                            '<img style="width: 12em;" src="'+item.img+'" name="history-' + item.bookMessageId +'">' +
                             '</div>' +
-                            '<div style="flex-grow: 2.5;width: 15em;">' +
+                            '<div style="flex-grow: 2;line-height: 3em;">' +
                             '<p>书名:' + item.name + '</p>' +
                             '<p>作者:' + item.author + '</p>' +
                             '<p>类别:' + item.kindName + '</p>' +
                             '<p>出版社:' + item.publisher + '</p>' +
                             '</div>' +
-                            '<div style="flex-grow: 3.5;width: 20em;height: 6em;">' +
+                            '<div style="flex-grow: 3;width:20em;height: 6em;">' +
                             '<p>简介:' + item.intorduciton + '</p>' +
                             '</div>' +
-                            '</li>');
+                            '</div>');
                     });
                 }
                 flow.load({
