@@ -5,9 +5,7 @@ import moe.xox.library.controller.vo.ReturnBean;
 import moe.xox.library.dao.entity.User;
 import moe.xox.library.service.UserService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +34,7 @@ public class LoginController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(new UsernamePasswordToken(userName,password));
-        }catch (UnknownAccountException ex){
+        }catch (AuthenticationException ex){
             logger.info("登录失败 无此账号");
 //            modelAndView.addObject("userName", "userName");
 //            modelAndView.addObject("password", "password");
@@ -45,9 +43,6 @@ public class LoginController extends BaseController{
 //            return getFailure("登录失败 无此账号");
 //            return "login";
             return modelAndView;
-        } catch (LockedAccountException loex){
-            logger.info("登录失败，此账号已被锁定");
-            modelAndView.addObject("msg", "登录失败，此账号已被锁定");
         }
         logger.info("登陆成功");
         User user = userService.findUserByEmail(userName);
