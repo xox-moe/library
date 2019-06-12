@@ -37,5 +37,4 @@ layui.use(['layer','element','table','form','laydate'], function(){
         var mywindow = parent.layer.getFrameIndex(window.name);
         parent.layer.close(mywindow); //再执行关闭
     });
-
 });

@@ -93,21 +93,24 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
             });
             return false
         })
-
-        // $('.goods ').click(function (data) {
-        //     console.log(data.currentTarget);
-        //     dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
-        //     console.log(dataForChild);
-        //     layer.open({
-        //         type: 2,
-        //         id:"goodsPage",
-        //         title:"图书详情",
-        //         area: ['1000px', '680px'],
-        //         skin: 'layui-layer-rim', //加上边框
-        //         content:basePath+'good'
-        //     });
-        //     return false
-        // });
+    }
+    //打开详情页2
+    function showGoods2(){
+        console.log("绑定详情页事件");
+        $(".goods2 img").click(function (data) {
+            console.log(data.currentTarget);
+            dataForChild=data.currentTarget.attributes.name.value.split("-")[1];
+            console.log(dataForChild);
+            layer.open({
+                type: 2,
+                id:"goodsPage",
+                title:"图书详情",
+                area: ['1000px', '680px'],
+                skin: 'layui-layer-rim', //加上边框
+                content:basePath+'good'
+            });
+            return false
+        })
     }
     //新进图书
     function newBooks() {
@@ -247,13 +250,13 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         $("#bookBorrow").last().append(
-                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
+                            '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId +'" id="BorrowId-' + item.bookMessageId + '" >' +
                             '<div style="flex-grow: 1;">' +
                             '<span style="font-size: 1em;line-height:6em;">预约:'+item.orderTime+'</span>' +
                             '<br />'+
                             '<p>订单号:'+item.code+'</p>' +
                             '</div>' +
-                            '<div style="flex-grow: 1.2;">' +
+                            '<div  style="flex-grow: 1.2;">' +
                             '<img style="width: 12em;" src="'+item.img+'" name="BorrowId-' + item.bookMessageId +'">' +
                             '</div>' +
                             '<div style="flex-grow: 2;line-height:3em;">' +
@@ -302,7 +305,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         item.img = "img/商品.jpg";
                                     }
                                     $("#bookBorrow").last().append(
-                                        '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId + '">' +
+                                        '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId + '">' +
                                         '<div style="flex-grow: 1;">' +
                                         '<span style="font-size: 1em;line-height: 6em;">待还:'+item.needReturnTime+'</span>' +
                                         '<br />'+
@@ -356,7 +359,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                         return false
                                     })
                                 });
-                                    showGoods();
+                                showGoods2();
                             }
                         }
                     });
@@ -377,7 +380,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         $("#bookul").last().append(
-                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "id="collectionPane-'+ item.collectionId + '" name="collectionPane-'+item.bookMessageId+'">' +
+                            '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "id="collectionPane-'+ item.collectionId + '" name="collectionPane-'+item.bookMessageId+'">' +
                             '<div style="flex-grow: 1;">' +
                             '<span style="font-size: 1em;line-height: 6em;">序号:' + (i+1) + '</span>' +
                             '<br>'+
@@ -415,7 +418,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         })
                     });
                     //图书详情页
-                    showGoods();
+                    showGoods2();
                 }
             }
         });
@@ -439,7 +442,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             item.img = "img/商品.jpg";
                         }
                         historyAllData.push(
-                            '<div style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "name="history-' + item.bookMessageId + '">' +
+                            '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "name="history-' + item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;">' +
                             '<span style="font-size: 1em;line-height: 6em;">浏览日期</span>' +
                             '</div>' +
@@ -472,7 +475,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                             //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
                             //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
                             next(lis.join(''), page < historyPage); //假设总页数为 10
-                            showGoods();
+                            showGoods2();
                         }, 250);
                     }
                 });
