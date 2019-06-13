@@ -65,12 +65,15 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
         url: basePath + 'yonghuguanli/getCurrentUserInfo'
         , type: "get"
         , success: function (res) {
+            console.log("用户ID:" + res.data.roleId);
             if(res.data.img!=null)
             $("#headImg").attr("src", res.data.img);
             $("#username").last().append(res.data.nickName)
-            if (res.roleId == 2) {//普通用户
+            if (res.data.roleId == 2) {//普通用户
+
                 $("#otherSystem").addClass("layui-hide");
-            }else if (res.roleId == 3) {//游客
+                $("#nav-16").addClass("layui-hide");
+            }else if (res.data.roleId == 3) {//游客
                 $("#otherSystem").addClass("layui-hide");
                 $("#currentUserSystem").attr("disabled","disabled");
             }
