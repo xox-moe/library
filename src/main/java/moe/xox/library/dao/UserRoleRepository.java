@@ -33,7 +33,7 @@ public interface UserRoleRepository  extends JpaRepository<UserRole,Long> {
             "       ISBN\n" +
             "from history left join book_message on history.book_message_id = book_message.book_message_id\n" +
             "left join book_kind on book_kind.kind_id = book_message.kind_id\n" +
-            "where user_id = :userId \n" +
+            "where user_id = :userId and book_message.status = true  \n" +
             "order by history.create_time desc limit 50")
     List<JSONObject> listUserHistory(@Param("userId") Long userId);
 }
