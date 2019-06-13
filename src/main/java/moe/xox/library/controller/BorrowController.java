@@ -99,6 +99,7 @@ public class BorrowController extends BaseController {
             } catch (Exception ex) {
                 logger.info(ex.getMessage());
             }
+
             boolean ifReturn = (boolean) object.get("ifReturn");
             if (!ifReturn) {
                 Timestamp timestamp = (Timestamp) object.get("outTime");
@@ -110,14 +111,28 @@ public class BorrowController extends BaseController {
                 if ((boolean) object.get("ifXu"))
                     needReturnTime = needReturnTime.plusMonths(3);
 //                LocalDateTime needReturnTime = outTime.plusMonths(6);
-                object.put("needReturnTime", needReturnTime);
+                object.put("needReturnTime", needReturnTime.toLocalDate());
                 object.put("ifOutOfTime", false);
                 if (needReturnTime.isBefore(LocalDateTime.now()))
                     object.put("ifOutOfTime", true);
+                object.put("outTime",timeToString(object,"outTime").length()>10?timeToString(object,"outTime").substring(0, 10):"");
+                object.put("backTime", timeToString(object,"backTime").length()>10?timeToString(object,"backTime").substring(0, 10):"");
+            }else {
+                object.put("outTime",timeToString(object,"outTime").length()>10?timeToString(object,"outTime").substring(0, 10):"");
+                object.put("backTime", timeToString(object,"backTime").length()>10?timeToString(object,"backTime").substring(0, 10):"");
             }
+
         }
 
         return getSuccess("OK", myBorrow.getContent(), myBorrow.getTotalElements());
+    }
+
+    private String timeToString(JSONObject object,String name){
+        if(object==null)
+            return "";
+        if(object.get(name)==null)
+            return "";
+        return object.get(name).toString();
     }
 
     @RequestMapping("xuBorrow")

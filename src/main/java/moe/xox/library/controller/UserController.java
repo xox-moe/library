@@ -276,6 +276,11 @@ public class UserController extends BaseController {
             } catch (Exception ex) {
                 logger.info(ex.getMessage());
             }
+            String historyTime = object.getString("historyTime");
+            historyTime = historyTime == null ? "" : historyTime;
+            if(historyTime.length()>10)
+                historyTime = historyTime.substring(0, 10);
+            object.put("historyTime", historyTime);
         }
         return getSuccess("OK", list, list.size());
     }
