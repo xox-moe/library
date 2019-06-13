@@ -50,6 +50,9 @@ public class BorrowService {
         Order order = orderRepository.findOrderByUserIdAndCodeAndStatusIsTrue(userId,code);
         Book book = bookRepository.findByBookId(bookId);
 
+        if (order == null) {
+            return -5;//取书码错误
+        }
         if (!book.getBookMessageId().equals(order.getBookMessageId())) {
             return -1; //预约与取出的书的类别不符
         }
