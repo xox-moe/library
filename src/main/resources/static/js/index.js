@@ -307,7 +307,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                     $("#bookBorrow").last().append(
                                         '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em;" name="BorrowId-' + item.bookMessageId + '">' +
                                         '<div style="flex-grow: 1;">' +
-                                        '<span style="font-size: 1em;line-height: 6em;">待还:'+item.needReturnTime+'</span>' +
+                                        '<span style="font-size: 1em;line-height: 6em;" id="needReturnTime-'+item.borrowId+'">待还:'+item.needReturnTime+'</span>' +
                                         '<br />'+
                                         '<p>' + "借阅:" +item.outTime+ '</p>' +
                                         '<br />'+
@@ -332,6 +332,10 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                                     );
                                     if (item.ifXu == true) {
                                         $("#delay-" + item.borrowId).text("不可以贪心哦").addClass("layui-btn-disabled").attr("disabled", "disabled");
+                                    }
+                                    if (item.needReturnTime == undefined || item.needReturnTime == null || item.needReturnTime == '') {
+
+                                        $("#needReturnTime-" + item.borrowId).addClass("layui-hide");
                                     }
                                     if (item.ifReturn == false) {
                                         console.log("ifReturn=false");
@@ -444,7 +448,7 @@ layui.use(['layer','element','table','form','code','layedit','carousel','laydate
                         historyAllData.push(
                             '<div class="goods2" style="display: flex; border: 2px solid gainsboro; padding: 1em; border-radius: 10px; margin-bottom: 1.2em; "name="history-' + item.bookMessageId + '">' +
                             '<div style="flex-grow: 1;">' +
-                            '<span style="font-size: 1em;line-height: 6em;">浏览日期</span>' +
+                            '<span style="font-size: 1em;line-height: 6em;">浏览日期:'+ item.historyTime + '</span>' +
                             '</div>' +
                             '<div style="flex-grow: 1;">' +
                             '<img style="width: 12em;" src="'+item.img+'" name="history-' + item.bookMessageId +'">' +
