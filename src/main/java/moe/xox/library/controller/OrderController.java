@@ -73,6 +73,12 @@ public class OrderController extends BaseController {
             } catch (Exception ex) {
                 logger.info(ex.getMessage());
             }
+            String orderTime = object.getString("orderTime");
+            orderTime = orderTime == null ? "" : orderTime;
+            if(orderTime.length()>10)
+                orderTime = orderTime.substring(0, 10);
+            object.put("orderTime", orderTime);
+
         }
         return getSuccess("OK", list, list.size());
     }
